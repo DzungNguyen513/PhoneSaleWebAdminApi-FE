@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Create Product</h2>
+        <form>
+            <div class="form-group">
+                <label for="productName">Product Name:</label>
+                <input type="text" class="form-control" id="productName">
+            </div>
+            <div class="form-group">
+                <label for="storageGb">Storage (GB):</label>
+                <select class="form-control" id="storageGb">
+                    <option value="32">32 GB</option>
+                    <option value="64">64 GB</option>
+                    <option value="128">128 GB</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="colorName">Color:</label>
+                <select class="form-control" id="colorName">
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="number" class="form-control" id="amount">
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" class="form-control" id="price">
+            </div>
+            <div class="form-group">
+                <label for="categoryId">Category:</label>
+                <select class="form-control" id="categoryId">
+                    <option value="1">Category 1</option>
+                    <option value="2">Category 2</option>
+                    <option value="3">Category 3</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="vendorId">Vendor:</label>
+                <select class="form-control" id="vendorId">
+                    <option value="1">Vendor 1</option>
+                    <option value="2">Vendor 2</option>
+                    <option value="3">Vendor 3</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="detail">Detail:</label>
+                <textarea class="form-control" id="detail" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="img">Image:</label>
+                <input type="file" class="form-control-file" id="img">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>
