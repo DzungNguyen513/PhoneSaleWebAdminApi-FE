@@ -1,4 +1,4 @@
-fetch('https://localhost:7244/api/Product')
+fetch('https://localhost:7244/api/Product/GetProducts')
     .then(response => response.json())
     .then(data => {
         const tableBody = document.querySelector('.table tbody');

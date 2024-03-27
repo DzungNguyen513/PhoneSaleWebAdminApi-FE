@@ -11,7 +11,7 @@
 <body>
     <div class="container mt-5">
         <h2 class="mb-4">Create Product</h2>
-        <form>
+        <form id="createProductForm">
             <div class="form-group">
                 <label for="productName">Product Name:</label>
                 <input type="text" class="form-control" id="productName">
@@ -19,17 +19,13 @@
             <div class="form-group">
                 <label for="storageGb">Storage (GB):</label>
                 <select class="form-control" id="storageGb">
-                    <option value="32">32 GB</option>
-                    <option value="64">64 GB</option>
-                    <option value="128">128 GB</option>
+
                 </select>
             </div>
             <div class="form-group">
                 <label for="colorName">Color:</label>
                 <select class="form-control" id="colorName">
-                    <option value="Red">Red</option>
-                    <option value="Blue">Blue</option>
-                    <option value="Green">Green</option>
+
                 </select>
             </div>
             <div class="form-group">
@@ -43,17 +39,13 @@
             <div class="form-group">
                 <label for="categoryId">Category:</label>
                 <select class="form-control" id="categoryId">
-                    <option value="1">Category 1</option>
-                    <option value="2">Category 2</option>
-                    <option value="3">Category 3</option>
+
                 </select>
             </div>
             <div class="form-group">
                 <label for="vendorId">Vendor:</label>
                 <select class="form-control" id="vendorId">
-                    <option value="1">Vendor 1</option>
-                    <option value="2">Vendor 2</option>
-                    <option value="3">Vendor 3</option>
+
                 </select>
             </div>
             <div class="form-group">
@@ -61,12 +53,108 @@
                 <textarea class="form-control" id="detail" rows="3"></textarea>
             </div>
             <div class="form-group">
-                <label for="img">Image:</label>
-                <input type="file" class="form-control-file" id="img">
+                <label for="imageFile">Image:</label>
+                <input type="file" class="form-control-file" id="imageFile">
+            </div>
+            <div class="form-group">
+                <label for="status">Status: </label>
+                <select class="form-control" id="status">
+                    <option value="1">0</option>
+                    <option value="2">1</option>
+
+                </select>
             </div>
             <button type="submit" class="btn btn-primary mb-2">Submit</button>
         </form>
     </div>
+
+    <script>
+        // Get Vendor
+        fetch('https://localhost:7244/api/Vendors/GetVendors')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch vendors');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const vendorSelect = document.getElementById('vendorId');
+                data.forEach(vendor => {
+                    const option = document.createElement('option');
+                    option.value = vendor.vendorId;
+                    option.textContent = vendor.vendorName;
+                    vendorSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching vendors:', error);
+            });
+
+        // Get Categories
+        fetch('https://localhost:7244/api/Categories')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch Categories');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const categorySelect = document.getElementById('categoryId');
+                data.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.categoryId;
+                    option.textContent = category.categoryName;
+                    categorySelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching categories:', error);
+            });
+
+        // Get Color
+        fetch('https://localhost:7244/api/Colors/GetColors')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch Colors');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const colorSelect = document.getElementById('colorName');
+                data.forEach(color => {
+                    const option = document.createElement('option');
+                    option.value = color.colorName;
+                    option.textContent = color.colorName;
+                    colorSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching color', error);
+            });
+
+        //Get Storage
+        fetch('https://localhost:7244/api/Storages/GetStorages')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch Storages');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const storageSelect = document.getElementById('storageGb');
+                data.forEach(storage => {
+                    const option = document.createElement('option');
+                    option.value = storage.storageGb; // Giả sử vendorId là trường chứa ID của Vendor
+                    option.textContent = storage.storageGb;
+                    storageSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching storages', error);
+            });
+
+    </script>
+    <script src="../../assets/js/create-product.js"></script>
 </body>
 
 </html>
