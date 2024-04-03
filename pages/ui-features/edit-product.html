@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Product</title>
+    <title>Edit Product</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
     <div class="container mt-5">
-        <h2 class="mb-4">Create Product</h2>
-        <form id="createProductForm">
+        <h2 class="mb-4">Edit Product</h2>
+        <form id="editProductForm">
             <div class="form-group">
                 <label for="productName">Product Name:</label>
                 <input type="text" class="form-control" id="productName">
@@ -66,12 +66,13 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary mb-2">Create</button>
+            <button type="submit" class="btn btn-primary mb-2">Save Changes</button>
             <a href="http://127.0.0.1:5500/pages/ui-features/buttons.html" class="btn btn-secondary mb-2">Back</a>
         </form>
     </div>
 
     <script>
+
         // Get Vendor
         fetch('https://localhost:7244/api/Vendors/GetVendors')
             .then(response => {
@@ -156,8 +157,100 @@
                 console.error('Error fetching storages', error);
             });
 
+        //get ID
+        const urlParams = new URLSearchParams(window.location.search)
+        const productId = urlParams.get('id')
+
+        //Load by ID
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch(`https://localhost:7244/api/Product/${productId}?id=${productId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch product details');
+                    }
+                    return response.json();
+                })
+                .then(product => {
+                    document.getElementById('productName').value = product.productName;
+                    document.getElementById('storageGb').value = product.storageGb;
+                    document.getElementById('colorName').value = product.colorName;
+                    document.getElementById('amount').value = product.amount;
+                    document.getElementById('price').value = product.price;
+                    document.getElementById('discount').value = product.discount;
+                    document.getElementById('categoryId').value = product.categoryId;
+                    document.getElementById('vendorId').value = product.vendorId;
+                    document.getElementById('detail').value = product.detail;
+                    document.getElementById('status').value = product.status;
+                })
+                .catch(error => {
+                    console.error('Error fetching product details:', error);
+                });
+
+
+        })
+
+
+
+        //edit product
+        document.getElementById('editProductForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const storageGB = document.getElementById('storageGb').value;
+            const colorName = document.getElementById('colorName').value;
+            const vendorId = document.getElementById('vendorId').value;
+            const categoryId = document.getElementById('categoryId').value;
+            const productName = document.getElementById('productName').value
+            const amount = document.getElementById('amount').value
+            const price = document.getElementById('price').value
+            const discount = document.getElementById('discount').value
+            const detail = document.getElementById('detail').value
+            const status = document.getElementById('status').value
+            const formData = {
+                productId: productId,
+                productName: productName,
+                storageGB: storageGB,
+                colorName: colorName,
+                amount: amount,
+                price: price,
+                discount: discount,
+                categoryId: categoryId,
+                vendorId: vendorId,
+                detail: detail,
+                status: status
+
+            }
+
+            fetch(`https://localhost:7244/api/Product/${productId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to update product');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Xử lý dữ liệu trả về nếu cần
+                    console.log('Product updated successfully:', data);
+                    alert('Sửa sản phẩm thành công');
+
+                })
+                .catch(error => {
+                    console.error('Error updating product:', error);
+                    alert('Lỗi không thể Sửa được sản phẩm');
+
+                });
+        })
+
+
+
+
+
+
     </script>
-    <script src="../../assets/js/create-product.js"></script>
 </body>
 
 </html>

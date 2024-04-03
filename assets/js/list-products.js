@@ -28,6 +28,7 @@ fetch('https://localhost:7244/api/Product/GetProducts')
 
             const detailCell = document.createElement('td');
             detailCell.textContent = product.detail
+            detailCell.classList.add('detail');
             row.appendChild(detailCell);
 
             const imgCell = document.createElement('td');
@@ -50,7 +51,7 @@ fetch('https://localhost:7244/api/Product/GetProducts')
             editButton.textContent = 'Edit';
             editButton.className = 'btn btn-primary mr-2';
             editButton.onclick = function () {
-                window.location.href = '/Edit/' + product.productId;
+                window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-product.html?id=${product.productId}`;
             };
             actionCell.appendChild(editButton);
 
@@ -68,7 +69,27 @@ fetch('https://localhost:7244/api/Product/GetProducts')
             deleteButton.textContent = 'Delete';
             deleteButton.className = 'btn btn-danger';
             deleteButton.onclick = function () {
-                window.location.href = '/Remove/' + product.productId;
+                // Hiển thị hộp thoại xác nhận
+                const confirmDelete = confirm('Bạn có muốn xóa sản phẩm này không?');
+
+                // Nếu người dùng đồng ý xóa sản phẩm
+                if (confirmDelete) {
+                    // Gọi fetch API phương thức DELETE
+                    fetch(`https://localhost:7244/api/Product/${product.productId}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Failed to delete product');
+                            }
+                            // Xử lý phản hồi nếu cần
+                            console.log('Product deleted successfully');
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            console.error('Error deleting product:', error);
+                        });
+                }
             };
             actionCell.appendChild(deleteButton);
 

@@ -14446,5 +14446,10 @@ dl {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1; }
+  .detail {
+    max-width: 150px;
+    word-wrap: break-word;
+    overflow: auto
+}
 
 /*# sourceMappingURL=style.css.map */
