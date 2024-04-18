@@ -14446,5 +14446,43 @@ dl {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1; }
+  .detail {
+    max-width: 150px;
+    word-wrap: break-word;
+    overflow: auto
+}
+
+
+/*phân trang*/
+.pagination-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: none;
+  border: 1px solid #dee2e6;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.page-link:hover {
+  background-color: #f8f9fa;
+}
+
+
 
 /*# sourceMappingURL=style.css.map */

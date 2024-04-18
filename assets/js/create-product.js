@@ -7,9 +7,8 @@ document.getElementById('createProductForm').addEventListener('submit', async fu
     const productName = document.getElementById('productName').value
     const amount = document.getElementById('amount').value
     const price = document.getElementById('price').value
+    const discount = document.getElementById('discount').value
     const detail = document.getElementById('detail').value
-    const fileInput = document.getElementById('imageFile').files[0];
-    const imageFile = fileInput.name;
     const status = document.getElementById('status').value
     const formData = {
         productName: productName,
@@ -17,10 +16,10 @@ document.getElementById('createProductForm').addEventListener('submit', async fu
         colorName: colorName,
         amount: amount,
         price: price,
+        discount: discount,
         categoryId: categoryId,
         vendorId: vendorId,
         detail: detail,
-        imageFile: imageFile,
         status: status
 
     }
@@ -30,7 +29,7 @@ document.getElementById('createProductForm').addEventListener('submit', async fu
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData)// biến thằng object thành JSON
     })
         .then(response => {
             if (!response.ok) {
@@ -41,9 +40,11 @@ document.getElementById('createProductForm').addEventListener('submit', async fu
         .then(data => {
             // Xử lý dữ liệu trả về nếu cần
             console.log('Product created successfully:', data);
+            alert('Thêm sản phẩm thành công');
         })
         .catch(error => {
             console.error('Error creating product:', error);
+            alert('Lỗi không thể tạo được sản phẩm');
         });
 });
 
