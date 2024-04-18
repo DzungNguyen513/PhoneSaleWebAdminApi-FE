@@ -29,7 +29,7 @@ document.getElementById('createProductForm').addEventListener('submit', async fu
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData)// biến thằng object thành JSON
     })
         .then(response => {
             if (!response.ok) {

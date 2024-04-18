@@ -84,7 +84,7 @@
                 const vendorSelect = document.getElementById('vendorId');
                 data.forEach(vendor => {
                     const option = document.createElement('option');
-                    option.value = vendor.vendorId;
+                    option.value = vendor.vendorId
                     option.textContent = vendor.vendorName;
                     vendorSelect.appendChild(option);
                 });
@@ -120,7 +120,7 @@
                 if (!response.ok) {
                     throw new Error('Failed to fetch Colors');
                 }
-                return response.json();
+                return response.json();// là từ json thành object
             })
             .then(data => {
                 const colorSelect = document.getElementById('colorName');

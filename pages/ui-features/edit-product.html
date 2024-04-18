@@ -162,8 +162,9 @@
         const productId = urlParams.get('id')
 
         //Load by ID
+        
         document.addEventListener('DOMContentLoaded', function () {
-            fetch(`https://localhost:7244/api/Product/${productId}?id=${productId}`)
+            fetch(`https://localhost:7244/api/Product/GetProduct/${productId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Failed to fetch product details');
@@ -172,9 +173,6 @@
                 })
                 .then(product => {
                     document.getElementById('productName').value = product.productName;
-                    document.getElementById('storageGb').value = product.storageGb;
-                    document.getElementById('colorName').value = product.colorName;
-                    document.getElementById('amount').value = product.amount;
                     document.getElementById('price').value = product.price;
                     document.getElementById('discount').value = product.discount;
                     document.getElementById('categoryId').value = product.categoryId;

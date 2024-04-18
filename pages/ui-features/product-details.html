@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Product Detail</h1>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="card shadow border-smoke">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">General Information</h5>
+                            <p><strong>Product ID:</strong> <span id="productId"></span></p>
+                            <p><strong>Product Name:</strong> <span id="productName"></span></p>
+                            <p><strong>Price:</strong> <span id="price"></span></p>
+                            <p><strong>Discount:</strong> <span id="discount"></span></p>
+                            <p><strong>Category ID:</strong> <span id="categoryId"></span></p>
+                            <p><strong>Vendor ID:</strong> <span id="vendorId"></span></p>
+                            <p><strong>Detail:</strong> <span id="detail"></span></p>
+                            <p><strong>Status:</strong> <span id="status"></span></p>
+                            <p><strong>Created At:</strong> <span id="createdAt"></span></p>
+                            <p><strong>Updated At:</strong> <span id="updatedAt"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2 card shadow border-smoke">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Product Specification</h5>
+                        <table class="table">
+                            <thead>
+                              <tr class="table-warning">
+                                <th>
+                                  StorageGb
+                                </th>
+        
+                                <th>
+                                  ColorName
+                                </th>
+        
+                                <th>
+                                  Amount
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+        
+                            </tbody>
+                          </table>
+                          <a class="btn btn-success" href="#">Create product details</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow border-smoke">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Product images</h5>
+                        <div class="container">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" src="../../assets/images/Iphone15.png" alt="img1">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="../../assets/images/Samsung.png" alt="img2">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="../../assets/images/Ipad.jpg" alt="img3">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search)
+        const productId = urlParams.get('id')
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    fetch(`https://localhost:7244/api/Product/GetProduct/${productId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch product details');
+            }
+            return response.json();
+        })
+        .then(product => {
+            document.getElementById('productId').textContent = product.productId;
+            document.getElementById('productName').textContent = product.productName;
+            document.getElementById('price').textContent = product.price;
+            document.getElementById('discount').textContent = product.discount;
+            document.getElementById('categoryId').textContent = product.categoryId;
+            document.getElementById('vendorId').textContent = product.vendorId;
+            document.getElementById('detail').textContent = product.detail;
+            document.getElementById('status').textContent = product.status;
+            document.getElementById('createdAt').textContent = product.createAt;
+            document.getElementById('updatedAt').textContent = product.updateAt
+        })
+        .catch(error => {
+            console.error('Error fetching product details:', error);
+        });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    fetch(`https://localhost:7244/api/Product/GetProductDetails/${productId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch product details');
+            }
+            return response.json();
+        })
+        .then(product => {
+            const colorName = product.colorName;
+            const storageGb = product.storageGb;
+            const amount = product.amount;
+
+            const tableBody = document.querySelector('.table tbody');
+
+            const row = document.createElement('tr');
+
+            const storageGbCell = document.createElement('td');
+            storageGbCell.textContent = storageGb;
+            row.appendChild(storageGbCell);
+
+            const colorNameCell = document.createElement('td');
+            colorNameCell.textContent = colorName;
+            row.appendChild(colorNameCell);
+
+            const amountCell = document.createElement('td');
+            amountCell.textContent = amount;
+            row.appendChild(amountCell);
+            
+
+            tableBody.appendChild(row);
+        })
+        .catch(error => {
+            console.error('Error fetching product details:', error);
+        });
+
+    fetchProductDetails(productId);
+});
+
+function fetchProductDetails(productId) {
+    fetch('https://localhost:7244/api/Product/GetALLProductDetails')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.querySelector('.table tbody');
+
+            data.forEach(product => {
+                if (product.productId === productId) {
+                    const row = document.createElement('tr');
+
+                    const storageGbCell = document.createElement('td');
+                    storageGbCell.textContent = product.storageGb;
+                    row.appendChild(storageGbCell);
+
+                    const colorNameCell = document.createElement('td');
+                    colorNameCell.textContent = product.colorName;
+                    row.appendChild(colorNameCell);
+
+                    const amountCell = document.createElement('td');
+                    amountCell.textContent = product.amount;
+                    row.appendChild(amountCell);
+
+                    // Thêm nút Edit
+                    const editButtonCell = document.createElement('td');
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Edit';
+                    editButton.classList.add('btn', 'btn-primary', 'btn-sm');
+                    editButton.addEventListener('click', function () {
+                        // Xử lý sự kiện khi click vào nút Edit
+                        // Điều hướng tới trang chỉnh sửa sản phẩm với productId
+                        window.location.href = `edit-product.html?id=${productId}`;
+                    });
+                    editButtonCell.appendChild(editButton);
+                    row.appendChild(editButtonCell);
+
+                    // Thêm nút Delete
+                    const deleteButtonCell = document.createElement('td');
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+                    deleteButton.addEventListener('click', function () {
+                        // Xử lý sự kiện khi click vào nút Delete
+                        // Gửi yêu cầu xóa sản phẩm với productId
+                        // Sau khi xóa thành công, có thể cập nhật giao diện hoặc điều hướng tới trang khác
+                        // Ví dụ:
+                        // deleteProduct(productId);
+                    });
+                    deleteButtonCell.appendChild(deleteButton);
+                    row.appendChild(deleteButtonCell);
+
+                    tableBody.appendChild(row);
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching product details:', error);
+        });
+}
+
+
+
+
+    </script>
+
+
+</body>
+</html>

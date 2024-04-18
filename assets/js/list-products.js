@@ -103,10 +103,12 @@
 //     .catch(error => {
 //         console.error('Đã xảy ra lỗi khi lấy danh sách sản phẩm:', error);
 //     });
-
+let allProducts = []; // Mảng chứa tất cả các sản phẩm
+let filteredProducts = []; // Mảng chứa sản phẩm đã lọc
 fetch('https://localhost:7244/api/Product/GetProducts')
     .then(response => response.json())
     .then(data => {
+        allProducts = data; // Lưu trữ tất cả sản phẩm
         const tableBody = document.querySelector('.table tbody');
         const itemsPerPage = 5; // Số sản phẩm trên mỗi trang
         const totalPages = Math.ceil(data.length / itemsPerPage); // Tổng số trang
@@ -175,7 +177,7 @@ fetch('https://localhost:7244/api/Product/GetProducts')
                 detailsButton.textContent = 'Details';
                 detailsButton.className = 'btn btn-info mr-2';
                 detailsButton.onclick = function () {
-                    window.location.href = '/Details/' + product.productId;
+                    window.location.href = `http://127.0.0.1:5500/pages/ui-features/product-details.html?id=${product.productId}`;
                 };
                 actionCell.appendChild(detailsButton);
 
@@ -253,6 +255,27 @@ fetch('https://localhost:7244/api/Product/GetProducts')
                 }
             });
         }
+        //Phần sử lý tìm kiếm
+        // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
+        const searchInput = document.querySelector('.form-control');
+        searchInput.addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
+            const products = document.querySelectorAll('.table tbody tr'); // Danh sách các sản phẩm
+
+            products.forEach(product => {
+                const productName = product.querySelector('td:first-child').textContent.toLowerCase(); // Lấy tên sản phẩm
+
+                // So sánh tên sản phẩm với giá trị tìm kiếm
+                if (productName.includes(searchValue)) {
+                    product.style.display = 'table-row'; // Hiển thị sản phẩm nếu tên chứa từ khóa tìm kiếm
+                } else {
+                    product.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
+                }
+            });
+        });
+
+
+
 
         // Khởi tạo
         renderProducts(currentPage);
