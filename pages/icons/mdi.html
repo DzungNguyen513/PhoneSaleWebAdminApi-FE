@@ -16,6 +16,7 @@
   <!-- endinject -->
   <!-- Layout styles -->
   <link rel="stylesheet" href="../../assets/css/style.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <!-- End layout styles -->
   <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
 </head>
@@ -220,10 +221,19 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/icons/mdi.html">
-              <span class="menu-title">Quản lý danh mục</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-account" aria-expanded="false"
+              aria-controls="ui-basic">
+              <span class="menu-title">Quản lý tài khoản</span>
+              <i class="menu-arrow"></i>
               <i class="mdi mdi-contacts menu-icon"></i>
             </a>
+            <div class="collapse" id="ui-account">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/icons/mdi.html">Tài khoản nhân viên</a>
+                </li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/icons/customer.html">Tài khoản khách hàng</a></li>
+              </ul>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../../pages/forms/basic_elements.html">
@@ -284,32 +294,83 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="page-header">
-            <h3 class="page-title"> Material design icons </h3>
+            <h3 class="page-title"> Tài khoản </h3>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Icons</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Material design icons</li>
+                <li class="breadcrumb-item"><a class="btn btn-success" href="./creat-account-employee.html">Create account</a>
+                </li>
               </ol>
             </nav>
           </div>
           <div class="row">
-            <div class="col-lg-12 grid-margin">
+            <div class="col-12 grid-margin stretch-card">
               <div class="card">
-                <div class="card-body">
-                  
+                <div id="productInfo" class="card-body">
+
+                  <table class="table">
+                    <thead>
+                      <tr class="table-warning">
+
+                        <th>
+                          Account ID
+                        </th>
+                        <th>
+                          User Name
+                        </th>
+
+                        <th>
+                          Password
+                        </th>
+
+                        <th>
+                          Last Login
+                        </th>
+
+                        <th>
+                          Status
+                        </th>
+
+                        <th>
+                          Create At
+                        </th>
+
+                        <th>
+                          Update At
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                  </table>
+
                 </div>
               </div>
+              <div id="pagination" class="pagination-container"></div>
+
             </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <footer class="footer">
+              <div class="container-fluid d-flex justify-content-between">
+                <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © 
+                  <a href="https://www.youtube.com/@1heedteam" target="_blank">1heed</a> from Thái Bình NorthSide
+                </span>
+                <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Làm bởi <a
+                    href="https://www.facebook.com/vietta10112003" target="_blank">Việt Tạ</a> from IT5-K62</span>
+              </div>
+            </footer>
+            <!-- partial -->
           </div>
         </div>
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
-            <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © bootstrapdash.com
-              2021</span>
-            <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Free <a
-                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin
-                template</a> from Bootstrapdash.com</span>
+            <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © 
+              <a href="https://www.youtube.com/@1heedteam" target="_blank">1heed</a> from Thái Bình NorthSide
+            </span>
+            <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Làm bởi <a
+                href="https://www.facebook.com/vietta10112003" target="_blank">Việt Tạ</a> from IT5-K62</span>
           </div>
         </footer>
         <!-- partial -->
