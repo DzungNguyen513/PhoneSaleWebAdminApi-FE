@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product Image</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Create Product Image</h1>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-6">
+                <form id="uploadForm">
+                    <div class="form-group">
+                        <label for="productId">Product ID</label>
+                        <input type="text" class="form-control" id="productId" name="productId" placeholder="Enter product ID" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="colorName">Color Name</label>
+                        <input type="text" class="form-control" id="colorName" name="colorName" placeholder="Enter color name">
+                    </div>
+                    <div class="form-group">
+                        <label for="imageFile">Choose Image</label>
+                        <input type="file" class="form-control-file" id="imageFile" name="imageFile">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search)
+        const productId = urlParams.get('id')
+        document.querySelector("#productId").value = productId;
+
+        $(document).ready(function () {
+            $('#uploadForm').submit(function (event) {
+                event.preventDefault();
+
+                var formData = new FormData();
+                formData.append('productId', $('#productId').val());
+                formData.append('colorName', $('#colorName').val());
+                formData.append('imageFile', $('#imageFile')[0].files[0]);
+
+                $.ajax({
+                    url: 'https://localhost:7244/api/ProductImage/' + $('#productId').val(),
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert('Thêm ảnh thành công');
+                        $('#productId').val('');
+                        $('#colorName').val('');
+                        $('#imageFile').val('');
+                    },
+                    error: function (error) {
+                        console.error('Error uploading image:', error);
+                        alert('Lỗi không thể thêm được ảnh, vui lòng kiểm tra lại');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

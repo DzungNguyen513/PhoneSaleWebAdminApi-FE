@@ -1,3 +1,6 @@
+
+//----------------------------------------------------------------------------------
+// Hàm gửi yêu cầu đăng nhập
 async function loginUser(email, password) {
     try {
         const response = await fetch('https://localhost:7244/api/Login', {
@@ -22,7 +25,7 @@ async function loginUser(email, password) {
 }
 
 // Sự kiện khi người dùng gửi biểu mẫu đăng nhập
-document.getElementById('loginForm').addEventListener('submit', function (event) {
+document.querySelector('#loginForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
     const email = document.getElementById('email').value;
@@ -30,4 +33,3 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
 
     loginUser(email, password);
 });
-
