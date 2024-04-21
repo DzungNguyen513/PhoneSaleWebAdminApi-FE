@@ -127,21 +127,13 @@ fetch('https://localhost:7244/api/Product/GetProducts')
                 nameCell.textContent = product.productName;
                 row.appendChild(nameCell);
 
-                const storageGbCell = document.createElement('td');
-                storageGbCell.textContent = product.storageGb;
-                row.appendChild(storageGbCell);
-
-                const colorNameCell = document.createElement('td');
-                colorNameCell.textContent = product.colorName;
-                row.appendChild(colorNameCell);
-
-                const amountCell = document.createElement('td');
-                amountCell.textContent = product.amount;
-                row.appendChild(amountCell);
-
                 const priceCell = document.createElement('td');
                 priceCell.textContent = product.price;
                 row.appendChild(priceCell);
+
+                const discountCell = document.createElement('td');
+                discountCell.textContent = product.discount;
+                row.appendChild(discountCell)
 
                 const detailCell = document.createElement('td');
                 detailCell.textContent = product.detail
@@ -167,18 +159,26 @@ fetch('https://localhost:7244/api/Product/GetProducts')
                 const editButton = document.createElement('button');
                 editButton.textContent = 'Edit';
                 editButton.className = 'btn btn-primary mr-2';
+                editButton.innerHTML += '&nbsp;';
                 editButton.onclick = function () {
                     window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-product.html?id=${product.productId}`;
                 };
+                const editIcon = document.createElement('i');
+                editIcon.className = 'mdi mdi-pencil';
+                editButton.appendChild(editIcon);
                 actionCell.appendChild(editButton);
 
                 // Tạo nút Details
                 const detailsButton = document.createElement('button');
                 detailsButton.textContent = 'Details';
                 detailsButton.className = 'btn btn-info mr-2';
+                detailsButton.innerHTML += '&nbsp;';
                 detailsButton.onclick = function () {
                     window.location.href = `http://127.0.0.1:5500/pages/ui-features/product-details.html?id=${product.productId}`;
                 };
+                 const detailsIcon = document.createElement('i');
+                 detailsIcon.className = 'mdi mdi-eye';
+                 detailsButton.appendChild(detailsIcon);
                 actionCell.appendChild(detailsButton);
 
                 // Tạo nút Delete
@@ -208,6 +208,9 @@ fetch('https://localhost:7244/api/Product/GetProducts')
                             });
                     }
                 };
+                const deleteIcon = document.createElement('i');
+                deleteIcon.className = 'mdi mdi-delete';
+                deleteButton.appendChild(deleteIcon);
                 actionCell.appendChild(deleteButton);
 
                 // Thêm cell vào hàng

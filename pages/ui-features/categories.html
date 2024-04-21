@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End Plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo" href="../../index.html"><img src="../../assets/images/logo.svg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../assets/images/logo-mini.svg" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <div class="search-field d-none d-md-block">
+            <form class="d-flex align-items-center h-100" action="#">
+              <div class="input-group">
+                <div class="input-group-prepend bg-transparent">
+                  <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                </div>
+                <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+              </div>
+            </form>
+          </div>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item nav-profile dropdown">
+              <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="nav-profile-img">
+                  <img src="../../assets/images/faces/face1.jpg" alt="image">
+                  <span class="availability-status online"></span>
+                </div>
+                <div class="nav-profile-text">
+                  <p class="mb-1 text-black">David Greymaax</p>
+                </div>
+              </a>
+              <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="mdi mdi-cached me-2 text-success"></i> Activity Log </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
+              </div>
+            </li>
+            <li class="nav-item d-none d-lg-block full-screen-link">
+              <a class="nav-link">
+                <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="mdi mdi-email-outline"></i>
+                <span class="count-symbol bg-warning"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                <h6 class="p-3 mb-0">Messages</h6>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="../../assets/images/faces/face4.jpg" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
+                    <p class="text-gray mb-0"> 1 Minutes ago </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="../../assets/images/faces/face2.jpg" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
+                    <p class="text-gray mb-0"> 15 Minutes ago </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="../../assets/images/faces/face3.jpg" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
+                    <p class="text-gray mb-0"> 18 Minutes ago </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <h6 class="p-3 mb-0 text-center">4 new messages</h6>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                <i class="mdi mdi-bell-outline"></i>
+                <span class="count-symbol bg-danger"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                <h6 class="p-3 mb-0">Notifications</h6>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-success">
+                      <i class="mdi mdi-calendar"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
+                    <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-warning">
+                      <i class="mdi mdi-settings"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
+                    <p class="text-gray ellipsis mb-0"> Update dashboard </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-info">
+                      <i class="mdi mdi-link-variant"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
+                    <p class="text-gray ellipsis mb-0"> New admin wow! </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+              </div>
+            </li>
+            <li class="nav-item nav-logout d-none d-lg-block">
+              <a class="nav-link" href="#">
+                <i class="mdi mdi-power"></i>
+              </a>
+            </li>
+            <li class="nav-item nav-settings d-none d-lg-block">
+              <a class="nav-link" href="#">
+                <i class="mdi mdi-format-line-spacing"></i>
+              </a>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="#" class="nav-link">
+                <div class="nav-profile-image">
+                  <img src="../../assets/images/faces/face1.jpg" alt="profile">
+                  <span class="login-status online"></span>
+                  <!--change to offline or busy as needed-->
+                </div>
+                <div class="nav-profile-text d-flex flex-column">
+                  <span class="font-weight-bold mb-2">David Grey. H</span>
+                  <span class="text-secondary text-small">Project Manager</span>
+                </div>
+                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../index.html">
+                <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Quản lý sản phẩm</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Danh sách sản
+                      phẩm</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/categories.html">Danh mục</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#ui-account" aria-expanded="false"
+                aria-controls="ui-basic">
+                <span class="menu-title">Quản lý tài khoản</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-contacts menu-icon"></i>
+              </a>
+              <div class="collapse" id="ui-account">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/icons/mdi.html">Tài khoản nhân viên</a>
+                  </li>
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/icons/customer.html">Tài khoản khách hàng</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/forms/basic_elements.html">
+                <span class="menu-title">Forms</span>
+                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/charts/chartjs.html">
+                <span class="menu-title">Charts</span>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/tables/basic-table.html">
+                <span class="menu-title">Tables</span>
+                <i class="mdi mdi-table-large menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
+                <span class="menu-title">Sample Pages</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-medical-bag menu-icon"></i>
+              </a>
+              <div class="collapse" id="general-pages">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/samples/blank-page.html"> Blank Page </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Login </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.html"> Register </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-404.html"> 404 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-500.html"> 500 </a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item sidebar-actions">
+              <span class="nav-link">
+                <div class="border-bottom">
+                  <h6 class="font-weight-normal mb-3">Projects</h6>
+                </div>
+                <button class="btn btn-block btn-lg btn-gradient-primary mt-4">+ Add a project</button>
+                <div class="mt-4">
+                  <div class="border-bottom">
+                    <p class="text-secondary">Categories</p>
+                  </div>
+                  <ul class="gradient-bullet-list mt-4">
+                    <li>Free</li>
+                    <li>Pro</li>
+                  </ul>
+                </div>
+              </span>
+            </li>
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> Typography </h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Typography</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="row">
+              <div class="col grid-margin stretch-card">
+                <div class="card">
+                  <div id="categoryInfo" class="card-body">
+                    <h4 class="card-title">Danh mục điện thoại</h4>
+                    <button class="btn btn-success btn-icon-text float-right">
+                      <i class="mdi mdi-plus btn-icon-prepend"></i>
+                      Create
+                  </button>
+                    <table class="table table-category">
+                      <thead>
+                        <tr class="table-warning">
+                          <th>
+                            CategoryID
+                          </th>
+  
+                          <th>
+                            CategoryName
+                          </th>
+  
+                          <th>
+                            CategoryImage
+                          </th>
+  
+                          <th>
+                            CategorStatus
+                          </th>
+  
+                          <th>
+                            Create At
+                          </th>
+  
+                          <th>
+                            Update At
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+  
+                      </tbody>
+                    </table>
+  
+                  </div>
+                </div>
+              </div>
+              <div class="col grid-margin stretch-card">
+                <div class="card">
+                  <div id="colorInfo" class="card-body">
+                    <h4 class="card-title">Danh mục màu</h4>
+                    <button class="btn btn-success btn-icon-text float-right">
+                      <i class="mdi mdi-plus btn-icon-prepend"></i>
+                      Create
+                  </button>
+                    <table class="table table-color">
+                      <thead>
+                        <tr class="table-warning">
+                          <th>
+                            ColorName
+                          </th>
+  
+                          <th>
+                            ColorImage
+                          </th>
+  
+                          <th>
+                            ColorPrice
+                          </th>
+  
+                          <th>
+                            Create At
+                          </th>
+  
+                          <th>
+                            Update At
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+  
+                      </tbody>
+                    </table>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="container-fluid d-flex justify-content-between">
+              <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © bootstrapdash.com 2021</span>
+              <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin template</a> from Bootstrapdash.com</span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../assets/js/off-canvas.js"></script>
+    <script src="../../assets/js/hoverable-collapse.js"></script>
+    <script src="../../assets/js/misc.js"></script>
+    <script>
+     let allCategories = []; // Mảng chứa tất cả các danh mục
+    fetch('https://localhost:7244/api/Categories/GetAllCategories')
+    .then(response => response.json())
+    .then(data => {
+        allCategories = data; // Lưu trữ tất cả các danh mục
+        const tableBody = document.querySelector('.table-category tbody');
+        const itemsPerPageCategory = 2; // Số danh mục trên mỗi trang
+        const totalPagesCategory = Math.ceil(data.length / itemsPerPageCategory); // Tổng số trang
+        let currentPageCategory = 1; // Trang hiện tại
+
+        // Hàm hiển thị danh mục trên trang hiện tại
+        function renderCategory(page) {
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
+            const startIndex = (page - 1) * itemsPerPageCategory;
+            const endIndex = page * itemsPerPageCategory;
+            const categoriesToShow = data.slice(startIndex, endIndex);
+
+            categoriesToShow.forEach(category => {
+                const row = document.createElement('tr');
+                const categoryID = document.createElement('td');
+                categoryID.textContent = category.categoryId; // Sử dụng categoryID thay vì categoryId
+                row.appendChild(categoryID);
+
+                const categoryName = document.createElement('td');
+                categoryName.textContent = category.categoryName; 
+                row.appendChild(categoryName);
+
+                const categoryImage = document.createElement('td');
+                if (category.categoryImage) { // Kiểm tra nếu có ảnh danh mục
+                    const image = document.createElement('img');
+                    image.src = category.categoryImage;
+                    image.alt = "Category Image";
+                    image.style.maxWidth = "100px";
+                    categoryImage.appendChild(image);
+                } else {
+                    categoryImage.textContent = "No Image"; // Hiển thị thông báo nếu không có ảnh
+                }
+                row.appendChild(categoryImage);
+
+                const categoryStatus = document.createElement('td');
+                categoryStatus.textContent = category.status;
+                row.appendChild(categoryStatus);
+
+                const createAt = document.createElement('td');
+                createAt.textContent = category.createAt; 
+                row.appendChild(createAt);
+
+                const updateAt = document.createElement('td');
+                updateAt.textContent = category.updateAt; 
+                row.appendChild(updateAt);
+
+                // Tạo thẻ td để chứa các nút bấm
+                const actionCell = document.createElement('td');
+
+                // Tạo nút Edit
+                const editLink = document.createElement('a');
+                editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-category.html?id=${category.categoryId}`;
+                editLink.className = 'Primary';
+                const editIcon = document.createElement('i');
+                editIcon.className = 'mdi mdi-pencil';
+                editLink.appendChild(editIcon);
+                actionCell.appendChild(editLink);
+
+                // Tạo nút Details
+                const detailsLink = document.createElement('a');
+                detailsLink.href = `http://127.0.0.1:5500/pages/ui-features/category-details.html?id=${category.categoryId}`;
+                detailsLink.className = 'btn  mr-2';
+                const detailsIcon = document.createElement('i');
+                detailsIcon.className = 'mdi mdi-eye';
+                detailsLink.appendChild(detailsIcon);
+                actionCell.appendChild(detailsLink);
+
+                // Tạo nút Delete
+                const deleteLink = document.createElement('a');
+                deleteLink.href = '#'; // Đặt href theo ý của bạn
+                deleteLink.className = 'Danger';
+                const deleteIcon = document.createElement('i');
+                deleteIcon.className = 'mdi mdi-delete';
+                deleteLink.appendChild(deleteIcon);
+                deleteLink.addEventListener('click', function (event) {
+                    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+                    const confirmDelete = confirm('Bạn có muốn xóa danh mục này không?');
+                    if (confirmDelete) {
+                        fetch(`https://localhost:7244/api/Categories/${category.categoryId}`, {
+                            method: 'DELETE'
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to delete category');
+                                }
+                                console.log('Category deleted successfully');
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.error('Error deleting category:', error);
+                            });
+                    }
+                });
+                actionCell.appendChild(deleteLink);
+
+                // Thêm cell vào hàng
+                row.appendChild(actionCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Hàm tạo nút phân trang
+        function createCategoryPaginationButtons() {
+            const pagination = document.createElement('ul');
+            pagination.className = 'pagination';
+
+            for (let i = 1; i <= totalPagesCategory; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.className = 'page-item';
+                const pageLink = document.createElement('a');
+                pageLink.className = 'page-link';
+                pageLink.textContent = i;
+                pageLink.addEventListener('click', () => {
+                    currentPageCategory = i;
+                    renderCategory(currentPageCategory);
+                    updateCategoryPaginationUI();
+                });
+                pageItem.appendChild(pageLink);
+                pagination.appendChild(pageItem);
+            }
+
+            document.querySelector('#categoryInfo').appendChild(pagination);
+        }
+
+        // Hàm cập nhật giao diện phân trang
+        function updateCategoryPaginationUI() {
+            const pageLinks = document.querySelectorAll('.page-link');
+            pageLinks.forEach((link, index) => {
+                if (index + 1 === currentPageCategory) {
+                    link.classList.add('active');
+                    link.style.backgroundColor = '#007bff';
+                    link.style.color = '#fff';
+                } else {
+                    link.classList.remove('active');
+                    link.style.backgroundColor = '';
+                    link.style.color = '';
+                }
+            });
+        }
+
+        //Khởi tạo
+        renderCategory(currentPageCategory);
+        createCategoryPaginationButtons();
+        updateCategoryPaginationUI();
+
+    })
+    .catch(error => {
+        console.error('Đã xảy ra lỗi khi lấy danh sách danh mục:', error);
+    });
+ 
+
+    // danh mục màu
+
+    fetch('https://localhost:7244/api/Colors/GetColors')
+    .then(response => response.json())
+    .then(data => {
+        const tableBody = document.querySelector('.table-color tbody');
+        const itemsPerPage = 5; // Số màu trên mỗi trang
+        const totalPagesColor = Math.ceil(data.length / itemsPerPage); // Tổng số trang
+        let currentPageColor = 1; // Trang hiện tại
+
+        // Hàm hiển thị màu trên trang hiện tại
+        function renderColor(page) {
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = page * itemsPerPage;
+            const colorsToShow = data.slice(startIndex, endIndex);
+
+            colorsToShow.forEach(color => {
+                const row = document.createElement('tr');
+                const colorID = document.createElement('td');
+                colorID.textContent = color.colorName; // Sử dụng colorId thay vì colorId
+                row.appendChild(colorID);
+
+                const colorImage = document.createElement('td');
+                if (color.colorImage) { // Kiểm tra nếu có ảnh màu
+                    const image = document.createElement('img');
+                    image.src = color.colorImage;
+                    image.alt = "Color Image";
+                    image.style.maxWidth = "100px";
+                    colorImage.appendChild(image);
+                } else {
+                    colorImage.textContent = "No Image"; // Hiển thị thông báo nếu không có ảnh
+                }
+                row.appendChild(colorImage);
+
+                const colorPrice = document.createElement('td');
+                colorPrice.textContent = color.colorPrice; 
+                row.appendChild(colorPrice);
+
+                const createAt = document.createElement('td');
+                createAt.textContent = color.createAt; 
+                row.appendChild(createAt);
+
+                const updateAt = document.createElement('td');
+                updateAt.textContent = color.updateAt; 
+                row.appendChild(updateAt);
+
+                // Tạo thẻ td để chứa các nút bấm
+                const actionCell = document.createElement('td');
+
+                // Tạo nút Edit
+                const editLink = document.createElement('a');
+                editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-color.html?id=${color.colorId}`;
+                editLink.className = 'Primary';
+                const editIcon = document.createElement('i');
+                editIcon.className = 'mdi mdi-pencil';
+                editLink.appendChild(editIcon);
+                actionCell.appendChild(editLink);
+
+                // Tạo nút Details
+                const detailsLink = document.createElement('a');
+                detailsLink.href = `http://127.0.0.1:5500/pages/ui-features/color-details.html?id=${color.colorId}`;
+                detailsLink.className = 'btn  mr-2';
+                const detailsIcon = document.createElement('i');
+                detailsIcon.className = 'mdi mdi-eye';
+                detailsLink.appendChild(detailsIcon);
+                actionCell.appendChild(detailsLink);
+
+                // Tạo nút Delete
+                const deleteLink = document.createElement('a');
+                deleteLink.href = '#'; // Đặt href theo ý của bạn
+                deleteLink.className = 'Danger';
+                const deleteIcon = document.createElement('i');
+                deleteIcon.className = 'mdi mdi-delete';
+                deleteLink.appendChild(deleteIcon);
+                deleteLink.addEventListener('click', function (event) {
+                    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+                    const confirmDelete = confirm('Bạn có muốn xóa màu này không?');
+                    if (confirmDelete) {
+                        fetch(`https://localhost:7244/api/Colors/${color.colorId}`, {
+                            method: 'DELETE'
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to delete color');
+                                }
+                                console.log('Color deleted successfully');
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.error('Error deleting color:', error);
+                            });
+                    }
+                });
+                actionCell.appendChild(deleteLink);
+
+                // Thêm cell vào hàng
+                row.appendChild(actionCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Hàm tạo nút phân trang
+        function createColorPaginationButtons() {
+            const pagination = document.createElement('ul');
+            pagination.className = 'pagination';
+
+            for (let i = 1; i <= totalPagesColor; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.className = 'page-item';
+                const pageLink = document.createElement('a');
+                pageLink.className = 'page-link color';
+                pageLink.textContent = i;
+                pageLink.addEventListener('click', () => {
+                    currentPageColor = i;
+                    renderColor(currentPageColor);
+                    updateColorPaginationUI();
+                });
+                pageItem.appendChild(pageLink);
+                pagination.appendChild(pageItem);
+            }
+
+            document.querySelector('#colorInfo').appendChild(pagination);
+        }
+
+        // Hàm cập nhật giao diện phân trang
+        function updateColorPaginationUI() {
+            const pageLinks = document.querySelectorAll('.page-link .color');
+            pageLinks.forEach((link, index) => {
+                if (index + 1 === currentPageColor) {
+                    link.classList.add('activeColor');
+                    link.style.backgroundColor = '#007bff';
+                    link.style.color = '#fff';
+                } else {
+                    link.classList.remove('activeColor');
+                    link.style.backgroundColor = '';
+                    link.style.color = '';
+                }
+            });
+        }
+
+        //Khởi tạo
+        renderColor(currentPageColor);
+        createColorPaginationButtons();
+        updateColorPaginationUI();
+    })
+    .catch(error => {
+        console.error('Đã xảy ra lỗi khi lấy danh sách màu:', error);
+    });
+
+
+    </script>
+    <!-- endinject -->
+  </body>
+</html>

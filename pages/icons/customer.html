@@ -213,9 +213,9 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Danh mục sản
+                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Danh sách sản
                     phẩm</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/categories.html">Typography</a>
                 </li>
               </ul>
             </div>
@@ -299,14 +299,11 @@
           <div class="row">
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
-                <div id="productInfo" class="card-body">
+                <div id="customerInfo" class="card-body">
 
                   <table class="table">
                     <thead>
                       <tr class="table-warning">
-                        <th>
-                          Customer ID
-                        </th>
                         <th>
                           Customer Name
                         </th>
@@ -315,10 +312,6 @@
                           Email
                         </th>
                         
-                        <th>
-                          Password
-                        </th>
-
                         <th>
                           Phone Number
                         </th>
@@ -395,6 +388,118 @@
   <script src="../../assets/js/off-canvas.js"></script>
   <script src="../../assets/js/hoverable-collapse.js"></script>
   <script src="../../assets/js/misc.js"></script>
+  <script>
+    let allCustomers = []; // Mảng chứa tất cả các khách hàng
+let filteredCustomers = []; // Mảng chứa khách hàng đã lọc
+api_url = 'https://localhost:7244/api'
+fetch(api_url +'/Customer')
+    .then(response => response.json())
+    .then(data => {
+        allCustomers = data; // Lưu trữ tất cả khách hàng
+        const tableBody = document.querySelector('.table tbody');
+        const itemsPerPage = 5; // Số khách hàng trên mỗi trang
+        const totalPages = Math.ceil(data.length / itemsPerPage); // Tổng số trang
+        let currentPage = 1; // Trang hiện tại
+
+        // Hàm hiển thị khách hàng trên trang hiện tại
+        function renderCustomer(page) {
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = page * itemsPerPage;
+            const customersToShow = data.slice(startIndex, endIndex);
+
+            customersToShow.forEach(customer => {
+                const row = document.createElement('tr');
+                const customerName = document.createElement('td');
+                customerName.textContent = customer.customerName;
+                row.appendChild(customerName);
+
+                const email = document.createElement('td');
+                email.textContent = customer.email;
+                row.appendChild(email);
+
+                const phoneNumber = document.createElement('td');
+                phoneNumber.textContent = customer.phoneNumber;
+                row.appendChild(phoneNumber);
+
+                const address = document.createElement('td');
+                address.textContent = customer.address;
+                row.appendChild(address);
+
+                const gender = document.createElement('td');
+                gender.textContent = customer.gender;
+                row.appendChild(gender);
+
+                const status = document.createElement('td');
+                status.textContent = customer.status;
+                row.appendChild(status);
+
+                const lastLogin = document.createElement('td');
+                lastLogin.textContent = customer.lastLogin;
+                row.appendChild(lastLogin);
+
+                const createAt = document.createElement('td');
+                createAt.textContent = customer.createAt;
+                row.appendChild(createAt);
+
+                const updateAt = document.createElement('td');
+                updateAt.textContent = customer.updateAt;
+                row.appendChild(updateAt);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Hàm tạo nút phân trang
+        function createPaginationButtons() {
+            const pagination = document.createElement('ul');
+            pagination.className = 'pagination';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.className = 'page-item';
+                const pageLink = document.createElement('a');
+                pageLink.className = 'page-link';
+                pageLink.textContent = i;
+                pageLink.addEventListener('click', () => {
+                    currentPage = i;
+                    renderCustomer(currentPage);
+                    updatePaginationUI();
+                });
+                pageItem.appendChild(pageLink);
+                pagination.appendChild(pageItem);
+            }
+
+            document.querySelector('#customerInfo').appendChild(pagination);
+        }
+
+        // Hàm cập nhật giao diện phân trang
+        function updatePaginationUI() {
+            const pageLinks = document.querySelectorAll('.page-link');
+            pageLinks.forEach((link, index) => {
+                if (index + 1 === currentPage) {
+                    link.classList.add('active');
+                    link.style.backgroundColor = '#007bff';
+                    link.style.color = '#fff';
+                } else {
+                    link.classList.remove('active');
+                    link.style.backgroundColor = '';
+                    link.style.color = '';
+                }
+            });
+        }
+
+        // Khởi tạo
+        renderCustomer(currentPage);
+        createPaginationButtons();
+        updatePaginationUI();
+    })
+    .catch(error => {
+        console.error('Đã xảy ra lỗi khi lấy danh sách khách hàng:', error);
+    });
+
+
+  </script>
   <!-- endinject -->
   <!-- Custom js for this page -->
   <!-- End custom js for this page -->

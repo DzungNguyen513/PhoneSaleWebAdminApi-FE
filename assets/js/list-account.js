@@ -1,6 +1,6 @@
 let allAccounts = []; // Mảng chứa tất cả các tài khoản
 let filteredAccount = []; // Mảng chứa tài khoản đã lọc
-fetch('https://localhost:7244/api/Account')
+fetch('https://localhost:7244/api/Accounts/GetAllAccounts')
     .then(response => response.json())
     .then(data => {
         allAccounts = data; // Lưu trữ tất cả tài khoản
@@ -19,27 +19,27 @@ fetch('https://localhost:7244/api/Account')
             accountsToShow.forEach(account => {
                 const row = document.createElement('tr');
                 const userName = document.createElement('td');
-                userName.textContent = account.Username;
+                userName.textContent = account.username; // Đổi tên thuộc tính từ "Username" thành "username"
                 row.appendChild(userName);
 
                 const passWord = document.createElement('td');
-                passWord.textContent = account.Password;
+                passWord.textContent = account.password; // Đổi tên thuộc tính từ "Password" thành "password"
                 row.appendChild(passWord);
 
                 const lastLogin = document.createElement('td');
-                lastLogin.textContent = account.Lastlogin;
+                lastLogin.textContent = account.lastLogin;
                 row.appendChild(lastLogin);
 
                 const status = document.createElement('td');
-                status.textContent = account.Status;
+                status.textContent = account.status;
                 row.appendChild(status);
 
                 const createAt = document.createElement('td');
-                createAt.textContent = account.CreateAt
+                createAt.textContent = account.createAt; // Đổi tên thuộc tính từ "CreateAt" thành "createAt"
                 row.appendChild(createAt);
 
                 const updateAt = document.createElement('td');
-                updateAt.textContent = account.UpdateAt
+                updateAt.textContent = account.updateAt; // Đổi tên thuộc tính từ "UpdateAt" thành "updateAt"
                 row.appendChild(updateAt);
 
                 // Tạo thẻ td để chứa các nút bấm
@@ -50,7 +50,7 @@ fetch('https://localhost:7244/api/Account')
                 editButton.textContent = 'Edit';
                 editButton.className = 'btn btn-primary mr-2';
                 editButton.onclick = function () {
-                    window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-product.html?id=${product.productId}`;
+                    window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-product.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
                 };
                 actionCell.appendChild(editButton);
 
@@ -59,7 +59,7 @@ fetch('https://localhost:7244/api/Account')
                 detailsButton.textContent = 'Details';
                 detailsButton.className = 'btn btn-info mr-2';
                 detailsButton.onclick = function () {
-                    window.location.href = `http://127.0.0.1:5500/pages/ui-features/product-details.html?id=${product.productId}`;
+                    window.location.href = `http://127.0.0.1:5500/pages/ui-features/product-details.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
                 };
                 actionCell.appendChild(detailsButton);
 
@@ -69,24 +69,24 @@ fetch('https://localhost:7244/api/Account')
                 deleteButton.className = 'btn btn-danger';
                 deleteButton.onclick = function () {
                     // Hiển thị hộp thoại xác nhận
-                    const confirmDelete = confirm('Bạn có muốn xóa sản phẩm này không?');
+                    const confirmDelete = confirm('Bạn có muốn xóa tài khoản này không?');
 
-                    // Nếu người dùng đồng ý xóa sản phẩm
+                    // Nếu người dùng đồng ý xóa tài khoản
                     if (confirmDelete) {
                         // Gọi fetch API phương thức DELETE
-                        fetch(`https://localhost:7244/api/Product/${product.productId}`, {
+                        fetch(`https://localhost:7244/api/Accounts/${account.accountId}`, { // Sử dụng accountId thay vì productId
                             method: 'DELETE'
                         })
                             .then(response => {
                                 if (!response.ok) {
-                                    throw new Error('Failed to delete product');
+                                    throw new Error('Failed to delete account');
                                 }
                                 // Xử lý phản hồi nếu cần
-                                console.log('Product deleted successfully');
+                                console.log('Account deleted successfully');
                                 window.location.reload();
                             })
                             .catch(error => {
-                                console.error('Error deleting product:', error);
+                                console.error('Error deleting account:', error);
                             });
                     }
                 };
@@ -137,29 +137,8 @@ fetch('https://localhost:7244/api/Account')
                 }
             });
         }
-        //Phần sử lý tìm kiếm
-        // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
-        const searchInput = document.querySelector('.form-control');
-        searchInput.addEventListener('input', function () {
-            const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
-            const products = document.querySelectorAll('.table tbody tr'); // Danh sách các sản phẩm
 
-            products.forEach(product => {
-                const productName = product.querySelector('td:first-child').textContent.toLowerCase(); // Lấy tên sản phẩm
-
-                // So sánh tên sản phẩm với giá trị tìm kiếm
-                if (productName.includes(searchValue)) {
-                    product.style.display = 'table-row'; // Hiển thị sản phẩm nếu tên chứa từ khóa tìm kiếm
-                } else {
-                    product.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
-                }
-            });
-        });
-
-
-
-
-        // Khởi tạo
+        //Khởi tạo
         renderAccount(currentPage);
         createPaginationButtons();
         updatePaginationUI();
@@ -167,5 +146,3 @@ fetch('https://localhost:7244/api/Account')
     .catch(error => {
         console.error('Đã xảy ra lỗi khi lấy danh sách tài khoản:', error);
     });
-
-
