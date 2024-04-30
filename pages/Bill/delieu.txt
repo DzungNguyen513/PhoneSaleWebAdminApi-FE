@@ -1,0 +1,49 @@
+<div id="billDetail" class="card-body">
+                    <p><b>Họ và tên khách hàng:</b> John Doe</p>
+                    <p><b>Địa chỉ:</b> 123 Đường ABC, Thành phố XYZ</p>
+                    <p><b>Số điện thoại:</b> 0123 456 789</p>
+                    <p><b>Mã hóa đơn:</b> HD123456</p>
+                    <p><b>Trạng thái:</b> Đã giao</p>
+                    <p><b>Ngày đặt:</b> 2024-04-30</p>
+                    <p><b>Ghi chú:</b> Giao hàng vào buổi sáng</p>
+
+                    <button>Thêm sản phẩm</button>
+                    <table class="table">
+                        <thead>
+                          <tr class="table-warning">
+                            <th>
+                                Mã hóa đơn
+                            </th>
+    
+                            <th>
+                                Tên sản phẩm 
+                            </th>
+    
+                            <th>
+                                Số lượng
+                            </th>
+    
+                            <th>
+                                Đơn giá bán
+                            </th>
+
+                            <th>
+                                Giảm giá
+                            </th>
+    
+                            <th>
+                                Thành tiền
+                            </th>
+    
+                            <th>
+                                Thao tác
+                          </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+    
+                        </tbody>
+                      </table>
+                      <h2>Thành tiền: </h2>
+
+                </div>
