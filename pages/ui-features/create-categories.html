@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .card-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Add New Category</h2>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label for="categoryName" class="form-label">Category Name</label>
+                    <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
+                </div>
+                <div class="mb-3">
+                    <label for="categoryImage" class="form-label">Category Image</label>
+                    <input type="file" class="form-control" id="categoryImage">
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="statusActive" value="active">
+                        <label class="form-check-label" for="statusActive">
+                            Active
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="statusInactive" value="inactive">
+                        <label class="form-check-label" for="statusInactive">
+                            Inactive
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

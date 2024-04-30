@@ -15,6 +15,8 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/categories.css">
+
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -282,7 +284,7 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="page-header">
-              <h3 class="page-title"> Typography </h3>
+              <h3 class="page-title"> Danh mục </h3>
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
@@ -295,7 +297,7 @@
                 <div class="card">
                   <div id="categoryInfo" class="card-body">
                     <h4 class="card-title">Danh mục điện thoại</h4>
-                    <button class="btn btn-success btn-icon-text float-right">
+                    <button id="showCategoryFormBtn" class="btn btn-success btn-icon-text float-right">
                       <i class="mdi mdi-plus btn-icon-prepend"></i>
                       Create
                   </button>
@@ -335,6 +337,36 @@
                   </div>
                 </div>
               </div>
+              <div id="categoryFormOverlay" class="category-form-overlay">
+                <div class="category-form-container">
+                    <form id="categoryForm">
+                      <div class="mb-3">
+                        <label for="categoryName" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoryImage" class="form-label">Category Image</label>
+                        <input type="file" class="form-control" id="categoryImage">
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="statusActive" value="active">
+                            <label class="form-check-label" for="statusActive">
+                                Active
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="statusInactive" value="inactive">
+                            <label class="form-check-label" for="statusInactive">
+                                Inactive
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
               <div class="col grid-margin stretch-card">
                 <div class="card">
                   <div id="colorInfo" class="card-body">
@@ -358,6 +390,90 @@
                             ColorPrice
                           </th>
   
+                          <th>
+                            Create At
+                          </th>
+  
+                          <th>
+                            Update At
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+  
+                      </tbody>
+                    </table>
+  
+                  </div>
+                </div>
+              </div>
+              <div class="col grid-margin stretch-card">
+                <div class="card">
+                  <div id="storageInfo" class="card-body">
+                    <h4 class="card-title">Danh mục dung lượng</h4>
+                    <button class="btn btn-success btn-icon-text float-right">
+                      <i class="mdi mdi-plus btn-icon-prepend"></i>
+                      Create
+                  </button>
+                    <table class="table table-storage">
+                      <thead>
+                        <tr class="table-warning">
+                          <th>
+                            StorageGB
+                          </th>
+  
+                          <th>
+                            StoragePrice
+                          </th>
+  
+                          <th>
+                            Create At
+                          </th>
+  
+                          <th>
+                            Update At
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+  
+                      </tbody>
+                    </table>
+  
+                  </div>
+                </div>
+              </div>
+              <div class="col grid-margin stretch-card">
+                <div class="card">
+                  <div id="vendorInfo" class="card-body">
+                    <h4 class="card-title">Danh mục nhà cung cấp</h4>
+                    <button class="btn btn-success btn-icon-text float-right">
+                      <i class="mdi mdi-plus btn-icon-prepend"></i>
+                      Create
+                  </button>
+                    <table class="table table-vendor">
+                      <thead>
+                        <tr class="table-warning">
+                          <th>
+                            VendorID
+                          </th>
+  
+                          <th>
+                            VendorName
+                          </th>
+
+                          <th>
+                            Address 
+                          </th>
+
+                          <th>
+                            PhoneNumber
+                          </th>
+
+                          <th>
+                            status
+                          </th>
+
                           <th>
                             Create At
                           </th>
@@ -402,8 +518,28 @@
     <script src="../../assets/js/hoverable-collapse.js"></script>
     <script src="../../assets/js/misc.js"></script>
     <script>
+                document.addEventListener('DOMContentLoaded', function() {
+              const showCategoryFormBtn = document.getElementById('showCategoryFormBtn');
+              const categoryFormOverlay = document.getElementById('categoryFormOverlay');
+
+              // Hiển thị form nhập category khi bấm vào nút "Create"
+              showCategoryFormBtn.addEventListener('click', function() {
+                  categoryFormOverlay.style.display = 'block';
+              });
+
+              // Ẩn form nhập category khi bấm vào nút "Cancel" hoặc bấm vào nền mờ xung quanh
+              categoryFormOverlay.addEventListener('click', function(event) {
+                  if (event.target === categoryFormOverlay) {
+                      categoryFormOverlay.style.display = 'none';
+                  }
+              });
+          });
+
+    </script>
+    <script>
+     const apiUrl = "https://localhost:7244/api/"
      let allCategories = []; // Mảng chứa tất cả các danh mục
-    fetch('https://localhost:7244/api/Categories/GetAllCategories')
+    fetch(`${apiUrl}Categories/GetAllCategories`)
     .then(response => response.json())
     .then(data => {
         allCategories = data; // Lưu trữ tất cả các danh mục
@@ -485,7 +621,7 @@
                     event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
                     const confirmDelete = confirm('Bạn có muốn xóa danh mục này không?');
                     if (confirmDelete) {
-                        fetch(`https://localhost:7244/api/Categories/${category.categoryId}`, {
+                        fetch(`${apiUrl}Categories/${category.categoryId}`, {
                             method: 'DELETE'
                         })
                             .then(response => {
@@ -518,7 +654,7 @@
                 const pageItem = document.createElement('li');
                 pageItem.className = 'page-item';
                 const pageLink = document.createElement('a');
-                pageLink.className = 'page-link';
+                pageLink.className = 'page-link category';
                 pageLink.textContent = i;
                 pageLink.addEventListener('click', () => {
                     currentPageCategory = i;
@@ -534,7 +670,7 @@
 
         // Hàm cập nhật giao diện phân trang
         function updateCategoryPaginationUI() {
-            const pageLinks = document.querySelectorAll('.page-link');
+            const pageLinks = document.querySelectorAll('.page-link.category');
             pageLinks.forEach((link, index) => {
                 if (index + 1 === currentPageCategory) {
                     link.classList.add('active');
@@ -561,7 +697,7 @@
 
     // danh mục màu
 
-    fetch('https://localhost:7244/api/Colors/GetColors')
+    fetch(`${apiUrl}Colors/GetColors`)
     .then(response => response.json())
     .then(data => {
         const tableBody = document.querySelector('.table-color tbody');
@@ -638,7 +774,7 @@
                     event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
                     const confirmDelete = confirm('Bạn có muốn xóa màu này không?');
                     if (confirmDelete) {
-                        fetch(`https://localhost:7244/api/Colors/${color.colorId}`, {
+                        fetch(`${apiUrl}Colors/${color.colorId}`, {
                             method: 'DELETE'
                         })
                             .then(response => {
@@ -669,7 +805,7 @@
 
             for (let i = 1; i <= totalPagesColor; i++) {
                 const pageItem = document.createElement('li');
-                pageItem.className = 'page-item';
+                pageItem.className = 'page-item color';
                 const pageLink = document.createElement('a');
                 pageLink.className = 'page-link color';
                 pageLink.textContent = i;
@@ -687,7 +823,7 @@
 
         // Hàm cập nhật giao diện phân trang
         function updateColorPaginationUI() {
-            const pageLinks = document.querySelectorAll('.page-link .color');
+          const pageLinks = document.querySelectorAll('.page-link.color');
             pageLinks.forEach((link, index) => {
                 if (index + 1 === currentPageColor) {
                     link.classList.add('activeColor');
@@ -710,7 +846,294 @@
         console.error('Đã xảy ra lỗi khi lấy danh sách màu:', error);
     });
 
+    //Danh mục dung lượng
+    fetch('https://localhost:7244/api/Storages/GetStorages')
+    .then(response => response.json())
+    .then(data => {
+        const tableBody = document.querySelector('.table-storage tbody');
+        const itemsPerPage = 3; // Số màu trên mỗi trang
+        const totalPageStorage = Math.ceil(data.length / itemsPerPage); // Tổng số trang
+        let currentPageStorage = 1; // Trang hiện tại
 
+        // Hàm hiển thị màu trên trang hiện tại
+        function renderStorage(page) {
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = page * itemsPerPage;
+            const storageToShow = data.slice(startIndex, endIndex);
+
+            storageToShow.forEach(storage => {
+                const row = document.createElement('tr');
+                const storageGB = document.createElement('td');
+                storageGB.textContent = storage.storageGb; // Sử dụng colorId thay vì colorId
+                row.appendChild(storageGB);
+
+                const storagePrice = document.createElement('td');
+                storagePrice.textContent = storage.storagePrice; 
+                row.appendChild(storagePrice);
+
+                const createAt = document.createElement('td');
+                createAt.textContent = storage.createAt; 
+                row.appendChild(createAt);
+
+                const updateAt = document.createElement('td');
+                updateAt.textContent = storage.updateAt; 
+                row.appendChild(updateAt);
+
+                // Tạo thẻ td để chứa các nút bấm
+                const actionCell = document.createElement('td');
+
+                // Tạo nút Edit
+                const editLink = document.createElement('a');
+                editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-color.html?id=${storage.storageGb}`;
+                editLink.className = 'Primary';
+                const editIcon = document.createElement('i');
+                editIcon.className = 'mdi mdi-pencil';
+                editLink.appendChild(editIcon);
+                actionCell.appendChild(editLink);
+
+                // Tạo nút Details
+                const detailsLink = document.createElement('a');
+                detailsLink.href = `http://127.0.0.1:5500/pages/ui-features/color-details.html?id=${storage.storageGb}`;
+                detailsLink.className = 'btn  mr-2';
+                const detailsIcon = document.createElement('i');
+                detailsIcon.className = 'mdi mdi-eye';
+                detailsLink.appendChild(detailsIcon);
+                actionCell.appendChild(detailsLink);
+
+                // Tạo nút Delete
+                const deleteLink = document.createElement('a');
+                deleteLink.href = '#'; // Đặt href theo ý của bạn
+                deleteLink.className = 'Danger';
+                const deleteIcon = document.createElement('i');
+                deleteIcon.className = 'mdi mdi-delete';
+                deleteLink.appendChild(deleteIcon);
+                deleteLink.addEventListener('click', function (event) {
+                    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+                    const confirmDelete = confirm('Bạn có muốn xóa Dung lượng này không?');
+                    if (confirmDelete) {
+                        fetch(`https://localhost:7244/api/Storages/${storage.storageGb}`, {
+                            method: 'DELETE'
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to delete color');
+                                }
+                                console.log('Color deleted successfully');
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.error('Error deleting color:', error);
+                            });
+                    }
+                });
+                actionCell.appendChild(deleteLink);
+
+                // Thêm cell vào hàng
+                row.appendChild(actionCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Hàm tạo nút phân trang
+        function createStoragePaginationButtons() {
+            const pagination = document.createElement('ul');
+            pagination.className = 'pagination';
+
+            for (let i = 1; i <= totalPageStorage; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.className = 'page-item storage';
+                const pageLink = document.createElement('a');
+                pageLink.className = 'page-link storage';
+                pageLink.textContent = i;
+                pageLink.addEventListener('click', () => {
+                    currentPageStorage = i;
+                    renderStorage(currentPageStorage);
+                    updateStoragePaginationUI();
+                });
+                pageItem.appendChild(pageLink);
+                pagination.appendChild(pageItem);
+            }
+
+            document.querySelector('#storageInfo').appendChild(pagination);
+        }
+
+        // Hàm cập nhật giao diện phân trang
+        function updateStoragePaginationUI() {
+          const pageLinks = document.querySelectorAll('.page-link.storage');
+            pageLinks.forEach((link, index) => {
+                if (index + 1 === currentPageStorage) {
+                    link.classList.add('activeStorage');
+                    link.style.backgroundColor = '#007bff';
+                    link.style.color = '#fff';
+                } else {
+                    link.classList.remove('activeStorage');
+                    link.style.backgroundColor = '';
+                    link.style.color = '';
+                }
+            });
+        }
+
+        //Khởi tạo
+        renderStorage(currentPageStorage);
+        createStoragePaginationButtons();
+        updateStoragePaginationUI();
+    })
+    .catch(error => {
+        console.error('Đã xảy ra lỗi khi lấy danh sách màu:', error);
+    });
+
+    // nhà cung cấp
+    fetch(`${apiUrl}Vendors/GetVendors`)
+    .then(response => response.json())
+    .then(data => {
+        const tableBody = document.querySelector('.table-vendor tbody');
+        const itemsPerPage = 3; // Số màu trên mỗi trang
+        const totalPageVendor = Math.ceil(data.length / itemsPerPage); // Tổng số trang
+        let currentPageVendor = 1; // Trang hiện tại
+
+        // Hàm hiển thị màu trên trang hiện tại
+        function renderVendor(page) {
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = page * itemsPerPage;
+            const vendorToShow = data.slice(startIndex, endIndex);
+
+            vendorToShow.forEach(vendor => {
+                const row = document.createElement('tr');
+                const VendorID = document.createElement('td');
+                VendorID.textContent = vendor.vendorId; // Sử dụng colorId thay vì colorId
+                row.appendChild(VendorID);
+
+                const VendorName = document.createElement('td');
+                VendorName.textContent = vendor.vendorName; 
+                row.appendChild(VendorName);
+
+                const VendorAddress = document.createElement('td');
+                VendorAddress.textContent = vendor.address; 
+                row.appendChild(VendorAddress);
+
+                const VendorPhone = document.createElement('td');
+                VendorPhone.textContent = vendor.phoneNumber; 
+                row.appendChild(VendorPhone);
+
+                const VendorStatus = document.createElement('td');
+                VendorStatus.textContent = vendor.status; 
+                row.appendChild(VendorStatus);
+
+                const createAt = document.createElement('td');
+                createAt.textContent = vendor.createAt; 
+                row.appendChild(createAt);
+
+                const updateAt = document.createElement('td');
+                updateAt.textContent = vendor.updateAt; 
+                row.appendChild(updateAt);
+
+                // Tạo thẻ td để chứa các nút bấm
+                const actionCell = document.createElement('td');
+
+                // Tạo nút Edit
+                const editLink = document.createElement('a');
+                editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-color.html?id=${vendor.vendorId}`;
+                editLink.className = 'Primary';
+                const editIcon = document.createElement('i');
+                editIcon.className = 'mdi mdi-pencil';
+                editLink.appendChild(editIcon);
+                actionCell.appendChild(editLink);
+
+                // Tạo nút Details
+                const detailsLink = document.createElement('a');
+                detailsLink.href = `http://127.0.0.1:5500/pages/ui-features/color-details.html?id=${vendor.vendorId}`;
+                detailsLink.className = 'btn  mr-2';
+                const detailsIcon = document.createElement('i');
+                detailsIcon.className = 'mdi mdi-eye';
+                detailsLink.appendChild(detailsIcon);
+                actionCell.appendChild(detailsLink);
+
+                // Tạo nút Delete
+                const deleteLink = document.createElement('a');
+                deleteLink.href = '#'; // Đặt href theo ý của bạn
+                deleteLink.className = 'Danger';
+                const deleteIcon = document.createElement('i');
+                deleteIcon.className = 'mdi mdi-delete';
+                deleteLink.appendChild(deleteIcon);
+                deleteLink.addEventListener('click', function (event) {
+                    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+                    const confirmDelete = confirm('Bạn có muốn xóa nhà cung cấp này không?');
+                    if (confirmDelete) {
+                        fetch(`${apiUrl}Storages/${vendor.vendorId}`, {
+                            method: 'DELETE'
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to delete color');
+                                }
+                                console.log('Color deleted successfully');
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.error('Error deleting color:', error);
+                            });
+                    }
+                });
+                actionCell.appendChild(deleteLink);
+
+                // Thêm cell vào hàng
+                row.appendChild(actionCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Hàm tạo nút phân trang
+        function createVendorPaginationButtons() {
+            const pagination = document.createElement('ul');
+            pagination.className = 'pagination';
+
+            for (let i = 1; i <= totalPageVendor; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.className = 'page-item vendor';
+                const pageLink = document.createElement('a');
+                pageLink.className = 'page-link vendor';
+                pageLink.textContent = i;
+                pageLink.addEventListener('click', () => {
+                    currentPageVendor = i;
+                    renderVendor(currentPageVendor);
+                    updateVendorPaginationUI();
+                });
+                pageItem.appendChild(pageLink);
+                pagination.appendChild(pageItem);
+            }
+
+            document.querySelector('#vendorInfo').appendChild(pagination);
+        }
+
+        // Hàm cập nhật giao diện phân trang
+        function updateVendorPaginationUI() {
+          const pageLinks = document.querySelectorAll('.page-link.vendor');
+            pageLinks.forEach((link, index) => {
+                if (index + 1 === currentPageVendor) {
+                    link.classList.add('activeVendor');
+                    link.style.backgroundColor = '#007bff';
+                    link.style.color = '#fff';
+                } else {
+                    link.classList.remove('activeVendor');
+                    link.style.backgroundColor = '';
+                    link.style.color = '';
+                }
+            });
+        }
+
+        //Khởi tạo
+        renderVendor(currentPageVendor);
+        createVendorPaginationButtons();
+        updateVendorPaginationUI();
+    })
+    .catch(error => {
+        console.error('Đã xảy ra lỗi khi lấy danh sách màu:', error);
+    });
+    
     </script>
     <!-- endinject -->
   </body>

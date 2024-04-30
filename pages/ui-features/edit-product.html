@@ -17,22 +17,6 @@
                 <input type="text" class="form-control" id="productName">
             </div>
             <div class="form-group">
-                <label for="storageGb">Storage (GB):</label>
-                <select class="form-control" id="storageGb">
-
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="colorName">Color:</label>
-                <select class="form-control" id="colorName">
-
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="amount">Amount:</label>
-                <input type="number" class="form-control" id="amount">
-            </div>
-            <div class="form-group">
                 <label for="price">Price:</label>
                 <input type="number" class="form-control" id="price">
             </div>
@@ -60,8 +44,8 @@
             <div class="form-group">
                 <label for="status">Status: </label>
                 <select class="form-control" id="status">
-                    <option value="1">0</option>
-                    <option value="2">1</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
 
                 </select>
             </div>
@@ -72,9 +56,10 @@
     </div>
 
     <script>
+        const apiUrl = 'https://localhost:7244/api/'
 
         // Get Vendor
-        fetch('https://localhost:7244/api/Vendors/GetVendors')
+        fetch(`${apiUrl}Vendors/GetVendors`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch vendors');
@@ -95,7 +80,7 @@
             });
 
         // Get Categories
-        fetch('https://localhost:7244/api/Categories')
+        fetch(`${apiUrl}Categories/GetAllCategories`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch Categories');
@@ -115,48 +100,7 @@
                 console.error('Error fetching categories:', error);
             });
 
-        // Get Color
-        fetch('https://localhost:7244/api/Colors/GetColors')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch Colors');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const colorSelect = document.getElementById('colorName');
-                data.forEach(color => {
-                    const option = document.createElement('option');
-                    option.value = color.colorName;
-                    option.textContent = color.colorName;
-                    colorSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching color', error);
-            });
-
-        //Get Storage
-        fetch('https://localhost:7244/api/Storages/GetStorages')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch Storages');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const storageSelect = document.getElementById('storageGb');
-                data.forEach(storage => {
-                    const option = document.createElement('option');
-                    option.value = storage.storageGb; // Giả sử vendorId là trường chứa ID của Vendor
-                    option.textContent = storage.storageGb;
-                    storageSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching storages', error);
-            });
-
+        
         //get ID
         const urlParams = new URLSearchParams(window.location.search)
         const productId = urlParams.get('id')
@@ -164,7 +108,7 @@
         //Load by ID
         
         document.addEventListener('DOMContentLoaded', function () {
-            fetch(`https://localhost:7244/api/Product/GetProduct/${productId}`)
+            fetch(`${apiUrl}Product/GetProduct/${productId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Failed to fetch product details');
@@ -192,12 +136,9 @@
         //edit product
         document.getElementById('editProductForm').addEventListener('submit', async function (event) {
             event.preventDefault();
-            const storageGB = document.getElementById('storageGb').value;
-            const colorName = document.getElementById('colorName').value;
             const vendorId = document.getElementById('vendorId').value;
             const categoryId = document.getElementById('categoryId').value;
             const productName = document.getElementById('productName').value
-            const amount = document.getElementById('amount').value
             const price = document.getElementById('price').value
             const discount = document.getElementById('discount').value
             const detail = document.getElementById('detail').value
@@ -205,9 +146,6 @@
             const formData = {
                 productId: productId,
                 productName: productName,
-                storageGB: storageGB,
-                colorName: colorName,
-                amount: amount,
                 price: price,
                 discount: discount,
                 categoryId: categoryId,
@@ -217,7 +155,7 @@
 
             }
 
-            fetch(`https://localhost:7244/api/Product/${productId}`, {
+            fetch(`${apiUrl}Product/${productId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -228,12 +166,16 @@
                     if (!response.ok) {
                         throw new Error('Failed to update product');
                     }
-                    return response.json();
+                    if (response.status === 204) {
+                        console.log('Product updated successfully');
+                        alert('Sửa sản phẩm thành công');
+                    } else {
+                        return response.json();
+                    }
                 })
                 .then(data => {
                     // Xử lý dữ liệu trả về nếu cần
                     console.log('Product updated successfully:', data);
-                    alert('Sửa sản phẩm thành công');
 
                 })
                 .catch(error => {
