@@ -231,7 +231,8 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="../../pages/icons/mdi.html">Tài khoản nhân viên</a>
                 </li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/icons/customer.html">Tài khoản khách hàng</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/icons/customer.html">Tài khoản khách
+                    hàng</a></li>
               </ul>
             </div>
           </li>
@@ -295,12 +296,13 @@
         <div class="content-wrapper">
           <div class="page-header">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="./Bill-management.html">Danh sách đơn hàng</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Chi tiết đơn hàng</li>
-              </ol>
+              <li class="breadcrumb-item"><a href="./Bill-management.html">Danh sách đơn hàng</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Chi tiết đơn hàng</li>
+            </ol>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="btn btn-success" href="./creat-account-employee.html">Tạo đơn hàng </a>
+                <li class="breadcrumb-item"><a class="btn btn-success" href="./creat-account-employee.html">Tạo đơn hàng
+                  </a>
                 </li>
               </ol>
             </nav>
@@ -309,15 +311,15 @@
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
                 <div id="billDetail" class="card-body">
-                    <p><b>CustomerName:</b> John Doe</p>
-                    <p><b>deliverryAddress:</b> 123 Đường ABC, Thành phố XYZ</p>
-                    <p><b>CustomerPHone:</b> 0123 456 789</p>
-                    <p><b>BillID:</b> HD123456</p>
-                    <p><b>Status			:</b> Đã giao</p>
-                    <p><b>Date			:</b> 2024-04-30</p>
-                    <p><b>Note:</b> Giao hàng vào buổi sáng</p>
-
-                    <button>Thêm sản phẩm</button>
+                  <div class="customer-detail">
+                    <p class=""><b>CustomerName:</b> John Doe</p>
+                    <p class=""><b>deliverryAddress:</b> 123 Đường ABC, Thành phố XYZ</p>
+                    <p class=""><b>CustomerPHone:</b> 0123 456 789</p>
+                    <p class=""><b>BillID:</b> HD123456</p>
+                    <p class=""><b>Status :</b> Đã giao</p>
+                    <p class=""><b>Date :</b> 2024-04-30</p>
+                    <p class=""><b>Note:</b> Giao hàng vào buổi sáng</p>
+                    <button class="btn add-product-detail">Thêm sản phẩm</button>
                     <table class="table">
                         <thead>
                           <tr class="table-warning">
@@ -337,58 +339,58 @@
                                 Price
                             </th>
 
-                            <th>
-                              Discount
-                            </th>
-    
-                            <th>
-                              Total
-                            </th>
-    
-                            <th>
-                                Thao tác
-                          </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-    
-                        </tbody>
-                      </table>
-                      <h2>Thành tiền: </h2>
+                        <th>
+                          Discount
+                        </th>
+
+                        <th>
+                          Total
+                        </th>
+
+                        <th>
+                          Thao tác
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                  </table>
+                  <h2>Thành tiền: </h2>
 
                 </div>
               </div>
               <div id="pagination" class="pagination-container"></div>
 
             </div>
-        </div>
-        <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © 
-              <a href="https://www.youtube.com/@1heedteam" target="_blank">1heed</a> from Thái Bình NorthSide
-            </span>
-            <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Làm bởi <a
-                href="https://www.facebook.com/vietta10112003" target="_blank">Khánh Phạm</a> from IT5-K62</span>
           </div>
-        </footer>
-        <!-- partial -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="container-fluid d-flex justify-content-between">
+              <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright ©
+                <a href="https://www.youtube.com/@1heedteam" target="_blank">1heed</a> from Thái Bình NorthSide
+              </span>
+              <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Làm bởi <a
+                  href="https://www.facebook.com/vietta10112003" target="_blank">Khánh Phạm</a> from IT5-K62</span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
       </div>
     </div>
-  </div>
-  <!-- plugins:js -->
-  <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page -->
-  <!-- End plugin js for this page -->
-  <!-- inject:js -->
-  <script src="../../assets/js/off-canvas.js"></script>
-  <script src="../../assets/js/hoverable-collapse.js"></script>
-  <script src="../../assets/js/misc.js"></script>
-  <script src="../../assets/js/list-bill-detail.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page -->
-  <!-- End custom js for this page -->
+    <!-- plugins:js -->
+    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../assets/js/off-canvas.js"></script>
+    <script src="../../assets/js/hoverable-collapse.js"></script>
+    <script src="../../assets/js/misc.js"></script>
+    <script src="../../assets/js/list-bill-detail.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <!-- End custom js for this page -->
 </body>
 
 </html>
