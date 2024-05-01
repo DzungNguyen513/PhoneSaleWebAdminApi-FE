@@ -32,6 +32,8 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
+        const apiUrl = 'https://localhost:7244/api/'
+
         const urlParams = new URLSearchParams(window.location.search)
         const productId = urlParams.get('id')
         document.querySelector("#productId").value = productId;
@@ -46,7 +48,7 @@
                 formData.append('imageFile', $('#imageFile')[0].files[0]);
 
                 $.ajax({
-                    url: 'https://localhost:7244/api/ProductImage/' + $('#productId').val(),
+                    url: `${apiUrl}ProductImage/` + $('#productId').val(),
                     type: 'POST',
                     data: formData,
                     processData: false,

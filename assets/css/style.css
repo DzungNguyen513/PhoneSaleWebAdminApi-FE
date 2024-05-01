@@ -14478,12 +14478,16 @@ dl {
   padding: 5px 10px;
   border-radius: 3px;
 }
-
+.page-link .color {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: none;
+  border: 1px solid #dee2e6;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
 .page-link:hover {
   background-color: #f8f9fa;
-}
-#billDetail{
-  position: relative;
 }
 
 #billDetail .add-product-detail{

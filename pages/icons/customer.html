@@ -215,7 +215,7 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Danh sách sản
                     phẩm</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/categories.html">Typography</a>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/categories.html">Danh mục</a>
                 </li>
               </ul>
             </div>
@@ -391,10 +391,13 @@
   <script src="../../assets/js/hoverable-collapse.js"></script>
   <script src="../../assets/js/misc.js"></script>
   <script>
+
+const apiUrl = 'https://localhost:7244/api/'
+
+
     let allCustomers = []; // Mảng chứa tất cả các khách hàng
 let filteredCustomers = []; // Mảng chứa khách hàng đã lọc
-api_url = 'https://localhost:7244/api'
-fetch(api_url +'/Customer')
+fetch(`${apiUrl}Customer`)
     .then(response => response.json())
     .then(data => {
         allCustomers = data; // Lưu trữ tất cả khách hàng
