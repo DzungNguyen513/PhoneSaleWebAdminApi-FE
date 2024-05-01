@@ -17,45 +17,66 @@
     </style>
 </head>
 <body>
-
-<div class="card-container">
-    <div class="card">
-        <div class="card-header">
-            <h2 class="card-title">Add New Category</h2>
-        </div>
-        <div class="card-body">
-            <form>
-                <div class="mb-3">
-                    <label for="categoryName" class="form-label">Category Name</label>
-                    <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
-                </div>
-                <div class="mb-3">
-                    <label for="categoryImage" class="form-label">Category Image</label>
-                    <input type="file" class="form-control" id="categoryImage">
-                </div>
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="statusActive" value="active">
-                        <label class="form-check-label" for="statusActive">
-                            Active
-                        </label>
+    <div id="storageFormOverlay" class="overlay storage-form-overlay">
+        <div class="form-container storage-form-container">
+            <form id="storageForm">
+              <div class="container">
+                <h2>Add New Storage</h2>
+                <form>
+                    <div class="mb-3">
+                        <label for="storageGb" class="form-label">StorageGB</label>
+                        <input type="text" class="form-control" id="storageGb" placeholder="Enter storage capacity">
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="statusInactive" value="inactive">
-                        <label class="form-check-label" for="statusInactive">
-                            Inactive
-                        </label>
+                    <div class="mb-3">
+                        <label for="storagePrice" class="form-label">StoragePrice</label>
+                        <input type="text" class="form-control" id="storagePrice" placeholder="Enter storage price">
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                    <button id="createStorage" type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>                    
             </form>
         </div>
     </div>
-</div>
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script>
+   const storageFormInput = document.getElementById('storageForm');
+   storageFormInput.addEventListener('submit', async function(event) {
+    event.preventDefault();
+        // Dữ liệu của storage mới
+        const formData = {
+            storageGb: document.getElementById('storageGb').value, 
+            storagePrice: document.getElementById('storagePrice').value 
+        };
+
+        // Thực hiện yêu cầu POST để tạo mới một lưu trữ
+        fetch('https://localhost:7244/api/Storages/AdminCreateStorage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // Trả về phản hồi dưới dạng JSON
+            } else {
+                throw new Error('Failed to create new storage');
+            }
+        })
+        .then(data => {
+            console.log('New storage created:', data);
+            alert('Thêm dung lượng thành công');
+
+        })
+        .catch(error => {
+            console.error('Error creating new storage:', error);
+            alert('thêm dung lượng thất bại vui lòng kiểm tra lại');
+        });
+    });
+
+</script>
 </body>
 </html>

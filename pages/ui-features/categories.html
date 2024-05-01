@@ -337,33 +337,41 @@
                   </div>
                 </div>
               </div>
-              <div id="categoryFormOverlay" class="category-form-overlay">
-                <div class="category-form-container">
+              <div id="categoryFormOverlay" class="overlay category-form-overlay">
+                <div class="form-container category-form-container">
                     <form id="categoryForm">
-                      <div class="mb-3">
-                        <label for="categoryName" class="form-label">Category Name</label>
-                        <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="categoryImage" class="form-label">Category Image</label>
-                        <input type="file" class="form-control" id="categoryImage">
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="status" id="statusActive" value="active">
-                            <label class="form-check-label" for="statusActive">
-                                Active
-                            </label>
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Add New Category</h2>
+                            </div>
+                            <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="categoryName" class="form-label">Category Name</label>
+                                        <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="categoryImage" class="form-label">Category Image</label>
+                                        <input type="file" class="form-control" id="categoryImage">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="status" class="form-label">Status</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" id="statusActive" value="active">
+                                            <label class="form-check-label" for="statusActive">
+                                                Active
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" id="statusInactive" value="inactive">
+                                            <label class="form-check-label" for="statusInactive">
+                                                Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="status" id="statusInactive" value="inactive">
-                            <label class="form-check-label" for="statusInactive">
-                                Inactive
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                  
                     </form>
                 </div>
             </div>
@@ -371,7 +379,7 @@
                 <div class="card">
                   <div id="colorInfo" class="card-body">
                     <h4 class="card-title">Danh mục màu</h4>
-                    <button class="btn btn-success btn-icon-text float-right">
+                    <button id="showColorFormBtn" class="btn btn-success btn-icon-text float-right">
                       <i class="mdi mdi-plus btn-icon-prepend"></i>
                       Create
                   </button>
@@ -407,11 +415,35 @@
                   </div>
                 </div>
               </div>
+              <div id="colorFormOverlay" class="overlay color-form-overlay">
+                <div class="form-container color-form-container">
+                    <form id="colorForm">
+                      <div class="container">
+                        <h2>Add New Color</h2>
+                        <form>
+                            <div class="mb-3">
+                                <label for="colorName" class="form-label">Color Name</label>
+                                <input type="text" class="form-control" id="colorName" placeholder="Enter color name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="colorImage" class="form-label">Color Image</label>
+                                <input type="file" class="form-control" id="colorImage">
+                            </div>
+                            <div class="mb-3">
+                                <label for="colorPrice" class="form-label">Color Price</label>
+                                <input type="number" class="form-control" id="colorPrice" placeholder="Enter color price">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    </form>
+                </div>
+            </div>
               <div class="col grid-margin stretch-card">
                 <div class="card">
                   <div id="storageInfo" class="card-body">
                     <h4 class="card-title">Danh mục dung lượng</h4>
-                    <button class="btn btn-success btn-icon-text float-right">
+                    <button id="showStorageFormBtn" class="btn btn-success btn-icon-text float-right">
                       <i class="mdi mdi-plus btn-icon-prepend"></i>
                       Create
                   </button>
@@ -443,11 +475,31 @@
                   </div>
                 </div>
               </div>
+              <div id="storageFormOverlay" class="overlay storage-form-overlay">
+                <div class="form-container storage-form-container">
+                    <form id="storageForm">
+                      <div class="container">
+                        <h2>Add New Storage</h2>
+                        <form>
+                            <div class="mb-3">
+                                <label for="storageGb" class="form-label">StorageGB</label>
+                                <input type="text" class="form-control" id="storageGb" placeholder="Enter storage capacity">
+                            </div>
+                            <div class="mb-3">
+                                <label for="storagePrice" class="form-label">StoragePrice</label>
+                                <input type="text" class="form-control" id="storagePrice" placeholder="Enter storage price">
+                            </div>
+                            <button id="createStorage" type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>                    
+                    </form>
+                </div>
+            </div>
               <div class="col grid-margin stretch-card">
                 <div class="card">
                   <div id="vendorInfo" class="card-body">
                     <h4 class="card-title">Danh mục nhà cung cấp</h4>
-                    <button class="btn btn-success btn-icon-text float-right">
+                    <button id="showVendorFormBtn" class="btn btn-success btn-icon-text float-right">
                       <i class="mdi mdi-plus btn-icon-prepend"></i>
                       Create
                   </button>
@@ -491,6 +543,37 @@
                   </div>
                 </div>
               </div>
+              <div id="vendorFormOverlay" class="overlay vendor-form-overlay">
+                <div class="form-container vendor-form-container">
+                    <form id="vendorForm">
+                      <div class="container">
+                        <h2>Add New Vendor</h2>
+                        <form>
+                            <div class="mb-3">
+                                <label for="vendorName" class="form-label">Vendor Name</label>
+                                <input type="text" class="form-control" id="vendorName" placeholder="Enter vendor name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" placeholder="Enter address">
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Phone Number</label>
+                                <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phone number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>                    
+                    </form>
+                </div>
+            </div>
             </div>
           </div>
           <!-- content-wrapper ends -->
@@ -518,24 +601,36 @@
     <script src="../../assets/js/hoverable-collapse.js"></script>
     <script src="../../assets/js/misc.js"></script>
     <script>
-                document.addEventListener('DOMContentLoaded', function() {
-              const showCategoryFormBtn = document.getElementById('showCategoryFormBtn');
-              const categoryFormOverlay = document.getElementById('categoryFormOverlay');
+            document.addEventListener('DOMContentLoaded', function() {
+            // Function to toggle form overlay
+            function toggleFormOverlay(showBtnId, formOverlayId) {
+                const showBtn = document.getElementById(showBtnId);
+                const formOverlay = document.getElementById(formOverlayId);
 
-              // Hiển thị form nhập category khi bấm vào nút "Create"
-              showCategoryFormBtn.addEventListener('click', function() {
-                  categoryFormOverlay.style.display = 'block';
-              });
+                // Hiển thị form khi bấm vào nút "Create"
+                showBtn.addEventListener('click', function() {
+                    formOverlay.style.display = 'block';
+                });
 
-              // Ẩn form nhập category khi bấm vào nút "Cancel" hoặc bấm vào nền mờ xung quanh
-              categoryFormOverlay.addEventListener('click', function(event) {
-                  if (event.target === categoryFormOverlay) {
-                      categoryFormOverlay.style.display = 'none';
-                  }
-              });
-          });
+                // Ẩn form khi bấm vào nút "Cancel" hoặc bấm vào nền mờ xung quanh
+                formOverlay.addEventListener('click', function(event) {
+                    if (event.target === formOverlay) {
+                        formOverlay.style.display = 'none';
+                    }
+                });
+            }
+
+            // Sử dụng hàm toggleFormOverlay cho cả hai phần
+            toggleFormOverlay('showCategoryFormBtn', 'categoryFormOverlay');
+            toggleFormOverlay('showColorFormBtn', 'colorFormOverlay');
+            toggleFormOverlay('showStorageFormBtn', 'storageFormOverlay');
+            toggleFormOverlay('showVendorFormBtn', 'vendorFormOverlay');
+
+
+        });
 
     </script>
+        <!-- load-->
     <script>
      const apiUrl = "https://localhost:7244/api/"
      let allCategories = []; // Mảng chứa tất cả các danh mục
@@ -1134,6 +1229,44 @@
         console.error('Đã xảy ra lỗi khi lấy danh sách màu:', error);
     });
     
+    </script>
+        <!-- create -->
+    <script>
+    const showStorageFormBtn = document.getElementById('createStorage');
+    showStorageFormBtn.addEventListener('click', async function(event) {
+        // Dữ liệu của storage mới
+        event.preventDefault();
+        const formData = {
+            storageGb: document.getElementById('storageGb').value, 
+            storagePrice: document.getElementById('storagePrice').value 
+        };
+
+        // Thực hiện yêu cầu POST để tạo mới một lưu trữ
+        fetch('https://localhost:7244/api/Storages/AdminCreateStorage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // Trả về phản hồi dưới dạng JSON
+            } else {
+                throw new Error('Failed to create new storage');
+            }
+        })
+        .then(data => {
+            console.log('New storage created:', data);
+            alert('Thêm dung lượng thành công');
+
+        })
+        .catch(error => {
+            console.error('Error creating new storage:', error);
+            alert('thêm dung lượng thất bại vui lòng kiểm tra lại');
+        });
+    });
+
     </script>
     <!-- endinject -->
   </body>
