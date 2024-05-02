@@ -356,13 +356,13 @@
                                     <div class="mb-3">
                                         <label for="status" class="form-label">Status</label>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status" id="statusActive" value="active">
+                                            <input class="form-check-input" type="radio" name="status" id="statusActive" value="0">
                                             <label class="form-check-label" for="statusActive">
                                                 Active
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status" id="statusInactive" value="inactive">
+                                            <input class="form-check-input" type="radio" name="status" id="statusInactive" value="1">
                                             <label class="form-check-label" for="statusInactive">
                                                 Inactive
                                             </label>
@@ -563,10 +563,18 @@
                             </div>
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
-                                <select class="form-select" id="status">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="status" id="statusActive" value="0">
+                                  <label class="form-check-label" for="statusActive">
+                                      Active
+                                  </label>
+                              </div>
+                              <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="status" id="statusInactive" value="1">
+                                  <label class="form-check-label" for="statusInactive">
+                                      Inactive
+                                  </label>
+                              </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -633,6 +641,20 @@
         <!-- load-->
     <script>
      const apiUrl = "https://localhost:7244/api/"
+
+     async function getCategoryImage(categoryId) {
+      try {
+          const response = await fetch(`${apiUrl}Categories/GetCategoryImage/${categoryId}`);
+          if (!response.ok) {
+              throw new Error('Failed to get category image');
+          }
+          const imageData = await response.blob();
+          return URL.createObjectURL(imageData);
+      } catch (error) {
+          console.error('Error getting category image:', error);
+          throw error;
+      }
+    }
      let allCategories = []; // Mảng chứa tất cả các danh mục
     fetch(`${apiUrl}Categories/GetAllCategories`)
     .then(response => response.json())
@@ -644,13 +666,13 @@
         let currentPageCategory = 1; // Trang hiện tại
 
         // Hàm hiển thị danh mục trên trang hiện tại
-        function renderCategory(page) {
+       async function renderCategory(page) {
             tableBody.innerHTML = ''; // Xóa nội dung cũ
             const startIndex = (page - 1) * itemsPerPageCategory;
             const endIndex = page * itemsPerPageCategory;
             const categoriesToShow = data.slice(startIndex, endIndex);
 
-            categoriesToShow.forEach(category => {
+            categoriesToShow.forEach( async category => {
                 const row = document.createElement('tr');
                 const categoryID = document.createElement('td');
                 categoryID.textContent = category.categoryId; // Sử dụng categoryID thay vì categoryId
@@ -661,16 +683,23 @@
                 row.appendChild(categoryName);
 
                 const categoryImage = document.createElement('td');
-                if (category.categoryImage) { // Kiểm tra nếu có ảnh danh mục
+                if (category.categoryImage) { // Kiểm tra nếu có ảnh màu
                     const image = document.createElement('img');
-                    image.src = category.categoryImage;
-                    image.alt = "Category Image";
+                    try {
+                        const imageUrl = await getCategoryImage(category.categoryId); // Lấy đường dẫn hình ảnh màu
+                        image.src = imageUrl;
+                    } catch (error) {
+                        console.error('Error getting category image:', error);
+                        image.src = 'placeholder_image_url.jpg'; // Sử dụng ảnh mặc định hoặc placeholder
+                    }
+                    image.alt = "category Image";
                     image.style.maxWidth = "100px";
                     categoryImage.appendChild(image);
                 } else {
                     categoryImage.textContent = "No Image"; // Hiển thị thông báo nếu không có ảnh
                 }
                 row.appendChild(categoryImage);
+
 
                 const categoryStatus = document.createElement('td');
                 categoryStatus.textContent = category.status;
@@ -792,6 +821,20 @@
 
     // danh mục màu
 
+    async function getColorImage(colorId) {
+    try {
+        const response = await fetch(`${apiUrl}Colors/GetColorImage/${colorId}`);
+        if (!response.ok) {
+            throw new Error('Failed to get color image');
+        }
+        const imageData = await response.blob();
+        return URL.createObjectURL(imageData);
+    } catch (error) {
+        console.error('Error getting color image:', error);
+        throw error;
+    }
+  }
+
     fetch(`${apiUrl}Colors/GetColors`)
     .then(response => response.json())
     .then(data => {
@@ -801,13 +844,13 @@
         let currentPageColor = 1; // Trang hiện tại
 
         // Hàm hiển thị màu trên trang hiện tại
-        function renderColor(page) {
+      async function renderColor(page) {
             tableBody.innerHTML = ''; // Xóa nội dung cũ
             const startIndex = (page - 1) * itemsPerPage;
             const endIndex = page * itemsPerPage;
             const colorsToShow = data.slice(startIndex, endIndex);
 
-            colorsToShow.forEach(color => {
+            colorsToShow.forEach(async color => {
                 const row = document.createElement('tr');
                 const colorID = document.createElement('td');
                 colorID.textContent = color.colorName; // Sử dụng colorId thay vì colorId
@@ -816,7 +859,13 @@
                 const colorImage = document.createElement('td');
                 if (color.colorImage) { // Kiểm tra nếu có ảnh màu
                     const image = document.createElement('img');
-                    image.src = color.colorImage;
+                    try {
+                        const imageUrl = await getColorImage(color.colorName); // Lấy đường dẫn hình ảnh màu
+                        image.src = imageUrl;
+                    } catch (error) {
+                        console.error('Error getting color image:', error);
+                        image.src = 'placeholder_image_url.jpg'; // Sử dụng ảnh mặc định hoặc placeholder
+                    }
                     image.alt = "Color Image";
                     image.style.maxWidth = "100px";
                     colorImage.appendChild(image);
@@ -1231,6 +1280,7 @@
     
     </script>
         <!-- create -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
     const showStorageFormBtn = document.getElementById('createStorage');
     showStorageFormBtn.addEventListener('click', async function(event) {
@@ -1267,7 +1317,110 @@
         });
     });
 
+    //create color
+    $(document).ready(function () {
+            $('#colorForm').submit(function (event) {
+                event.preventDefault();
+
+                var formData = new FormData();
+                formData.append('colorName', $('#colorName').val());
+                formData.append('colorImage', $('#colorImage')[0].files[0]);
+                formData.append('colorPrice', $('#colorPrice').val());
+
+
+                $.ajax({
+                    url: `${apiUrl}Colors/CreateColorDTO`,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert('Thêm màu thành công');
+                        $('#colorName').val('');
+                        $('#colorImage').val('');
+                        $('#colorPrice').val('');
+                    },
+                    error: function (error) {
+                        console.error('Error uploading color:', error);
+                        alert('Lỗi không thể thêm được màu, vui lòng kiểm tra lại');
+                    }
+                });
+            });
+        });
+      
+        //create category
+        $(document).ready(function () {
+            $('#categoryForm').submit(function (event) {
+                event.preventDefault();
+
+                var formData = new FormData();
+                formData.append('categoryName', $('#categoryName').val());
+                formData.append('categoryImage', $('#categoryImage')[0].files[0]);
+                var status = $('input[name=status]:checked').val();
+                formData.append('status', status);
+
+                $.ajax({
+                    url: `${apiUrl}Categories/CreateCategory`,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert('Thêm danh mục thành công');
+                        $('#categoryName').val('');
+                        $('#categoryImage').val('');
+                    },
+                    error: function (error) {
+                        console.error('Error uploading color:', error);
+                        alert('Lỗi không thể thêm được màu, vui lòng kiểm tra lại');
+                    }
+                });
+            });
+        });
+        // create vendor
+        document.getElementById('vendorForm').addEventListener('submit', async function(event){
+          event.preventDefault();
+          const statusActive = document.getElementById('statusActive').checked;
+          const statusInactive = document.getElementById('statusInactive').checked;
+          
+          // Kiểm tra xem radio button nào được chọn
+          let status = ""; // Giá trị mặc định
+          if (statusActive) {
+            status = 0;
+          } else if (statusInactive) {
+            status = 1;
+          }
+          const formData = {
+            vendorName: document.getElementById('vendorName').value,
+            address: document.getElementById('address').value,
+            phoneNumber: document.getElementById('phoneNumber').value,
+            status: status
+          };
+          fetch('https://localhost:7244/api/Vendors/AdminCreateVendor', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to create vendor');
+            }
+            return response.json();
+          })
+          .then(data => {
+            alert('Thêm nhà cung cấp thành công')
+            console.log('Vendor created successfully:', data);
+          })
+          .catch(error => {
+            alert('Không thể thêm mới nhà cung cấp vui lòng kiểm tra lại')
+            console.error('Error creating vendor:', error);
+          });
+        })
+
     </script>
+    
     <!-- endinject -->
   </body>
 </html>
