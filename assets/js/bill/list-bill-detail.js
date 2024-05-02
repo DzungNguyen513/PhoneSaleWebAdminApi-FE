@@ -9,6 +9,7 @@ fetch(`https://localhost:7244/api/BillDetail/${billId}`)
 
         // Duyệt qua các dữ liệu chi tiết và thêm chúng vào bảng
         data.forEach(detail => {
+
             const row = document.createElement('tr');
 
             const billIdCell = document.createElement('td');
@@ -34,7 +35,6 @@ fetch(`https://localhost:7244/api/BillDetail/${billId}`)
             const totalCell = document.createElement('td');
             totalCell.textContent = detail.total;
             row.appendChild(totalCell);
-
 
             // Tạo thẻ td để chứa các nút bấm
             const actionCell = document.createElement('td');
@@ -72,6 +72,7 @@ fetch(`https://localhost:7244/api/BillDetail/${billId}`)
             
             tableBody.appendChild(row);
         });
+
     })
     .catch(error => {
         console.error('Đã xảy ra lỗi khi lấy chi tiết hóa đơn:', error);

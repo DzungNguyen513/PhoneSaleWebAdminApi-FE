@@ -14490,4 +14490,13 @@ dl {
   background-color: #f8f9fa;
 }
 
+#billDetail .add-product-detail{
+  margin-bottom: 20px;
+  display: block;
+  border-radius: 5px;
+  background-color: greenyellow;
+  font-size: 20;
+  font-weight: 600;
+}
+
 /*# sourceMappingURL=style.css.map */

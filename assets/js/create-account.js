@@ -10,7 +10,7 @@ document.getElementById('createAccountForm').addEventListener('submit', async fu
     }
     const confirmPassword = document.getElementById('confirmPassword').value;
     if(passWord === confirmPassword){
-        fetch('https://localhost:7244/api/Account', {
+        fetch('https://localhost:7244/api/Account/CreateAccount', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
