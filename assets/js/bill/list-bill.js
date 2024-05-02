@@ -1,7 +1,11 @@
+import api from '../../Base-url/Url.js'
+console.log(api);
+const bill = `${api}Bill`
 
 let allBills = []; // Mảng chứa tất cả các Bill
 let filteredBills = []; // Mảng chứa Bill đã lọc
-fetch('https://localhost:7244/api/Bill')
+fetch(bill)
+// fetch(`https://localhost:7244/api/Bill`)
     .then(response => response.json())
     .then(data => {
         allBills = data; // Lưu trữ tất cả Bill
@@ -66,10 +70,7 @@ fetch('https://localhost:7244/api/Bill')
                 totalBillCell.textContent = `${bill.totalBill} VNĐ`;
                 row.appendChild(totalBillCell);
 
-                const noteCell = document.createElement('td');
-                noteCell.textContent = bill.note;
-                row.appendChild(noteCell);
-
+                
                 tableBody.appendChild(row);
 
                 // Tạo thẻ td để chứa các nút bấm
