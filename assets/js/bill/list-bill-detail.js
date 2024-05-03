@@ -1,7 +1,11 @@
+import api from '../../Base-url/Url.js'
+console.log(api);
 
 const urlParams = new URLSearchParams(window.location.search);
 const billId = urlParams.get('id');
-fetch(`https://localhost:7244/api/BillDetail/${billId}`)
+const billDetail = `${api}BillDetail/${billId}`
+
+fetch(billDetail)
     .then(response => response.json())
     .then(data => {
         const tableBody = document.querySelector('.table tbody');
