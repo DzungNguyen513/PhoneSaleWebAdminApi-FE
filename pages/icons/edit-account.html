@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Edit account</h2>
+        <form id="editAccountForm">
+            <div class="form-group">
+                <label for="userName">User Name:</label>
+                <input type="text" class="form-control" id="userName">
+            </div>
+            <div class="form-group">
+                <label for="oldPassWord">Old Password:</label>
+                <input type="text" class="form-control" id="oldPassWord">
+            </div>
+            <div class="form-group">
+                <label for="newPassWord">New Password:</label>
+                <input type="text" class="form-control" id="newPassWord">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="text" class="form-control" id="confirmPassword">
+            </div>
+            <div class="form-group">
+                <label for="status">Status: </label>
+                <select class="form-control" id="status">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-2">Save Changes</button>
+            <a href="http://127.0.0.1:5500/pages/icons/mdi.html" class="btn btn-secondary mb-2">Back</a>
+        </form>
+    </div>
+
+    <script>
+        const apiUrl = 'https://localhost:7244/api/';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const accountId = urlParams.get('id');
+
+            // Load account details by ID
+            fetch(`${apiUrl}Account/${accountId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch account details');
+                    }
+                    return response.json();
+                })
+                .then(account => {
+                    document.getElementById('userName').value = account.username;
+                    document.getElementById('status').value = account.status;
+                })
+                .catch(error => {
+                    console.error('Error fetching account details:', error);
+                });
+
+            // Edit account form submission
+            document.getElementById('editAccountForm').addEventListener('submit', async function (event) {
+                event.preventDefault();
+                const userName = document.getElementById('userName').value;
+                const oldPassWord = document.getElementById('oldPassWord').value;
+                const newPassWord = document.getElementById('newPassWord').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const status = document.getElementById('status').value;
+
+                // Check if new password matches confirm password
+                if (newPassWord !== confirmPassword) {
+                    alert('Vui lòng nhập đúng mật khẩu');
+                    return;
+                }
+
+                const formData = {
+                    userName: userName,
+                    newPassWord: newPassWord,
+                    status: status
+                };
+
+                fetch(`${apiUrl}Account/${accountId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to update account');
+                        }
+                        console.log('Account updated successfully');
+                        alert('Sửa tài khoản thành công');
+                    })
+                    .catch(error => {
+                        console.error('Error updating account:', error);
+                        alert('Lỗi không thể sửa được tài khoản');
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>

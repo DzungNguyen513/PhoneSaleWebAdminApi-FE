@@ -1,6 +1,6 @@
 let allAccounts = []; // Mảng chứa tất cả các tài khoản
 let filteredAccount = []; // Mảng chứa tài khoản đã lọc
-fetch('https://localhost:7244/api/Accounts/GetAllAccounts')
+fetch('https://localhost:7244/api/Account/GetAllAccounts')
     .then(response => response.json())
     .then(data => {
         allAccounts = data; // Lưu trữ tất cả tài khoản
@@ -22,25 +22,38 @@ fetch('https://localhost:7244/api/Accounts/GetAllAccounts')
                 userName.textContent = account.username; // Đổi tên thuộc tính từ "Username" thành "username"
                 row.appendChild(userName);
 
-                const passWord = document.createElement('td');
-                passWord.textContent = account.password; // Đổi tên thuộc tính từ "Password" thành "password"
-                row.appendChild(passWord);
-
+                // Chưa có dữ liệu chưa dùng
+                // const loginCell = document.createElement('td');
+                // const Login = new Date(account.LastLogin);
+                // // Xác định chuỗi AM/PM dựa vào giờ
+                // const ampm = Login.getHours() >= 12 ? 'PM' : 'AM';
+                // const lastLogin = `${Login.getDate()}/${Login.getMonth() + 1}/${Login.getFullYear()} ${Login.getHours() % 12}:${('0' + Login.getMinutes()).slice(-2)}:${('0' + Login.getSeconds()).slice(-2)} ${ampm}`;
+                // loginCell.textContent = lastLogin;
+                // row.appendChild(loginCell);
+                // Có thì xóa
                 const lastLogin = document.createElement('td');
                 lastLogin.textContent = account.lastLogin;
                 row.appendChild(lastLogin);
 
                 const status = document.createElement('td');
-                status.textContent = account.status;
+                status.textContent = account.status === 0 ? 'Đang bị khóa' : 'Đang hoạt động';
                 row.appendChild(status);
 
-                const createAt = document.createElement('td');
-                createAt.textContent = account.createAt; // Đổi tên thuộc tính từ "CreateAt" thành "createAt"
-                row.appendChild(createAt);
+                const createAtCell = document.createElement('td');
+                const createWhen = new Date(account.createAt);
+                // Xác định chuỗi AM/PM dựa vào giờ
+                const ampm1 = createWhen.getHours() >= 12 ? 'PM' : 'AM';
+                const createAt = `${createWhen.getDate()}/${createWhen.getMonth() + 1}/${createWhen.getFullYear()} ${createWhen.getHours() % 12}:${('0' + createWhen.getMinutes()).slice(-2)}:${('0' + createWhen.getSeconds()).slice(-2)} ${ampm1}`;
+                createAtCell.textContent = createAt;
+                row.appendChild(createAtCell);
 
-                const updateAt = document.createElement('td');
-                updateAt.textContent = account.updateAt; // Đổi tên thuộc tính từ "UpdateAt" thành "updateAt"
-                row.appendChild(updateAt);
+                const updateAtCell = document.createElement('td');
+                const updateWhen = new Date(account.updateAt);
+                // Xác định chuỗi AM/PM dựa vào giờ
+                const ampm2 = updateWhen.getHours() >= 12 ? 'PM' : 'AM';
+                const updateAt = `${updateWhen.getDate()}/${updateWhen.getMonth() + 1}/${updateWhen.getFullYear()} ${updateWhen.getHours() % 12}:${('0' + updateWhen.getMinutes()).slice(-2)}:${('0' + updateWhen.getSeconds()).slice(-2)} ${ampm2}`;
+                updateAtCell.textContent = updateAt;
+                row.appendChild(updateAtCell);
 
                 // Tạo thẻ td để chứa các nút bấm
                 const actionCell = document.createElement('td');
@@ -50,18 +63,9 @@ fetch('https://localhost:7244/api/Accounts/GetAllAccounts')
                 editButton.textContent = 'Edit';
                 editButton.className = 'btn btn-primary mr-2';
                 editButton.onclick = function () {
-                    window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-product.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
+                    window.location.href = `http://127.0.0.1:5500/pages/icons/edit-account.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
                 };
                 actionCell.appendChild(editButton);
-
-                // Tạo nút Details
-                const detailsButton = document.createElement('button');
-                detailsButton.textContent = 'Details';
-                detailsButton.className = 'btn btn-info mr-2';
-                detailsButton.onclick = function () {
-                    window.location.href = `http://127.0.0.1:5500/pages/ui-features/product-details.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
-                };
-                actionCell.appendChild(detailsButton);
 
                 // Tạo nút Delete
                 const deleteButton = document.createElement('button');
@@ -96,6 +100,8 @@ fetch('https://localhost:7244/api/Accounts/GetAllAccounts')
                 row.appendChild(actionCell);
 
                 tableBody.appendChild(row);
+
+
             });
         }
 
