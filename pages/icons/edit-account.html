@@ -4,39 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Account</title>
+    <title>Change Password</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
     <div class="container mt-5">
-        <h2 class="mb-4">Edit account</h2>
-        <form id="editAccountForm">
+        <h2 class="mb-4">Change Password</h2>
+        <form id="changePasswordForm">
             <div class="form-group">
                 <label for="userName">User Name:</label>
-                <input type="text" class="form-control" id="userName">
+                <input type="text" class="form-control" id="userName" readonly>
+            </div>            
+            <div class="form-group">
+                <label for="oldPassword">Old Password:</label>
+                <input type="password" class="form-control" id="oldPassword">
             </div>
             <div class="form-group">
-                <label for="oldPassWord">Old Password:</label>
-                <input type="text" class="form-control" id="oldPassWord">
-            </div>
-            <div class="form-group">
-                <label for="newPassWord">New Password:</label>
-                <input type="text" class="form-control" id="newPassWord">
+                <label for="newPassword">New Password:</label>
+                <input type="password" class="form-control" id="newPassword">
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password:</label>
-                <input type="text" class="form-control" id="confirmPassword">
-            </div>
-            <div class="form-group">
-                <label for="status">Status: </label>
-                <select class="form-control" id="status">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </select>
+                <input type="password" class="form-control" id="confirmPassword">
             </div>
 
-            <button type="submit" class="btn btn-primary mb-2">Save Changes</button>
+            <button type="submit" class="btn btn-primary mb-2">Change Password</button>
             <a href="http://127.0.0.1:5500/pages/icons/mdi.html" class="btn btn-secondary mb-2">Back</a>
         </form>
     </div>
@@ -58,51 +51,55 @@
                 })
                 .then(account => {
                     document.getElementById('userName').value = account.username;
-                    document.getElementById('status').value = account.status;
                 })
                 .catch(error => {
                     console.error('Error fetching account details:', error);
                 });
 
-            // Edit account form submission
-            document.getElementById('editAccountForm').addEventListener('submit', async function (event) {
+            // Change password form submission
+            document.getElementById('changePasswordForm').addEventListener('submit', async function (event) {
                 event.preventDefault();
-                const userName = document.getElementById('userName').value;
-                const oldPassWord = document.getElementById('oldPassWord').value;
-                const newPassWord = document.getElementById('newPassWord').value;
+                const oldPassword = document.getElementById('oldPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
                 const confirmPassword = document.getElementById('confirmPassword').value;
-                const status = document.getElementById('status').value;
+
+                // Check for empty fields
+                if (oldPassword.trim() === '' || newPassword.trim() === '' || confirmPassword.trim() === '') {
+                    alert('Please fill in all fields.');
+                    return;
+                }
 
                 // Check if new password matches confirm password
-                if (newPassWord !== confirmPassword) {
-                    alert('Vui lòng nhập đúng mật khẩu');
+                if (newPassword !== confirmPassword) {
+                    alert('New password and confirm password do not match.');
                     return;
                 }
 
                 const formData = {
-                    userName: userName,
-                    newPassWord: newPassWord,
-                    status: status
+                    UserName: document.getElementById('userName').value,
+                    OldPassword: oldPassword,
+                    NewPassword: newPassword,
+                    ConfirmNewPassword: confirmPassword
                 };
 
-                fetch(`${apiUrl}Account/${accountId}`, {
-                    method: 'PUT',
+                fetch(`${apiUrl}Account/ChangePassword`, {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(formData)
                 })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Failed to update account');
-                        }
-                        console.log('Account updated successfully');
-                        alert('Sửa tài khoản thành công');
-                    })
-                    .catch(error => {
-                        console.error('Error updating account:', error);
-                        alert('Lỗi không thể sửa được tài khoản');
-                    });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to change password');
+                    }
+                    console.log('Password changed successfully');
+                    alert('Password changed successfully');
+                })
+                .catch(error => {
+                    console.error('Error changing password:', error);
+                    alert('Failed to change password. Please try again.');
+                });
             });
         });
     </script>

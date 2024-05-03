@@ -564,13 +564,11 @@
         toggleButton.innerHTML += '&nbsp;';
         const toggleIconClass = newStatus === 0 ? 'mdi-lock' : 'mdi-lock-open';
         toggleButton.querySelector('i').className = `mdi ${toggleIconClass}`;
-
-        alert('Đã cập nhật trạng thái tài khoản thành công');
     })
     .catch(error => {
         console.error('Error updating account status:', error);
     });
-}
+  }
 
     
 
@@ -590,8 +588,7 @@
           customer.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
         }
     });
-});
-
+  });
 
   </script>
   <!-- endinject -->

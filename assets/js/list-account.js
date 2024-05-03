@@ -65,7 +65,27 @@ fetch('https://localhost:7244/api/Account/GetAllAccounts')
                 editButton.onclick = function () {
                     window.location.href = `http://127.0.0.1:5500/pages/icons/edit-account.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
                 };
+                const editIcon = document.createElement('i');
+                editIcon.className = 'mdi mdi-pencil';
+                editButton.appendChild(editIcon);
                 actionCell.appendChild(editButton);
+
+                // Tạo nút khóa
+                const toggleButton = document.createElement('button');
+                toggleButton.textContent = account.status === 0 ? 'Unlock' : 'Lock';
+                toggleButton.className = 'btn btn-primary mr-2';
+                toggleButton.id = `toggleBtn_${account.accountId}`; // Thêm ID cho nút để xác định
+                toggleButton.onclick = function () {
+                    const newStatus = account.status === 0 ? 1 : 0; // Đảo ngược trạng thái
+                    updateAccountStatus(account.accountId, newStatus); // Gọi hàm cập nhật trạng thái
+                    window.location.reload();
+                };
+                toggleButton.innerHTML += '&nbsp;';
+                const toggleIcon = document.createElement('i');
+                const toggleIconClass = account.status === 0 ? 'mdi-lock' : 'mdi-lock-open';
+                toggleIcon.className = `mdi ${toggleIconClass}`;
+                toggleButton.appendChild(toggleIcon);
+                actionCell.appendChild(toggleButton);
 
                 // Tạo nút Delete
                 const deleteButton = document.createElement('button');
@@ -94,6 +114,9 @@ fetch('https://localhost:7244/api/Account/GetAllAccounts')
                             });
                     }
                 };
+                const deleteIcon = document.createElement('i');
+                deleteIcon.className = 'mdi mdi-delete';
+                deleteButton.appendChild(deleteIcon);
                 actionCell.appendChild(deleteButton);
 
                 // Thêm cell vào hàng
@@ -152,3 +175,30 @@ fetch('https://localhost:7244/api/Account/GetAllAccounts')
     .catch(error => {
         console.error('Đã xảy ra lỗi khi lấy danh sách tài khoản:', error);
     });
+
+    // Hàm gửi yêu cầu cập nhật trạng thái tài khoản
+    function updateAccountStatus(accountId, newStatus) {
+        fetch(`https://localhost:7244/api/Account/updateAccountStatus/${accountId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: newStatus })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update account status');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const toggleButton = document.querySelector(`#toggleBtn_${accountId}`);
+            toggleButton.textContent = newStatus === 0 ? 'Unlock' : 'Lock';
+            toggleButton.innerHTML += '&nbsp;';
+            const toggleIconClass = newStatus === 0 ? 'mdi-lock' : 'mdi-lock-open';
+            toggleButton.querySelector('i').className = `mdi ${toggleIconClass}`;
+            })
+        .catch(error => {
+            console.error('Error updating account status:', error);
+        });
+    }
