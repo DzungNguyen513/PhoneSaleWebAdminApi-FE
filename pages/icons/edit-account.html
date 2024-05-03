@@ -56,22 +56,21 @@
                     console.error('Error fetching account details:', error);
                 });
 
-            // Change password form submission
+            // Đổi mật khẩu
             document.getElementById('changePasswordForm').addEventListener('submit', async function (event) {
                 event.preventDefault();
                 const oldPassword = document.getElementById('oldPassword').value;
                 const newPassword = document.getElementById('newPassword').value;
                 const confirmPassword = document.getElementById('confirmPassword').value;
 
-                // Check for empty fields
+                // Kiểm tra trống
                 if (oldPassword.trim() === '' || newPassword.trim() === '' || confirmPassword.trim() === '') {
-                    alert('Please fill in all fields.');
+                    alert('Điền đầy đủ thông tin');
                     return;
                 }
 
-                // Check if new password matches confirm password
                 if (newPassword !== confirmPassword) {
-                    alert('New password and confirm password do not match.');
+                    alert('Mật khẩu nhập lại sai. Vui lòng thử lại');
                     return;
                 }
 
@@ -91,14 +90,14 @@
                 })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Failed to change password');
+                        throw new Error('Không thể đổi mật khẩu');
                     }
-                    console.log('Password changed successfully');
-                    alert('Password changed successfully');
+                    console.log('Thay đổi hoàn tất');
+                    alert('Đã đổi mật khẩu');
                 })
                 .catch(error => {
-                    console.error('Error changing password:', error);
-                    alert('Failed to change password. Please try again.');
+                    console.error('Không thể đổi mật khẩu:', error);
+                    alert('Không thể thay đổi mật khẩu, hãy kiểm tra lại thông tin');
                 });
             });
         });
