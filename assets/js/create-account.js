@@ -2,11 +2,9 @@ document.getElementById('createAccountForm').addEventListener('submit', async fu
     event.preventDefault();
     const userName = document.getElementById('userName').value;
     const passWord = document.getElementById('passWord').value;
-    const status = document.getElementById('status').value
     const formData = {
         userName: userName,
         passWord: passWord,
-        status: status
     }
     const confirmPassword = document.getElementById('confirmPassword').value;
     if(passWord === confirmPassword){

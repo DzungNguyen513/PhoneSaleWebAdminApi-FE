@@ -41,7 +41,7 @@
               <div class="input-group-prepend bg-transparent">
                 <i class="input-group-text border-0 mdi mdi-magnify"></i>
               </div>
-              <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+              <input type="text" class="form-control bg-transparent border-0" placeholder="Search customer by email">
             </div>
           </form>
         </div>
@@ -452,7 +452,27 @@ fetch(`${apiUrl}Customer`)
                 row.appendChild(updateAt);
 
                 tableBody.appendChild(row);
-            });
+
+                // Tạo thẻ td để chứa các nút bấm
+                const actionCell = document.createElement('td');
+
+                // Tạo nút Edit
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Edit';
+                editButton.className = 'btn btn-primary mr-2';
+                editButton.innerHTML += '&nbsp;';
+                editButton.onclick = function () {
+                    window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-product.html?id=${product.productId}`;
+                };
+                const editIcon = document.createElement('i');
+                editIcon.className = 'mdi mdi-pencil';
+                editButton.appendChild(editIcon);
+                actionCell.appendChild(editButton);
+                });
+
+                // Thêm cell vào hàng
+                row.appendChild(actionCell);
+                tableBody.appendChild(row);
         }
 
         // Hàm tạo nút phân trang
@@ -502,6 +522,26 @@ fetch(`${apiUrl}Customer`)
     .catch(error => {
         console.error('Đã xảy ra lỗi khi lấy danh sách khách hàng:', error);
     });
+
+    
+
+    //Phần sử lý tìm kiếm
+    // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
+    const searchInput = document.querySelector('.form-control');
+    searchInput.addEventListener('input', function () {
+    const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
+    const customers = document.querySelectorAll('.table tbody tr'); // Danh sách các người dùng
+
+    customers.forEach(customer => {
+        const email = product.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Lấy email ở cột thứ 2
+        // So sánh email với giá trị tìm kiếm
+        if (email.includes(searchValue)) {
+          customer.style.display = 'table-row'; // Hiển thị sản phẩm nếu tên chứa từ khóa tìm kiếm
+        } else {
+          customer.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
+        }
+    });
+});
 
 
   </script>
