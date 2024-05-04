@@ -1,11 +1,13 @@
 import api from '../../Base-url/Url.js'
+import formatDateTime from '../function/formatDateTime.js'
+import formatMoney from '../function/formatMoneyVN.js'
 console.log(api);
 const bill = `${api}Bill`
 
 let allBills = []; // Mảng chứa tất cả các Bill
 let filteredBills = []; // Mảng chứa Bill đã lọc
 fetch(bill)
-// fetch(`https://localhost:7244/api/Bill`)
+    // fetch(`https://localhost:7244/api/Bill`)
     .then(response => response.json())
     .then(data => {
         allBills = data; // Lưu trữ tất cả Bill
@@ -39,38 +41,47 @@ fetch(bill)
                 });
                 // Thêm sự kiện click vào dòng
                 row.addEventListener('click', function () {
-                    // Lấy ID bill từ nội dung ô ID bill
                     const idBill = idBillCell.textContent;
-                    // Chuyển hướng đến trang chi tiết hóa đơn
                     window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-detail.html?id=${bill.billId}`;
                 });
 
                 const idEmployeeCell = document.createElement('td');
-                idEmployeeCell.textContent = bill.customerId; // Đây có thể là customerId hoặc employeeId tùy thuộc vào cách bạn lưu trữ thông tin.
+                idEmployeeCell.textContent = bill.customerId;
                 row.appendChild(idEmployeeCell);
 
                 const statusCell = document.createElement('td');
-                // Kiểm tra trạng thái hóa đơn và ghi là "Đã xác nhận" hoặc "Chưa xác nhận"
-                statusCell.textContent = bill.status === 1 ? "Đã xác nhận" : "Chưa xác nhận";
+                const statusText = ['Chờ xác nhận', 'Chờ lấy hàng', 'Chờ giao hàng', 'Đã giao', 'Đã hủy'];
+                statusCell.textContent = statusText[bill.status];
+                statusCell.classList.add('waiting-confirmation');
+
+                const statusColors = {
+                    0: 'Gold',   // Màu xanh cho trạng thái "Chờ xác nhận"
+                    1: 'Chartreuse',  // Màu xanh lá cây cho trạng thái "Chờ lấy hàng"
+                    2: 'PaleTurquoise', // Màu cam cho trạng thái "Chờ giao hàng"
+                    3: 'MediumBlue', // Màu tím cho trạng thái "Đã giao"
+                    4: 'red'     // Màu đỏ cho trạng thái "Đã hủy"
+                };
+
+                statusCell.style.color = statusColors[bill.status]; 
                 row.appendChild(statusCell);
 
 
-                const dateBillCell = document.createElement('td');
-                const dateBill = new Date(bill.dateBill);
-
-                // Xác định chuỗi AM/PM dựa vào giờ
-                const ampm = dateBill.getHours() >= 12 ? 'PM' : 'AM';
-
-                // Định dạng lại thời gian
-                const formattedDate = `${dateBill.getDate()}/${dateBill.getMonth() + 1}/${dateBill.getFullYear()} ${dateBill.getHours() % 12}:${('0' + dateBill.getMinutes()).slice(-2)}:${('0' + dateBill.getSeconds()).slice(-2)} ${ampm}`;
-                dateBillCell.textContent = formattedDate;
+                // Ngày tạo
+                const dateBillCell = document.createElement('td');              
+                dateBillCell.textContent = formatDateTime(bill.dateBill);
                 row.appendChild(dateBillCell);
 
+                // Ngày sửa
+                const updateBillCell = document.createElement('td');              
+                updateBillCell.textContent = formatDateTime(bill.updateAt);
+                row.appendChild(updateBillCell);
+                // Tổng tiền
+                formatMoney
                 const totalBillCell = document.createElement('td');
-                totalBillCell.textContent = `${bill.totalBill} VNĐ`;
+                totalBillCell.textContent = `${formatMoney(bill.totalBill)}`;
                 row.appendChild(totalBillCell);
 
-                
+
                 tableBody.appendChild(row);
 
                 // Tạo thẻ td để chứa các nút bấm

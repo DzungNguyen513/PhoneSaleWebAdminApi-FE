@@ -41,7 +41,7 @@
               <div class="input-group-prepend bg-transparent">
                 <i class="input-group-text border-0 mdi mdi-magnify"></i>
               </div>
-              <input type="text" class="form-control bg-transparent border-0" placeholder="Search accounts">
+              <input type="text" class="form-control col-4 bg-transparent border-0" placeholder="Search accounts">
             </div>
           </form>
         </div>
@@ -295,7 +295,11 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="page-header">
-            <h3 class="page-title"> Danh sách đơn hàng</h3>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="./Bill-management.html">Danh sách đơn hàng</a></li>
+              <li class="breadcrumb-item"><a href="./Bill-detail.html">Chi tiết đơn hàng</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa chi tiết đơn hàng</li>
+            </ol>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a class="btn btn-success" href="./creat-account-employee.html">Tạo đơn hàng
@@ -307,50 +311,42 @@
           <div class="row">
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
-                <div id="BillInfo" class="card-body">
-                  <table class="table">
-                    <thead>
-                      <tr class="table-warning">
-                        <th>
-                          Mã hóa đơn
-                        </th>
-
-                        <th>
-                          Mã khách hàng
-                        </th>
-
-                        <th>
-                          Trạng thái
-                        </th>
-
-                        <th>
-                          Ngày tạo
-                        </th>
-
-                        <th>
-                          Ngày sửa
-                        </th>
-
-                        <th>
-                          Tổng tiền
-                        </th>
-
-                        <th>
-                          Thao tác
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                  </table>
-
+                <div id="billDetail" class="card-body">
+                    <div class="">
+                        <h2 class="mb-4">Edit Bill</h2>
+                        <form id="form-edit-bill">
+                            <div class="form-group">
+                                <label for="name">Họ tên khách hàng:</label>
+                                <input type="text" class="form-control col-4" id="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery">Địa chỉ:</label>
+                                <input type="text" class="form-control col-4" id="delivery">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Số điện thoại:</label>
+                                <input type="number" class="form-control col-4" id="phone">
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="note">Ghi chú:</label>
+                                <input type="text" class="form-control col-4" id="note">
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="status">Trạng thái:</label>
+                                <select class="form-control col-4" id="status">
+                
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Lưu</button>
+                            
+                            <a href="../Bill/Bill-management.html" class="btn btn-secondary mb-2">Back</a>
+                        </form>
+                    </div>
                 </div>
               </div>
-              <div id="pagination" class="pagination-container"></div>
-
             </div>
-            <!-- content-wrapper ends -->
             <!-- partial:../../partials/_footer.html -->
             <footer class="footer">
               <div class="container-fluid d-flex justify-content-between">
@@ -364,33 +360,19 @@
             <!-- partial -->
           </div>
         </div>
-        <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright ©
-              <a href="https://www.youtube.com/@1heedteam" target="_blank">1heed</a> from Thái Bình NorthSide
-            </span>
-            <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Làm bởi <a
-                href="https://www.facebook.com/vietta10112003" target="_blank">Khánh Phạm</a> from IT5-K62</span>
-          </div>
-        </footer>
-        <!-- partial -->
       </div>
-    </div>
-  </div>
-  <!-- plugins:js -->
-  <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page -->
-  <!-- End plugin js for this page -->
-  <!-- inject:js -->
-  <script src="../../assets/js/off-canvas.js"></script>
-  <script src="../../assets/js/hoverable-collapse.js"></script>
-  <script src="../../assets/js/misc.js"></script>
-  <script type="module" src="../../assets/js/bill/list-bill.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page -->
-  <!-- End custom js for this page -->
+      <!-- plugins:js -->
+      <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+      <!-- endinject -->
+      <!-- Plugin js for this page -->
+      <!-- End plugin js for this page -->
+      <!-- inject:js -->
+      <script src="../../assets/js/off-canvas.js"></script>
+      <script src="../../assets/js/hoverable-collapse.js"></script>
+      <script src="../../assets/js/misc.js"></script>
+      <script type="module" src="../../assets/js/bill/bill-detail-edit.js"></script>      <!-- endinject -->
+      <!-- Custom js for this page -->
+      <!-- End custom js for this page -->
 </body>
 
 </html>
