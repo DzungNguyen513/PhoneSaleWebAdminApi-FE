@@ -576,19 +576,19 @@
     // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
     const searchInput = document.querySelector('.form-control');
     searchInput.addEventListener('input', function () {
-    const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
-    const customers = document.querySelectorAll('.table tbody tr'); // Danh sách các người dùng
+      const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
+      const customers = document.querySelectorAll('.table tbody tr'); // Danh sách các người dùng
 
-    customers.forEach(customer => {
-        const email = product.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Lấy email ở cột thứ 2
-        // So sánh email với giá trị tìm kiếm
-        if (email.includes(searchValue)) {
-          customer.style.display = 'table-row'; // Hiển thị sản phẩm nếu tên chứa từ khóa tìm kiếm
-        } else {
-          customer.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
-        }
+      customers.forEach(customer => {
+          const email = customer.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Lấy email ở cột thứ 2
+          // So sánh email với giá trị tìm kiếm
+          if (email.includes(searchValue)) {
+            customer.style.display = 'table-row'; // Hiển thị sản phẩm nếu tên chứa từ khóa tìm kiếm
+          } else {
+            customer.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
+          }
+      });
     });
-  });
 
   </script>
   <!-- endinject -->
