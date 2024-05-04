@@ -9,8 +9,8 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Product Detail Form</h2>
-        <form id="create-productdetail">
+        <h2>Edit Product Detail Form</h2>
+        <form id="edit-productdetail">
             <div class="mb-3">
                 <div class="form-group">
                     <label for="productId">Product ID</label>
@@ -21,14 +21,14 @@
                 <label for="colorName" class="form-label">Color Name</label>
                 <select class="form-control" id="colorName">
                     
-                    <!-- Add more options as needed -->
+                   <option class="op-colorName" value=""></option>
                 </select>
             </div>
             <div class="form-group mb-3">
                 <label for="storage" class="form-label">Storage</label>
                 <select class="form-control" id="storageGb">
                     
-                    <!-- Add more options as needed -->
+                   <option class="op-storageGb" value=""></option>
                 </select>
             </div>
             <div class="mb-3">
@@ -42,108 +42,8 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      
+    <script type="module" src="../../assets/js/Product/edit-productDetails.js">
      
-        const apiUrl = 'https://localhost:7244/api/'
-
-        // Get Colors
-        fetch(`${apiUrl}Colors/GetColors`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch Colors');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const colorSelect = document.getElementById('colorName'); // Thay đổi ID nếu cần
-                data.forEach(color => {
-                    const option = document.createElement('option');
-                    option.value = color.colorName; // Thay đổi giá trị value tùy theo dữ liệu trả về
-                    option.textContent = color.colorName; // Thay đổi trường dữ liệu hiển thị tùy theo dữ liệu trả về
-                    colorSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching colors:', error);
-            });
-
-            // Get Storage Options
-            fetch(`${apiUrl}Storages/GetStorages`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch Storage options');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const storageSelect = document.getElementById('storageGb'); // Thay đổi ID nếu cần
-                    data.forEach(storage => {
-                        const option = document.createElement('option');
-                        option.value = storage.storageGb; // Thay đổi giá trị value tùy theo dữ liệu trả về
-                        option.textContent = storage.storageGb; // Thay đổi trường dữ liệu hiển thị tùy theo dữ liệu trả về
-                        storageSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching storage options:', error);
-                });
-        const urlParams = new URLSearchParams(window.location.search)
-        const productId = urlParams.get('id')
-        const ColorName = urlParams.get('colorName')
-        const StorageGb = urlParams.get('storageGb')
-        const Amount = urlParams.get('amount')
-        document.querySelector("#productId").value = productId;
-        document.getElementById('colorName').value = ColorName;
-        document.getElementById('storageGb').value = StorageGb;
-        document.querySelector("#amount").value = Amount;
-
-                
-            // const form = document.getElementById('create-productdetail');
-            // form.addEventListener('submit', async function(event) {
-            //     event.preventDefault();
-
-            //     // Lấy dữ liệu từ form
-            //     const formData = {
-            //         productId: document.getElementById('productId').value,
-            //         colorName: document.getElementById('colorName').value,
-            //         storageGb: document.getElementById('storageGb').value,
-            //         amount: document.getElementById('amount').value
-            //         // Thêm các trường dữ liệu khác của sản phẩm ở đây nếu cần
-            //     };
-
-            //     // Thực hiện yêu cầu POST
-            //     fetch('https://localhost:7244/api/Product/CreateProductDetails', {
-            //         method: 'PUT',
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         },
-            //         body: JSON.stringify(formData)
-            //     })
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             throw new Error('Failed to create new product');
-            //         }
-            //         return response.json();
-            //     })
-            //     .then(data => {
-            //         console.log('New product created:', data);
-            //         // Xử lý dữ liệu trả về nếu cần
-            //         window.alert('Thêm dữ liệu thành công!');
-            //     })
-            //     .catch(error => {
-            //         console.error('Error creating new product:', error);
-            //         window.alert('Đã sảy ra lỗi khi tạo mới, có thể đã có hoặc tồn tại');
-
-            //         // Xử lý lỗi, hiển thị thông báo hoặc thực hiện các hành động khác
-            //     });
-            // });
-
-        
-            
-            
-
-
     </script>
 </body>
 </html>
