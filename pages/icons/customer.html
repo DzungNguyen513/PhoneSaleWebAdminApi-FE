@@ -16,6 +16,7 @@
   <!-- endinject -->
   <!-- Layout styles -->
   <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <!-- End layout styles -->
   <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
@@ -41,7 +42,7 @@
               <div class="input-group-prepend bg-transparent">
                 <i class="input-group-text border-0 mdi mdi-magnify"></i>
               </div>
-              <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+              <input type="text" class="form-control bg-transparent border-0" placeholder="Search customer by email">
             </div>
           </form>
         </div>
@@ -307,7 +308,7 @@
                     <thead>
                       <tr class="table-warning">
                         <th>
-                          Customer Name
+                          Họ tên
                         </th>
 
                         <th>
@@ -315,31 +316,31 @@
                         </th>
                         
                         <th>
-                          Phone Number
+                          Số điện thoại
                         </th>
 
                         <th>
-                          Address
+                          Địa chỉ
                         </th>
 
                         <th>
-                          Gender
+                          Giới tính
                         </th>
 
                         <th>
-                          Status
+                          Trạng thái
                         </th>
 
                         <th>
-                          Last Login
+                          Lần đăng nhập cuối
                         </th>
 
                         <th>
-                          Create At
+                          Được tạo lúc
                         </th>
 
                         <th>
-                          Update At
+                          Cập nhật lúc
                         </th>
                       </tr>
                     </thead>
@@ -392,12 +393,12 @@
   <script src="../../assets/js/misc.js"></script>
   <script>
 
-const apiUrl = 'https://localhost:7244/api/'
+    const apiUrl = 'https://localhost:7244/api/'
 
 
     let allCustomers = []; // Mảng chứa tất cả các khách hàng
-let filteredCustomers = []; // Mảng chứa khách hàng đã lọc
-fetch(`${apiUrl}Customer`)
+    let filteredCustomers = []; // Mảng chứa khách hàng đã lọc
+    fetch(`${apiUrl}Customer`)
     .then(response => response.json())
     .then(data => {
         allCustomers = data; // Lưu trữ tất cả khách hàng
@@ -432,27 +433,67 @@ fetch(`${apiUrl}Customer`)
                 row.appendChild(address);
 
                 const gender = document.createElement('td');
-                gender.textContent = customer.gender;
+                gender.textContent = customer.gender === 0 ? 'Nam' : 'Nữ';
                 row.appendChild(gender);
 
                 const status = document.createElement('td');
-                status.textContent = customer.status;
+                status.textContent = customer.status === 0 ? 'Đang bị khóa' : 'Đang hoạt động';
                 row.appendChild(status);
 
+                // Chưa có dữ liệu chưa dùng
+                // const loginCell = document.createElement('td');
+                // const Login = new Date(customer.LastLogin);
+                // // Xác định chuỗi AM/PM dựa vào giờ
+                // const ampm = Login.getHours() >= 12 ? 'PM' : 'AM';
+                // const lastLogin = `${Login.getDate()}/${Login.getMonth() + 1}/${Login.getFullYear()} ${Login.getHours() % 12}:${('0' + Login.getMinutes()).slice(-2)}:${('0' + Login.getSeconds()).slice(-2)} ${ampm}`;
+                // loginCell.textContent = lastLogin;
+                // row.appendChild(loginCell);
+                // Có thì xóa
                 const lastLogin = document.createElement('td');
                 lastLogin.textContent = customer.lastLogin;
                 row.appendChild(lastLogin);
 
-                const createAt = document.createElement('td');
-                createAt.textContent = customer.createAt;
-                row.appendChild(createAt);
+                const createAtCell = document.createElement('td');
+                const createWhen = new Date(customer.createAt);
+                // Xác định chuỗi AM/PM dựa vào giờ
+                const ampm1 = createWhen.getHours() >= 12 ? 'PM' : 'AM';
+                const createAt = `${createWhen.getDate()}/${createWhen.getMonth() + 1}/${createWhen.getFullYear()} ${createWhen.getHours() % 12}:${('0' + createWhen.getMinutes()).slice(-2)}:${('0' + createWhen.getSeconds()).slice(-2)} ${ampm1}`;
+                createAtCell.textContent = createAt;
+                row.appendChild(createAtCell);
 
-                const updateAt = document.createElement('td');
-                updateAt.textContent = customer.updateAt;
-                row.appendChild(updateAt);
+                const updateAtCell = document.createElement('td');
+                const updateWhen = new Date(customer.updateAt);
+                // Xác định chuỗi AM/PM dựa vào giờ
+                const ampm2 = updateWhen.getHours() >= 12 ? 'PM' : 'AM';
+                const updateAt = `${updateWhen.getDate()}/${updateWhen.getMonth() + 1}/${updateWhen.getFullYear()} ${updateWhen.getHours() % 12}:${('0' + updateWhen.getMinutes()).slice(-2)}:${('0' + updateWhen.getSeconds()).slice(-2)} ${ampm2}`;
+                updateAtCell.textContent = updateAt;
+                row.appendChild(updateAtCell);
 
                 tableBody.appendChild(row);
-            });
+
+                // Tạo thẻ td để chứa các nút bấm
+                const actionCell = document.createElement('td');
+
+                // Tạo nút khóa
+                const toggleButton = document.createElement('button');
+                toggleButton.textContent = customer.status === 0 ? 'Unlock' : 'Lock';
+                toggleButton.className = 'btn btn-primary mr-2';
+                toggleButton.id = `toggleBtn_${customer.customerId}`; // Thêm ID cho nút để xác định
+                toggleButton.onclick = function () {
+                    const newStatus = customer.status === 0 ? 1 : 0; // Đảo ngược trạng thái
+                    updateAccountStatus(customer.customerId, newStatus); // Gọi hàm cập nhật trạng thái
+                    window.location.reload();
+                };
+                toggleButton.innerHTML += '&nbsp;';
+                const toggleIcon = document.createElement('i');
+                const toggleIconClass = customer.status === 0 ? 'mdi-lock' : 'mdi-lock-open';
+                toggleIcon.className = `mdi ${toggleIconClass}`;
+                toggleButton.appendChild(toggleIcon);
+                actionCell.appendChild(toggleButton);
+                // Thêm cell vào hàng
+                row.appendChild(actionCell);
+                tableBody.appendChild(row);
+                });
         }
 
         // Hàm tạo nút phân trang
@@ -474,7 +515,6 @@ fetch(`${apiUrl}Customer`)
                 pageItem.appendChild(pageLink);
                 pagination.appendChild(pageItem);
             }
-
             document.querySelector('#customerInfo').appendChild(pagination);
         }
 
@@ -503,6 +543,52 @@ fetch(`${apiUrl}Customer`)
         console.error('Đã xảy ra lỗi khi lấy danh sách khách hàng:', error);
     });
 
+    // Hàm gửi yêu cầu cập nhật trạng thái tài khoản
+    function updateAccountStatus(customerId, newStatus) {
+    fetch(`${apiUrl}Customer/updateCustomerStatus/${customerId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update account status');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const toggleButton = document.querySelector(`#toggleBtn_${customerId}`);
+        toggleButton.textContent = newStatus === 0 ? 'Unlock' : 'Lock';
+        toggleButton.innerHTML += '&nbsp;';
+        const toggleIconClass = newStatus === 0 ? 'mdi-lock' : 'mdi-lock-open';
+        toggleButton.querySelector('i').className = `mdi ${toggleIconClass}`;
+    })
+    .catch(error => {
+        console.error('Error updating account status:', error);
+    });
+  }
+
+    
+
+    //Phần sử lý tìm kiếm
+    // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
+    const searchInput = document.querySelector('.form-control');
+    searchInput.addEventListener('input', function () {
+    const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
+    const customers = document.querySelectorAll('.table tbody tr'); // Danh sách các người dùng
+
+    customers.forEach(customer => {
+        const email = product.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Lấy email ở cột thứ 2
+        // So sánh email với giá trị tìm kiếm
+        if (email.includes(searchValue)) {
+          customer.style.display = 'table-row'; // Hiển thị sản phẩm nếu tên chứa từ khóa tìm kiếm
+        } else {
+          customer.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
+        }
+    });
+  });
 
   </script>
   <!-- endinject -->

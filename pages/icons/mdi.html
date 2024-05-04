@@ -41,7 +41,7 @@
               <div class="input-group-prepend bg-transparent">
                 <i class="input-group-text border-0 mdi mdi-magnify"></i>
               </div>
-              <input type="text" class="form-control bg-transparent border-0" placeholder="Search accounts">
+              <input type="text" class="form-control bg-transparent border-0" placeholder="Search accounts by user name">
             </div>
           </form>
         </div>
@@ -310,27 +310,23 @@
                     <thead>
                       <tr class="table-warning">
                         <th>
-                          User Name
+                          Tên tài khoản
                         </th>
 
                         <th>
-                          Password
+                          Lần đăng nhập cuối
                         </th>
 
                         <th>
-                          Last Login
+                          Trạng thái
                         </th>
 
                         <th>
-                          Status
+                          Được tạo lúc
                         </th>
 
                         <th>
-                          Create At
-                        </th>
-
-                        <th>
-                          Update At
+                          Cập nhật lúc
                         </th>
                       </tr>
                     </thead>
@@ -361,6 +357,30 @@
       </div>
     </div>
   </div>
+
+  <script>
+    const apiUrl = 'https://localhost:7244/api/Account/GetAllAccounts'
+
+    //Phần sử lý tìm kiếm
+    // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
+    const searchInput = document.querySelector('.form-control');
+    searchInput.addEventListener('input', function () {
+        const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
+        const account = document.querySelectorAll('.table tbody tr'); // Danh sách các tài khoản
+
+        account.forEach(account => {
+            const userName = account.querySelector('td:first-child').textContent.toLowerCase(); // Lấy tên đăng nhập
+
+            // So sánh tên tài khoản với giá trị tìm kiếm
+            if (userName.includes(searchValue)) {
+              account.style.display = 'table-row'; // Hiển thị tài khoản nếu tên chứa từ khóa tìm kiếm
+            } else {
+              account.style.display = 'none'; // Ẩn tài khoản nếu không chứa từ khóa tìm kiếm
+            }
+        });
+    });
+  </script>
+  
   <!-- plugins:js -->
   <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->

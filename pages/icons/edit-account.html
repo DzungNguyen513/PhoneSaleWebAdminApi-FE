@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Change Password</h2>
+        <form id="changePasswordForm">
+            <div class="form-group">
+                <label for="userName">User Name:</label>
+                <input type="text" class="form-control" id="userName" readonly>
+            </div>            
+            <div class="form-group">
+                <label for="oldPassword">Old Password:</label>
+                <input type="password" class="form-control" id="oldPassword">
+            </div>
+            <div class="form-group">
+                <label for="newPassword">New Password:</label>
+                <input type="password" class="form-control" id="newPassword">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirmPassword">
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-2">Change Password</button>
+            <a href="http://127.0.0.1:5500/pages/icons/mdi.html" class="btn btn-secondary mb-2">Back</a>
+        </form>
+    </div>
+
+    <script>
+        const apiUrl = 'https://localhost:7244/api/';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const accountId = urlParams.get('id');
+
+            // Load account details by ID
+            fetch(`${apiUrl}Account/${accountId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch account details');
+                    }
+                    return response.json();
+                })
+                .then(account => {
+                    document.getElementById('userName').value = account.username;
+                })
+                .catch(error => {
+                    console.error('Error fetching account details:', error);
+                });
+
+            // Đổi mật khẩu
+            document.getElementById('changePasswordForm').addEventListener('submit', async function (event) {
+                event.preventDefault();
+                const oldPassword = document.getElementById('oldPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                // Kiểm tra trống
+                if (oldPassword.trim() === '' || newPassword.trim() === '' || confirmPassword.trim() === '') {
+                    alert('Điền đầy đủ thông tin');
+                    return;
+                }
+
+                if (newPassword !== confirmPassword) {
+                    alert('Mật khẩu nhập lại sai. Vui lòng thử lại');
+                    return;
+                }
+
+                const formData = {
+                    UserName: document.getElementById('userName').value,
+                    OldPassword: oldPassword,
+                    NewPassword: newPassword,
+                    ConfirmNewPassword: confirmPassword
+                };
+
+                fetch(`${apiUrl}Account/ChangePassword`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Không thể đổi mật khẩu');
+                    }
+                    console.log('Thay đổi hoàn tất');
+                    alert('Đã đổi mật khẩu');
+                })
+                .catch(error => {
+                    console.error('Không thể đổi mật khẩu:', error);
+                    alert('Không thể thay đổi mật khẩu, hãy kiểm tra lại thông tin');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
