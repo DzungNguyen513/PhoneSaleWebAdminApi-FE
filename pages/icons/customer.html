@@ -482,7 +482,7 @@
                 toggleButton.onclick = function () {
                     const newStatus = customer.status === 0 ? 1 : 0; // Đảo ngược trạng thái
                     updateAccountStatus(customer.customerId, newStatus); // Gọi hàm cập nhật trạng thái
-                    window.location.reload();
+                    //window.location.reload();
                 };
                 toggleButton.innerHTML += '&nbsp;';
                 const toggleIcon = document.createElement('i');
