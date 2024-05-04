@@ -80,7 +80,7 @@
             });
 
         // Get Categories
-        fetch(`${apiUrl}Categories/GetAllCategories`)
+        fetch(`${apiUrl}Categories/GetCategories`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch Categories');

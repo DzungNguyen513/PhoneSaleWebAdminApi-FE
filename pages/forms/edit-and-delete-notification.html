@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Form</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .editor-btn {
+      cursor: pointer;
+      border: 1px solid #ccc;
+      padding: 3px 6px;
+      margin: 0 2px;
+      font-size: 10px; /* Kích thước font chữ */
+    }
+
+    .editor-font-size {
+      width: 80px; /* Độ rộng của dropdown */
+    }
+
+    .editor-container {
+      border: 1px solid #ccc;
+      padding: 10px;
+      min-height: 200px;
+      font-size: 14px; /* Kích thước font chữ */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">Notification Form</h2>
+    <form>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="notificationName">Notification Name</label>
+            <input type="text" class="form-control" id="notificationName" placeholder="Enter notification name">
+          </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" placeholder="Enter title">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <div class=" mt-3">
+              <div class="btn-group mb-3">
+                <button class="editor-btn" onclick="document.execCommand('bold', false, null)"><b>Bold</b></button>
+                <button class="editor-btn" onclick="document.execCommand('italic', false, null)"><i>Italic</i></button>
+                <button class="editor-btn" onclick="document.execCommand('underline', false, null)"><i>Underline</i></button>
+
+                <div class="input-group mr-2">
+                  <select class="form-control editor-font-size" onchange="changeFontSize(this.value)">
+                    <option value="1">Very Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Normal</option>
+                    <option value="4">Large</option>
+                    <option value="5">Very Large</option>
+                  </select>
+                </div>
+                <select class="form-control editor-font" onchange="changeFont(this.value)">
+                  <option value="Arial">Arial</option>
+                  <option value="Times New Roman">Times New Roman</option>
+                  <option value="Verdana">Verdana</option>
+                </select>
+                <button class="editor-btn" onclick="changeFontColor('red')">Font Color</button>
+                <button class="editor-btn" onclick="document.execCommand('justifyCenter', false, null)">Center</button>
+                <button class="editor-btn" onclick="document.execCommand('justifyLeft', false, null)">Left</button>
+                <button class="editor-btn" onclick="document.execCommand('justifyRight', false, null)">Right</button>
+              </div>
+              <div class="editor-container" contenteditable="true"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" placeholder="Enter description">
+          </div>
+          <button id="" type="submit" class="btn btn-primary">Submit</button>
+          <button id="DeleteNoftification" type="submit" class="btn btn-danger float-right">Delete</button>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="notificationType">Notification Type</label>
+            <input type="text" class="form-control" id="notificationType" placeholder="Enter notification type">
+          </div>
+          <div class="form-group">
+            <label for="customerId">Customer ID</label>
+            <select class="form-control" id="customerId">
+              <option value="All">All</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Is Active?</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="isActive" id="isActiveYes" value="true" checked>
+              <label class="form-check-label" for="isActiveYes">Yes</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="isActive" id="isActiveNo" value="false">
+              <label class="form-check-label" for="isActiveNo">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </form>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function changeFont(font) {
+      document.execCommand('fontName', false, font);
+    }
+
+    function changeFontSize(size) {
+      document.execCommand('fontSize', false, size);
+    }
+
+    function changeFontColor(color) {
+    document.execCommand('foreColor', false, color);
+    
+ 
+
+}
+  </script>
+  <script type = "module"> 
+    import url from '../../assets/Base-url/Url.js'
+    const apiUrl = url;
+
+    fetch(`${apiUrl}Customer`)
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Failed to fetch customer IDs');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const selectElement = document.getElementById('customerId'); // Lấy thẻ select
+        data.forEach(customer => {
+        const option = document.createElement('option'); // Tạo một option mới
+        option.value = customer.customerId; // Đặt giá trị của option là id của khách hàng
+        option.textContent = customer.customerId; // Đặt nội dung của option là tên của khách hàng
+        selectElement.appendChild(option); // Thêm option vào thẻ select
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching customer IDs:', error);
+    });
+
+
+    const urlParams = new URLSearchParams(window.location.search)
+    const notificationId = urlParams.get('id')
+
+    document.addEventListener('DOMContentLoaded', function () {
+            fetch(`${apiUrl}SystemNotification/${notificationId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch notification details');
+                    }
+                    return response.json();
+                })
+                .then(notification => {
+                  document.getElementById('notificationName').value = notification.notificationName;
+                  document.getElementById('title').value = notification.title;
+                  document.querySelector('.editor-container').innerHTML = notification.message;
+                  document.getElementById('description').value = notification.description;
+                  document.getElementById('notificationType').value = notification.notificationType;
+                  document.getElementById('customerId').value = notification.customerId;
+                  document.querySelector('input[name="isActive"][value="' + notification.isActive + '"]').checked = true;
+                })
+                .catch(error => {
+                    console.error('Error fetching product details:', error);
+                });
+
+
+        })
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    // Bắt sự kiện khi form được submit
+    document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Ngăn chặn hành động mặc định của form
+
+        // Lấy dữ liệu từ các trường input trong form
+        const customerIdValue = document.getElementById('customerId').value;
+        const customerId = customerIdValue === "All" ? null : customerIdValue;
+
+        const notificationData = {
+            NotificationId: notificationId,
+            NotificationName: document.getElementById('notificationName').value,
+            Title: document.getElementById('title').value,
+            Description: document.getElementById('description').value,
+            Message: document.querySelector('.editor-container').innerHTML,
+            NotificationType: document.getElementById('notificationType').value,
+            CustomerId: customerId,
+            IsActive: document.querySelector('input[name="isActive"]:checked').value === "true"
+        };
+
+        // Gửi request POST đến API
+        fetch(`${apiUrl}SystemNotification/${notificationId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(notificationData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Lỗi mạng! Không thể tạo thông báo.');
+            }
+            if (response.status === 204) {
+                        console.log('Product updated successfully');
+                        alert('Sửa sản phẩm thành công');
+            } 
+            else {
+             return response.json();
+            }
+        })
+        .then(data => {
+            // Xử lý dữ liệu trả về từ API nếu cần
+            console.log('Thông báo đã được tạo:', data);
+            // Reset form sau khi tạo thông báo thành công
+            document.querySelector('form').reset();
+        })
+        .catch(error => {
+            // Xử lý lỗi nếu có
+            console.error('Đã xảy ra lỗi:', error);
+            alert('Sửa thông báo không thành công, vui lòng kiểm tra và thử lại')
+        });
+    });
+
+    // Hàm xử lý sự kiện cho các nút chỉnh sửa văn bản
+    const editorButtons = document.querySelectorAll('.editor-btn');
+    editorButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            const command = this.getAttribute('data-command'); // Lấy lệnh chỉnh sửa từ thuộc tính data-command
+            document.execCommand(command, false, null); // Thực thi lệnh chỉnh sửa văn bản
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Bắt sự kiện khi nút "Delete" được nhấp
+    document.getElementById('DeleteNoftification').addEventListener('click', function (event) {
+        event.preventDefault(); // Ngăn chặn hành động mặc định của nút
+
+        // Xác nhận với người dùng trước khi xóa
+        const confirmDelete = confirm('Bạn có chắc chắn muốn xóa thông báo này?');
+        if (!confirmDelete) {
+            return; // Nếu người dùng không xác nhận, thoát khỏi hàm
+        }
+
+        // Gửi yêu cầu DELETE đến API để xóa thông báo
+        fetch(`${apiUrl}SystemNotification/${notificationId}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Lỗi mạng! Không thể xóa thông báo.');
+            }
+            if (response.status === 204) {
+                        console.log('Product updated successfully');
+            } 
+            else {
+             return response.json();
+            }
+        })
+        .then(data => {
+            // Xử lý dữ liệu trả về từ API nếu cần
+            console.log('Thông báo đã được xóa:', data);
+            alert('Xóa thông báo thành công');
+            // Thực hiện bất kỳ hành động nào sau khi xóa thành công, ví dụ: chuyển hướng trang
+        })
+        .catch(error => {
+            // Xử lý lỗi nếu có
+            console.error('Đã xảy ra lỗi:', error);
+            alert('Xóa thông báo không thành công, vui lòng thử lại sau');
+        });
+    });
+
+    const editorButtons = document.querySelectorAll('.editor-btn');
+    editorButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            const command = this.getAttribute('data-command'); // Lấy lệnh chỉnh sửa từ thuộc tính data-command
+            document.execCommand(command, false, null); // Thực thi lệnh chỉnh sửa văn bản
+        });
+    });
+});
+
+
+
+  </script>
+</body>
+</html>

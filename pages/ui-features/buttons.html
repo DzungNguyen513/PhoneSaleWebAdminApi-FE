@@ -411,7 +411,7 @@
 
                         const detailCell = document.createElement('td');
                         detailCell.textContent = product.detail
-                        detailCell.classList.add('detail');
+                        detailCell.style.whiteSpace = 'pre-wrap';
                         row.appendChild(detailCell);
 
                         const imgCell = document.createElement('td');

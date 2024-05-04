@@ -639,8 +639,9 @@
 
     </script>
         <!-- load-->
-    <script>
-     const apiUrl = "https://localhost:7244/api/"
+    <script type="module">
+      import url from '../../assets/Base-url/Url.js'
+     const apiUrl = url
 
      async function getCategoryImage(categoryId) {
       try {
@@ -656,7 +657,7 @@
       }
     }
      let allCategories = []; // Mảng chứa tất cả các danh mục
-    fetch(`${apiUrl}Categories/GetAllCategories`)
+    fetch(`${apiUrl}Categories/GetCategories`)
     .then(response => response.json())
     .then(data => {
         allCategories = data; // Lưu trữ tất cả các danh mục
