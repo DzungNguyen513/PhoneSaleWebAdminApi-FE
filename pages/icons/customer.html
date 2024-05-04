@@ -62,7 +62,7 @@
               <a class="dropdown-item" href="#">
                 <i class="mdi mdi-cached me-2 text-success"></i> Activity Log </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="../samples/login.html">
                 <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
             </div>
           </li>
@@ -246,13 +246,13 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../../pages/charts/chartjs.html">
-              <span class="menu-title">Charts</span>
+              <span class="menu-title">Báo cáo thống kê</span>
               <i class="mdi mdi-chart-bar menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../../pages/tables/basic-table.html">
-              <span class="menu-title">Tables</span>
+              <span class="menu-title">Quản lý thông báo</span>
               <i class="mdi mdi-table-large menu-icon"></i>
             </a>
           </li>
@@ -482,7 +482,7 @@
                 toggleButton.onclick = function () {
                     const newStatus = customer.status === 0 ? 1 : 0; // Đảo ngược trạng thái
                     updateAccountStatus(customer.customerId, newStatus); // Gọi hàm cập nhật trạng thái
-                    //window.location.reload();
+                    window.location.reload();
                 };
                 toggleButton.innerHTML += '&nbsp;';
                 const toggleIcon = document.createElement('i');
@@ -576,19 +576,19 @@
     // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
     const searchInput = document.querySelector('.form-control');
     searchInput.addEventListener('input', function () {
-    const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
-    const customers = document.querySelectorAll('.table tbody tr'); // Danh sách các người dùng
+      const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
+      const customers = document.querySelectorAll('.table tbody tr'); // Danh sách các người dùng
 
-    customers.forEach(customer => {
-        const email = product.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Lấy email ở cột thứ 2
-        // So sánh email với giá trị tìm kiếm
-        if (email.includes(searchValue)) {
-          customer.style.display = 'table-row'; // Hiển thị sản phẩm nếu tên chứa từ khóa tìm kiếm
-        } else {
-          customer.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
-        }
+      customers.forEach(customer => {
+          const email = customer.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Lấy email ở cột thứ 2
+          // So sánh email với giá trị tìm kiếm
+          if (email.includes(searchValue)) {
+            customer.style.display = 'table-row'; // Hiển thị sản phẩm nếu tên chứa từ khóa tìm kiếm
+          } else {
+            customer.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
+          }
+      });
     });
-  });
 
   </script>
   <!-- endinject -->
