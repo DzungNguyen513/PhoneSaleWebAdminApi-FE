@@ -383,10 +383,8 @@
   <script type="module">
     import api from "../../assets/Base-url/Url.js"
 
-
-    const apiUrl = 'https://localhost:7244/api/'
-
-
+    const apiUrl = api;
+    
     let allCustomers = []; // Mảng chứa tất cả các khách hàng
     let filteredCustomers = []; // Mảng chứa khách hàng đã lọc
     fetch(`${apiUrl}Customer`)
