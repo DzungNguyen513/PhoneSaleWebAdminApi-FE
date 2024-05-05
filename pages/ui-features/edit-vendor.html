@@ -296,8 +296,8 @@
         <div class="content-wrapper">
           <div class="page-header">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="./buttons.html">Danh sách sản phẩm</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa sản phẩm</li>
+              <li class="breadcrumb-item"><a href="./categories.html">Danh mục</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa danh mục màu điện thoại</li>
             </ol>
             <nav aria-label="breadcrumb">
             </nav>
@@ -306,51 +306,41 @@
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
                 <div id="EditProduct" class="card-body">
-                    <div class="container mt-5">
-                        <h2 class="mb-4">Edit Product</h2>
-                        <form id="editProductForm">
-                            <div class="form-group">
-                                <label for="productName">Product Name:</label>
-                                <input type="text" class="form-control" id="productName">
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price:</label>
-                                <input type="number" class="form-control" id="price">
-                            </div>
-                            <div class="form-group">
-                                <label for="discount">Discount:</label>
-                                <input type="number" class="form-control" id="discount">
-                            </div>
-                            <div class="form-group">
-                                <label for="categoryId">Category:</label>
-                                <select class="form-control" id="categoryId">
-                
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="vendorId">Vendor:</label>
-                                <select class="form-control" id="vendorId">
-                
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="detail">Detail:</label>
-                                <textarea class="form-control" id="detail" rows="3"></textarea>
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="status">Status: </label>
-                                <select class="form-control" id="status">
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                
-                                </select>
-                            </div>
-                
-                            <button type="submit" class="btn btn-primary mb-2">Save Changes</button>
-                            <a href="http://127.0.0.1:5500/pages/ui-features/buttons.html" class="btn btn-secondary mb-2">Back</a>
-                        </form>
-                    </div>
+                    <form id="vendorForm">
+                        <div class="container">
+                          <h2>Add New Vendor</h2>
+                          <form>
+                              <div class="mb-3">
+                                  <label for="vendorName" class="form-label">Vendor Name</label>
+                                  <input type="text" class="form-control" id="vendorName" placeholder="Enter vendor name">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="address" class="form-label">Address</label>
+                                  <input type="text" class="form-control" id="address" placeholder="Enter address">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="phoneNumber" class="form-label">Phone Number</label>
+                                  <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phone number">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="status" class="form-label">Status</label>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="statusActive" value="0">
+                                    <label class="form-check-label" for="statusActive">
+                                        Active
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="statusInactive" value="1">
+                                    <label class="form-check-label" for="statusInactive">
+                                        Inactive
+                                    </label>
+                                </div>
+                              </div>
+                              <button id="createVendor" type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+                      </div>                    
+                      </form>
                 </div>
               </div>
             </div>
@@ -377,9 +367,87 @@
       <script src="../../assets/js/off-canvas.js"></script>
       <script src="../../assets/js/hoverable-collapse.js"></script>
       <script src="../../assets/js/misc.js"></script>
-      <script type="module" src="../../assets/js/Product/edit-product.js">
+      <script type="module" src="../../assets/js/Categories/edit-categories.js">
 
       </script>
+      <script type="module">
+        
+        import api from '../../assets/Base-url/Url.js'
+        const apiUrl = api
+
+        const urlParams = new URLSearchParams(window.location.search)
+        const vendorId = urlParams.get('id')
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('storageForm');
+   
+
+    // Fetch category by ID
+    fetch(`${apiUrl}Vendors/${vendorId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch category');
+            }
+            return response.json();
+        })
+        .then(vendor => {
+            // Đổ dữ liệu category lấy được từ API lên form
+            document.getElementById('vendorName').value = vendor.vendorName;
+            document.getElementById('address').value = vendor.address;
+            document.getElementById('phoneNumber').value = vendor.phoneNumber;
+            document.getElementById('statusActive').checked = vendor.status === 0;
+            document.getElementById('statusInactive').checked = vendor.status === 1;
+        })
+        .catch(error => {
+            console.error('Error fetching category:', error);
+            // Xử lý lỗi, hiển thị thông báo hoặc thực hiện các hành động khác
+        });
+
+    
+
+});
+
+$(document).ready(function() {
+    $('#createVendor').click(function(event) {
+        event.preventDefault();
+
+        // Lấy dữ liệu từ form
+        var formData = new FormData();
+         formData.append('vendorId', vendorId); 
+
+        formData.append('vendorName', $('#vendorName').val());
+        formData.append('address', $('#address').val());
+        formData.append('phoneNumber', $('#phoneNumber').val());
+        var status = $('input[name=status]:checked').val();
+        formData.append('status', status);
+
+        // Thực hiện ajax request
+        $.ajax({
+            url: `${apiUrl}Vendors/${vendorId}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(Object.fromEntries(formData.entries())), // Chuyển đổi FormData thành object JSON
+            processData: false, // Không xử lý dữ liệu trước khi gửi đi vì chúng đã được chuyển đổi thành JSON
+            success: function(response) {
+                //console.log('Storage updated:', response);
+                window.alert('Vendor updated successfully');
+                // Xử lý dữ liệu trả về nếu cần
+            },
+            error: function(error) {
+                console.error('Error updating storage:', error);
+                window.alert('Failed to update storage. Please try again.');
+                // Xử lý lỗi, hiển thị thông báo hoặc thực hiện các hành động khác
+            }
+        });
+    });
+});
+
+
+
+
+
+      </script>
+      <!-- End custom js for this page -->
 </body>
 
 </html>

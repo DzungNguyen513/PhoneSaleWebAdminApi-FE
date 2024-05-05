@@ -296,8 +296,8 @@
         <div class="content-wrapper">
           <div class="page-header">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="./buttons.html">Danh sách sản phẩm</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa sản phẩm</li>
+              <li class="breadcrumb-item"><a href="./categories.html">Danh mục</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa danh mục màu điện thoại</li>
             </ol>
             <nav aria-label="breadcrumb">
             </nav>
@@ -306,51 +306,26 @@
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
                 <div id="EditProduct" class="card-body">
-                    <div class="container mt-5">
-                        <h2 class="mb-4">Edit Product</h2>
-                        <form id="editProductForm">
-                            <div class="form-group">
-                                <label for="productName">Product Name:</label>
-                                <input type="text" class="form-control" id="productName">
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price:</label>
-                                <input type="number" class="form-control" id="price">
-                            </div>
-                            <div class="form-group">
-                                <label for="discount">Discount:</label>
-                                <input type="number" class="form-control" id="discount">
-                            </div>
-                            <div class="form-group">
-                                <label for="categoryId">Category:</label>
-                                <select class="form-control" id="categoryId">
-                
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="vendorId">Vendor:</label>
-                                <select class="form-control" id="vendorId">
-                
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="detail">Detail:</label>
-                                <textarea class="form-control" id="detail" rows="3"></textarea>
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="status">Status: </label>
-                                <select class="form-control" id="status">
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                
-                                </select>
-                            </div>
-                
-                            <button type="submit" class="btn btn-primary mb-2">Save Changes</button>
-                            <a href="http://127.0.0.1:5500/pages/ui-features/buttons.html" class="btn btn-secondary mb-2">Back</a>
-                        </form>
-                    </div>
+                    <form id="colorForm">
+                        <div class="container">
+                          <h2>Add New Color</h2>
+                          <form>
+                              <div class="mb-3">
+                                  <label for="colorName" class="form-label">Color Name</label>
+                                  <input type="text" class="form-control" id="colorName" placeholder="Enter color name" readonly>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="colorImage" class="form-label">Color Image</label>
+                                  <input type="file" class="form-control" id="colorImage">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="colorPrice" class="form-label">Color Price</label>
+                                  <input type="number" class="form-control" id="colorPrice" placeholder="Enter color price">
+                              </div>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+                      </div>
+                      </form>
                 </div>
               </div>
             </div>
@@ -377,9 +352,76 @@
       <script src="../../assets/js/off-canvas.js"></script>
       <script src="../../assets/js/hoverable-collapse.js"></script>
       <script src="../../assets/js/misc.js"></script>
-      <script type="module" src="../../assets/js/Product/edit-product.js">
+      <script type="module" src="../../assets/js/Categories/edit-categories.js">
 
       </script>
+      <script type="module">
+        
+        import api from '../../assets/Base-url/Url.js'
+        const apiUrl = api
+
+        const urlParams = new URLSearchParams(window.location.search)
+        const colorId = urlParams.get('id')
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('colorForm');
+   
+
+    // Fetch category by ID
+    fetch(`${apiUrl}Colors/${colorId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch category');
+            }
+            return response.json();
+        })
+        .then(color => {
+            // Đổ dữ liệu category lấy được từ API lên form
+            document.getElementById('colorName').value = color.colorName;
+            document.getElementById('colorPrice').value = color.colorPrice;
+        })
+        .catch(error => {
+            console.error('Error fetching category:', error);
+            window.alert('Failed to fetch category. Please try again.');
+            // Xử lý lỗi, hiển thị thông báo hoặc thực hiện các hành động khác
+        });
+
+    
+
+});
+
+$(document).ready(function () {
+            $('#colorForm').submit(function (event) {
+                event.preventDefault();
+
+                var formData = new FormData();
+                formData.append('colorName', $('#colorName').val());
+                formData.append('colorImage', $('#colorImage')[0].files[0]);
+                formData.append('colorPrice', $('#colorPrice').val());
+
+                $.ajax({
+                    url: `${apiUrl}Colors/UpdateColor/${colorId}`,
+                    type: 'PUT',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert('Sửa danh mục màu thành công');
+                        $('#colorName').val('');
+                        $('#colorImage').val('');
+                    },
+                    error: function (error) {
+                        console.error('Error uploading \danh mục:', error);
+                        alert('Lỗi không thể Sửa được Danh mục màu, vui lòng kiểm tra lại');
+                    }
+                });
+            });
+        });
+
+
+
+      </script>
+      <!-- End custom js for this page -->
 </body>
 
 </html>

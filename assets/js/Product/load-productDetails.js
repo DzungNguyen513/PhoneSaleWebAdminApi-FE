@@ -137,6 +137,10 @@ var btnCreateProductImages = document.querySelector(".createProductImages");
 btnCreateProductImages.addEventListener('click', function() {
 window.location.href = `http://127.0.0.1:5500/pages/ui-features/createProductImages.html?id=${productId}`
 })
+var btnEditProductImages = document.querySelector(".editProductImages");
+btnEditProductImages.addEventListener('click', function() {
+window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-productImages.html?id=${productId}`
+})
 
 var btnCreateProductDetails = document.querySelector(".createProductDetails");
 btnCreateProductDetails.addEventListener('click', function() {

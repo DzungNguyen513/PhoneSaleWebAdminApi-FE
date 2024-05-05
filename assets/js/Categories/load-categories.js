@@ -62,7 +62,9 @@ fetch(`${apiUrl}Categories/GetCategories`)
 
 
            const categoryStatus = document.createElement('td');
-           categoryStatus.textContent = category.status;
+           categoryStatus.textContent = category.status === 0 ? 'Đang hợp tác' : 'Đã ngừng hợp tác';
+           categoryStatus.style.color = category.status === 0 ? 'green' : 'red';
+           categoryStatus.style.fontWeight = 'bold'    
            row.appendChild(categoryStatus);
 
            const createAt = document.createElement('td');
@@ -83,25 +85,15 @@ fetch(`${apiUrl}Categories/GetCategories`)
            editLink.className = 'Primary';
            const editIcon = document.createElement('i');
            editIcon.className = 'mdi mdi-pencil';
-           editLink.className = 'showEditCategoryBtn'
            editLink.appendChild(editIcon);
            actionCell.appendChild(editLink);
-
-           // Tạo nút Details
-           const detailsLink = document.createElement('a');
-           detailsLink.href = `http://127.0.0.1:5500/pages/ui-features/category-details.html?id=${category.categoryId}`;
-           detailsLink.className = 'btn  mr-2';
-           const detailsIcon = document.createElement('i');
-           detailsIcon.className = 'mdi mdi-eye';
-           detailsLink.appendChild(detailsIcon);
-           actionCell.appendChild(detailsLink);
 
            // Tạo nút Delete
            const deleteLink = document.createElement('a');
            deleteLink.href = '#'; // Đặt href theo ý của bạn
            deleteLink.className = 'Danger';
            const deleteIcon = document.createElement('i');
-           deleteIcon.className = 'mdi mdi-delete';
+           deleteIcon.className = 'mdi mdi-delete ml-3';
            deleteLink.appendChild(deleteIcon);
            deleteLink.addEventListener('click', function (event) {
                event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
@@ -253,34 +245,25 @@ fetch(`${apiUrl}Colors/GetColors`)
 
            // Tạo nút Edit
            const editLink = document.createElement('a');
-           editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-color.html?id=${color.colorId}`;
+           editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-color.html?id=${color.colorName}`;
            editLink.className = 'Primary';
            const editIcon = document.createElement('i');
            editIcon.className = 'mdi mdi-pencil';
            editLink.appendChild(editIcon);
            actionCell.appendChild(editLink);
 
-           // Tạo nút Details
-           const detailsLink = document.createElement('a');
-           detailsLink.href = `http://127.0.0.1:5500/pages/ui-features/color-details.html?id=${color.colorId}`;
-           detailsLink.className = 'btn  mr-2';
-           const detailsIcon = document.createElement('i');
-           detailsIcon.className = 'mdi mdi-eye';
-           detailsLink.appendChild(detailsIcon);
-           actionCell.appendChild(detailsLink);
-
            // Tạo nút Delete
            const deleteLink = document.createElement('a');
            deleteLink.href = '#'; // Đặt href theo ý của bạn
            deleteLink.className = 'Danger';
            const deleteIcon = document.createElement('i');
-           deleteIcon.className = 'mdi mdi-delete';
+           deleteIcon.className = 'mdi mdi-delete ml-3';
            deleteLink.appendChild(deleteIcon);
            deleteLink.addEventListener('click', function (event) {
                event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
                const confirmDelete = confirm('Bạn có muốn xóa màu này không?');
                if (confirmDelete) {
-                   fetch(`${apiUrl}Colors/${color.colorId}`, {
+                   fetch(`${apiUrl}Colors/${color.colorName}`, {
                        method: 'DELETE'
                    })
                        .then(response => {
@@ -353,7 +336,7 @@ fetch(`${apiUrl}Colors/GetColors`)
 });
 
 //Danh mục dung lượng
-fetch('https://localhost:7244/api/Storages/GetStorages')
+fetch(`${apiUrl}Storages/GetStorages`)
 .then(response => response.json())
 .then(data => {
    const tableBody = document.querySelector('.table-storage tbody');
@@ -391,34 +374,25 @@ fetch('https://localhost:7244/api/Storages/GetStorages')
 
            // Tạo nút Edit
            const editLink = document.createElement('a');
-           editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-color.html?id=${storage.storageGb}`;
+           editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-storage.html?id=${storage.storageGb}`;
            editLink.className = 'Primary';
            const editIcon = document.createElement('i');
            editIcon.className = 'mdi mdi-pencil';
            editLink.appendChild(editIcon);
            actionCell.appendChild(editLink);
 
-           // Tạo nút Details
-           const detailsLink = document.createElement('a');
-           detailsLink.href = `http://127.0.0.1:5500/pages/ui-features/color-details.html?id=${storage.storageGb}`;
-           detailsLink.className = 'btn  mr-2';
-           const detailsIcon = document.createElement('i');
-           detailsIcon.className = 'mdi mdi-eye';
-           detailsLink.appendChild(detailsIcon);
-           actionCell.appendChild(detailsLink);
-
            // Tạo nút Delete
            const deleteLink = document.createElement('a');
            deleteLink.href = '#'; // Đặt href theo ý của bạn
            deleteLink.className = 'Danger';
            const deleteIcon = document.createElement('i');
-           deleteIcon.className = 'mdi mdi-delete';
+           deleteIcon.className = 'mdi mdi-delete ml-3';
            deleteLink.appendChild(deleteIcon);
            deleteLink.addEventListener('click', function (event) {
                event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
                const confirmDelete = confirm('Bạn có muốn xóa Dung lượng này không?');
                if (confirmDelete) {
-                   fetch(`https://localhost:7244/api/Storages/${storage.storageGb}`, {
+                   fetch(`${apiUrl}Storages/${storage.storageGb}`, {
                        method: 'DELETE'
                    })
                        .then(response => {
@@ -525,7 +499,9 @@ fetch(`${apiUrl}Vendors/GetVendors`)
            row.appendChild(VendorPhone);
 
            const VendorStatus = document.createElement('td');
-           VendorStatus.textContent = vendor.status; 
+           VendorStatus.textContent = vendor.status === 0 ? 'Đang hợp tác' : 'Đã ngừng hợp tác';
+           VendorStatus.style.color = vendor.status === 0 ? 'green' : 'red';
+           VendorStatus.style.fontWeight = 'bold'    
            row.appendChild(VendorStatus);
 
            const createAt = document.createElement('td');
@@ -541,34 +517,25 @@ fetch(`${apiUrl}Vendors/GetVendors`)
 
            // Tạo nút Edit
            const editLink = document.createElement('a');
-           editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-color.html?id=${vendor.vendorId}`;
+           editLink.href = `http://127.0.0.1:5500/pages/ui-features/edit-vendor.html?id=${vendor.vendorId}`;
            editLink.className = 'Primary';
            const editIcon = document.createElement('i');
            editIcon.className = 'mdi mdi-pencil';
            editLink.appendChild(editIcon);
            actionCell.appendChild(editLink);
 
-           // Tạo nút Details
-           const detailsLink = document.createElement('a');
-           detailsLink.href = `http://127.0.0.1:5500/pages/ui-features/color-details.html?id=${vendor.vendorId}`;
-           detailsLink.className = 'btn  mr-2';
-           const detailsIcon = document.createElement('i');
-           detailsIcon.className = 'mdi mdi-eye';
-           detailsLink.appendChild(detailsIcon);
-           actionCell.appendChild(detailsLink);
-
            // Tạo nút Delete
            const deleteLink = document.createElement('a');
            deleteLink.href = '#'; // Đặt href theo ý của bạn
            deleteLink.className = 'Danger';
            const deleteIcon = document.createElement('i');
-           deleteIcon.className = 'mdi mdi-delete';
+           deleteIcon.className = 'mdi mdi-delete ml-3';
            deleteLink.appendChild(deleteIcon);
            deleteLink.addEventListener('click', function (event) {
                event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
                const confirmDelete = confirm('Bạn có muốn xóa nhà cung cấp này không?');
                if (confirmDelete) {
-                   fetch(`${apiUrl}Storages/${vendor.vendorId}`, {
+                   fetch(`${apiUrl}Vendors/${vendor.vendorId}`, {
                        method: 'DELETE'
                    })
                        .then(response => {
