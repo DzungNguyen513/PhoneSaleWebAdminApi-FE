@@ -1,3 +1,7 @@
+import api from '../../Base-url/Url.js'
+
+const apiUrl = api;
+
 document.getElementById('createAccountForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
@@ -24,7 +28,7 @@ document.getElementById('createAccountForm').addEventListener('submit', async fu
     };
 
     try {
-        const response = await fetch('https://localhost:7244/api/Account/CreateAccount', {
+        const response = await fetch(`${apiUrl}Account/CreateAccount`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

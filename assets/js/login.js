@@ -1,9 +1,12 @@
+import api from '../../Base-url/Url.js'
+
+const apiUrl = api;
 
 //----------------------------------------------------------------------------------
 // Hàm gửi yêu cầu đăng nhập
 async function loginUser(email, password) {
     try {
-        const response = await fetch('https://localhost:7244/api/Login', {
+        const response = await fetch(`${apiUrl}Login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

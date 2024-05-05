@@ -1,7 +1,11 @@
+import api from '../../Base-url/Url.js'
+
+const apiUrl = api;
+
 // Hàm gửi yêu cầu đăng ký tới API
 async function registerCustomer(model) {
     try {
-        const response = await fetch('https://localhost:7244/api/Customer/Register', {
+        const response = await fetch(`${apiUrl}Customer/Register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

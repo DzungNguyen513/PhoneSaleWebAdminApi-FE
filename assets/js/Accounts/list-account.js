@@ -1,6 +1,10 @@
+import api from '../../Base-url/Url.js'
+
+const apiUrl = api;
+
 let allAccounts = []; // Mảng chứa tất cả các tài khoản
 let filteredAccount = []; // Mảng chứa tài khoản đã lọc
-fetch('https://localhost:7244/api/Account/GetAllAccounts')
+fetch(`${apiUrl}Account/GetAllAccounts`)
     .then(response => response.json())
     .then(data => {
         allAccounts = data; // Lưu trữ tất cả tài khoản
@@ -103,7 +107,7 @@ fetch('https://localhost:7244/api/Account/GetAllAccounts')
                     // Nếu người dùng đồng ý xóa tài khoản
                     if (confirmDelete) {
                         // Gọi fetch API phương thức DELETE
-                        fetch(`https://localhost:7244/api/Accounts/${account.accountId}`, { // Sử dụng accountId thay vì productId
+                        fetch(`${apiUrl}Accounts/${account.accountId}`, { // Sử dụng accountId thay vì productId
                             method: 'DELETE'
                         })
                             .then(response => {
@@ -183,7 +187,7 @@ fetch('https://localhost:7244/api/Account/GetAllAccounts')
 
     // Hàm gửi yêu cầu cập nhật trạng thái tài khoản
     function updateAccountStatus(accountId, newStatus) {
-        fetch(`https://localhost:7244/api/Account/updateAccountStatus/${accountId}`, {
+        fetch(`${apiUrl}Account/updateAccountStatus/${accountId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
