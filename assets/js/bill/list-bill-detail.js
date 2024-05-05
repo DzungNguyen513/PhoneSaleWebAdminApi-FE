@@ -72,65 +72,116 @@ fetch(billDetail)
             billIdCell.textContent = detail.billId;
             row.appendChild(billIdCell);
 
-            const productIdCell = document.createElement('td');
-            productIdCell.textContent = detail.productId;
-            row.appendChild(productIdCell);
+            // Lấy tên sản phẩm
+            getProductName(detail.productId)
+                .then(productName => {
+                    const productNameCell = document.createElement('td');
+                    productNameCell.setAttribute('data-product-id', detail.productId);
+                    productNameCell.textContent = productName;
+                    row.appendChild(productNameCell);
 
-            const amountCell = document.createElement('td');
-            amountCell.textContent = detail.amount;
-            row.appendChild(amountCell);
+                    //Thêm trường colorName
+                    const colorNameCell = document.createElement('td');
+                    colorNameCell.setAttribute('data-color-id', detail.colorName);
+                    colorNameCell.textContent = detail.colorName || ''; //Nếu không có giá trị, sẽ hiển thị chuỗi rỗng
+                    row.appendChild(colorNameCell);
 
-            const priceCell = document.createElement('td');
-            priceCell.textContent = `${formatMoney(detail.price)}`;
-            row.appendChild(priceCell);
+                    //Thêm trường storageGb
+                    const storageGbCell = document.createElement('td');
+                    storageGbCell.setAttribute('data-storageGb-id', detail.storageGb);
+                    storageGbCell.textContent = detail.storageGb || ''; //Nếu không có giá trị, sẽ hiển thị chuỗi rỗng
+                    row.appendChild(storageGbCell);
 
-            const discountCell = document.createElement('td');
-            discountCell.textContent = `${detail.discount}%`;
-            row.appendChild(discountCell);
+                    // Thêm các ô dữ liệu khác sau khi đã có tên sản phẩm
+                    const amountCell = document.createElement('td');
+                    amountCell.textContent = detail.amount;
+                    row.appendChild(amountCell);
 
-            const totalCell = document.createElement('td');
-            
-            totalCell.textContent = `${formatMoney(detail.total)}`;
-            row.appendChild(totalCell);
+                    const priceCell = document.createElement('td');
+                    priceCell.textContent = `${formatMoney(detail.price)}`;
+                    row.appendChild(priceCell);
 
-            // Tạo thẻ td để chứa các nút bấm
-            const actionCell = document.createElement('td');
+                    const discountCell = document.createElement('td');
+                    discountCell.textContent = `${detail.discount}%`;
+                    row.appendChild(discountCell);
 
-            // Tạo nút Edit
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Edit';
-            editButton.className = 'btn btn-primary mr-2';
-            editButton.innerHTML += '&nbsp;';
-            editButton.onclick = function (e) {
-                // e.stopPropagation();
-                window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-detail-edit.html?id=${billId}`;
-            };
-            const editIcon = document.createElement('i');
-            editIcon.className = 'mdi mdi-pencil';
-            editButton.appendChild(editIcon);
-            actionCell.appendChild(editButton);
+                    const totalCell = document.createElement('td');
+                    totalCell.textContent = `${formatMoney(detail.total)}`;
+                    row.appendChild(totalCell);
+
+                    // Tạo thẻ td để chứa các nút bấm
+                    const actionCell = document.createElement('td');
+
+                    // Tạo nút Edit
+                    // const editButton = document.createElement('button');
+                    // editButton.textContent = 'Edit';
+                    // editButton.className = 'btn btn-primary mr-2';
+                    // editButton.innerHTML += '&nbsp;';
+                    // editButton.onclick = function (e) {
+                    //     // e.stopPropagation();
+                    //     window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-detail-edit.html?id=${detail.billId}`;
+                    // };
+                    // const editIcon = document.createElement('i');
+                    // editIcon.className = 'mdi mdi-pencil';
+                    // editButton.appendChild(editIcon);
+                    // actionCell.appendChild(editButton);
+
+                    // Lấy thông tin sản phẩm cần chỉnh sửa khi ấn nút Edit
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Edit';
+                    editButton.className = 'btn btn-primary mr-2';
+                    editButton.innerHTML += '&nbsp;';
+                    editButton.onclick = function (e) {
+                        // Lấy thông tin từ dòng hiện tại
+                        const productId= detail.productId;
+                        const colorName = detail.colorName;
+                        const storageGb = detail.storageGb;
+                        const amount = detail.amount;
+                        const price = detail.price;
+                        const discount = detail.discount;
+                        const total = detail.total;
+
+                        // Chuyển hướng sang trang chỉnh sửa và truyền thông tin sản phẩm
+                        window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-detail-edit.html?id=${detail.billId}&productId=${productId}&colorName=${colorName}&storageGb=${storageGb}&amount=${amount}&price=${price}&discount=${discount}&total=${total}`;
+                    };
+                    const editIcon = document.createElement('i');
+                    editIcon.className = 'mdi mdi-pencil';
+                    editButton.appendChild(editIcon);
+                    actionCell.appendChild(editButton);
 
 
-            // Tạo nút Delete
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.className = 'btn btn-danger';
-            deleteButton.onclick = function (e) {
-                e.stopPropagation();
-                window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-delete.html?id=${bill.billId}`;
-            };
-            const deleteIcon = document.createElement('i');
-            deleteIcon.className = 'mdi mdi-delete';
-            deleteButton.appendChild(deleteIcon);
-            actionCell.appendChild(deleteButton);
+                    // Tạo nút Delete
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'btn btn-danger';
+                    deleteButton.onclick = function (e) {
+                        e.stopPropagation();
+                        window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-delete.html?id=${detail.billId}`;
+                    };
+                    const deleteIcon = document.createElement('i');
+                    deleteIcon.className = 'mdi mdi-delete';
+                    deleteButton.appendChild(deleteIcon);
+                    actionCell.appendChild(deleteButton);
 
-            // // Thêm cell vào hàng
-            row.appendChild(actionCell);
+                    // // Thêm cell vào hàng
+                    row.appendChild(actionCell);
 
-            tableBody.appendChild(row);
+                    tableBody.appendChild(row);
+                });
         });
 
     })
     .catch(error => {
         console.error('Đã xảy ra lỗi khi lấy chi tiết hóa đơn:', error);
     });
+const getProductName = (productId) => {
+    return fetch(`${api}Product/GetProduct/${productId}`)
+        .then(response => response.json())
+        .then(data => {
+            return data.productName;
+        })
+        .catch(error => {
+            console.error('Error fetching product details:', error);
+            return 'Product Name Not Found'; // Trả về một giá trị mặc định nếu có lỗi
+        });
+}
