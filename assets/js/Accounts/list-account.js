@@ -23,17 +23,22 @@ fetch('https://localhost:7244/api/Account/GetAllAccounts')
                 row.appendChild(userName);
 
                 // Chưa có dữ liệu chưa dùng
-                // const loginCell = document.createElement('td');
-                // const Login = new Date(account.LastLogin);
-                // // Xác định chuỗi AM/PM dựa vào giờ
-                // const ampm = Login.getHours() >= 12 ? 'PM' : 'AM';
-                // const lastLogin = `${Login.getDate()}/${Login.getMonth() + 1}/${Login.getFullYear()} ${Login.getHours() % 12}:${('0' + Login.getMinutes()).slice(-2)}:${('0' + Login.getSeconds()).slice(-2)} ${ampm}`;
-                // loginCell.textContent = lastLogin;
-                // row.appendChild(loginCell);
+                const loginCell = document.createElement('td');
+                if (account.lastLogin) {
+                    const Login = new Date(account.lastLogin);
+                    // Xác định chuỗi AM/PM dựa vào giờ
+                    const ampm = Login.getHours() >= 12 ? 'PM' : 'AM';
+                    const lastLogin = `${Login.getDate()}/${Login.getMonth() + 1}/${Login.getFullYear()} ${Login.getHours() % 12}:${('0' + Login.getMinutes()).slice(-2)}:${('0' + Login.getSeconds()).slice(-2)} ${ampm}`;
+                    loginCell.textContent = lastLogin;
+                } else {
+                    loginCell.textContent = 'Chưa từng đăng nhập';
+                }
+                
+                row.appendChild(loginCell);
                 // Có thì xóa
-                const lastLogin = document.createElement('td');
-                lastLogin.textContent = account.lastLogin;
-                row.appendChild(lastLogin);
+                // const lastLogin = document.createElement('td');
+                // lastLogin.textContent = account.lastLogin;
+                // row.appendChild(lastLogin);
 
                 const status = document.createElement('td');
                 status.textContent = account.status === 0 ? 'Đang bị khóa' : 'Đang hoạt động';
