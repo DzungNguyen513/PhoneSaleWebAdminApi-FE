@@ -296,8 +296,8 @@
         <div class="content-wrapper">
           <div class="page-header">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="./buttons.html">Danh sách sản phẩm</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa sản phẩm</li>
+              <li class="breadcrumb-item"><a href="./categories.html">Danh mục</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa danh mục điện thoại</li>
             </ol>
             <nav aria-label="breadcrumb">
             </nav>
@@ -307,48 +307,39 @@
               <div class="card">
                 <div id="EditProduct" class="card-body">
                     <div class="container mt-5">
-                        <h2 class="mb-4">Edit Product</h2>
-                        <form id="editProductForm">
-                            <div class="form-group">
-                                <label for="productName">Product Name:</label>
-                                <input type="text" class="form-control" id="productName">
+                        <form id="categoryForm">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Add New Category</h2>
+                                </div>
+                                <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="categoryName" class="form-label">Category Name</label>
+                                            <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="categoryImage" class="form-label">Category Image</label>
+                                            <input type="file" class="form-control" id="categoryImage">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="status" class="form-label">Status</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="status" id="statusActive" value="0">
+                                                <label class="form-check-label" for="statusActive">
+                                                    Active
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="status" id="statusInactive" value="1">
+                                                <label class="form-check-label" for="statusInactive">
+                                                    Inactive
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="price">Price:</label>
-                                <input type="number" class="form-control" id="price">
-                            </div>
-                            <div class="form-group">
-                                <label for="discount">Discount:</label>
-                                <input type="number" class="form-control" id="discount">
-                            </div>
-                            <div class="form-group">
-                                <label for="categoryId">Category:</label>
-                                <select class="form-control" id="categoryId">
-                
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="vendorId">Vendor:</label>
-                                <select class="form-control" id="vendorId">
-                
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="detail">Detail:</label>
-                                <textarea class="form-control" id="detail" rows="3"></textarea>
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="status">Status: </label>
-                                <select class="form-control" id="status">
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                
-                                </select>
-                            </div>
-                
-                            <button type="submit" class="btn btn-primary mb-2">Save Changes</button>
-                            <a href="http://127.0.0.1:5500/pages/ui-features/buttons.html" class="btn btn-secondary mb-2">Back</a>
+                      
                         </form>
                     </div>
                 </div>
@@ -377,9 +368,78 @@
       <script src="../../assets/js/off-canvas.js"></script>
       <script src="../../assets/js/hoverable-collapse.js"></script>
       <script src="../../assets/js/misc.js"></script>
-      <script type="module" src="../../assets/js/Product/edit-product.js">
+      <script type="module" src="../../assets/js/Categories/edit-categories.js">
 
       </script>
+      <script type="module">
+        
+        import api from '../../assets/Base-url/Url.js'
+        const apiUrl = api
+
+        const urlParams = new URLSearchParams(window.location.search)
+        const categoryId = urlParams.get('id')
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('categoryForm');
+   
+
+    // Fetch category by ID
+    fetch(`${apiUrl}Categories/${categoryId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch category');
+            }
+            return response.json();
+        })
+        .then(category => {
+            // Đổ dữ liệu category lấy được từ API lên form
+            document.getElementById('categoryName').value = category.categoryName;
+            document.getElementById('statusActive').checked = category.status === 0;
+            document.getElementById('statusInactive').checked = category.status === 1;
+        })
+        .catch(error => {
+            console.error('Error fetching category:', error);
+            window.alert('Failed to fetch category. Please try again.');
+            // Xử lý lỗi, hiển thị thông báo hoặc thực hiện các hành động khác
+        });
+
+    
+
+});
+
+$(document).ready(function () {
+            $('#categoryForm').submit(function (event) {
+                event.preventDefault();
+
+                var formData = new FormData();
+                formData.append('categoryName', $('#categoryName').val());
+                formData.append('categoryImage', $('#categoryImage')[0].files[0]);
+                var status = $('input[name=status]:checked').val();
+                formData.append('status', status);
+
+                $.ajax({
+                    url: `${apiUrl}Categories/UpdateCategory/${categoryId}`,
+                    type: 'PUT',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert('Sửa danh mục thành công');
+                        $('#categoryName').val('');
+                        $('#categoryImage').val('');
+                    },
+                    error: function (error) {
+                        console.error('Error uploading \danh mục:', error);
+                        alert('Lỗi không thể Sửa được Danh mục, vui lòng kiểm tra lại');
+                    }
+                });
+            });
+        });
+
+
+
+      </script>
+      <!-- End custom js for this page -->
 </body>
 
 </html>
