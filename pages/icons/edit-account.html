@@ -34,8 +34,10 @@
         </form>
     </div>
 
-    <script>
-        const apiUrl = 'https://localhost:7244/api/';
+    <script type="module">
+        import api from "../../assets/Base-url/Url.js"
+
+        const apiUrl = api;
 
         document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
