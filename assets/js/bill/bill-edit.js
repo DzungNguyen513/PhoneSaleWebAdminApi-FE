@@ -7,8 +7,6 @@ const urlParams = new URLSearchParams(window.location.search);
 const billId = urlParams.get('id');
 const billUrl = `${api}Bill/${billId}`;
 
-
-
 // Fetch dữ liệu hóa đơn từ API và điền vào form
 fetch(billUrl)
     .then(response => response.json())
@@ -26,7 +24,6 @@ fetch(billUrl)
         document.getElementById('note').value = data.note;
 
         const statusSelect = document.getElementById('status');
-
         statusText.forEach((status, index) => {
             const option = document.createElement('option');
             option.value = index;

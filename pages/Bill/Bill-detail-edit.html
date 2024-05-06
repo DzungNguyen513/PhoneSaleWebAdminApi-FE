@@ -312,38 +312,51 @@
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
                 <div id="billDetail" class="card-body">
-                    <div class="">
-                        <h2 class="mb-4">Edit Bill</h2>
-                        <form id="form-edit-bill">
-                            <div class="form-group">
-                                <label for="name">Họ tên khách hàng:</label>
-                                <input type="text" class="form-control col-4" id="name">
-                            </div>
-                            <div class="form-group">
-                                <label for="delivery">Địa chỉ:</label>
-                                <input type="text" class="form-control col-4" id="delivery">
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Số điện thoại:</label>
-                                <input type="number" class="form-control col-4" id="phone">
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="note">Ghi chú:</label>
-                                <input type="text" class="form-control col-4" id="note">
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="status">Trạng thái:</label>
-                                <select class="form-control col-4" id="status">
-                
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary mb-2">Lưu</button>
-                            
-                            <a href="../Bill/Bill-management.html" class="btn btn-secondary mb-2">Back</a>
-                        </form>
-                    </div>
+                  <div class="">
+                    <h2 class="mb-4">Edit Bill</h2>
+                    <form id="form-edit-bill-detail">
+                      <div class="form-group">
+                        <label for="name">Tên sản phẩm:</label>
+                        <input type="text" class="form-control col-4" id="name" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="color">Màu:</label>
+                        <select class="form-control col-4" id="color">
+
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="storage">Dung lượng:</label>
+                        <select class="form-control col-4" id="storage">
+
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="amount">Số lượng:</label>
+                        <input type="number" class="form-control col-4" id="amount">
+                        <p>Số lượng tồn: <span id="amount-product"></span></p>
+                      </div>
+                      <div class="form-group">
+                        <label for="price">Giá:</label>
+                        <input type="number" class="form-control col-4" id="price" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="discount">Giảm giá:</label>
+                        <input type="number" class="form-control col-4" id="discount">
+                      </div>
+                      <div class="form-group">
+                        <label for="total">Tổng tiền sản phẩm:</label>
+                        <input type="number" class="form-control col-4" id="total" readonly>
+                      </div>
+
+                      <div class="form-group">
+
+                        <button type="submit" class="btn btn-primary mb-2">Lưu</button>
+
+                        <!-- <a href="../Bill/Bill-management.html" class="btn btn-secondary mb-2">Back</a> -->
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -370,7 +383,7 @@
       <script src="../../assets/js/off-canvas.js"></script>
       <script src="../../assets/js/hoverable-collapse.js"></script>
       <script src="../../assets/js/misc.js"></script>
-      <script type="module" src="../../assets/js/bill/bill-detail-edit.js"></script>      <!-- endinject -->
+      <script type="module" src="../../assets/js/bill/bill-detail-edit.js"></script> <!-- endinject -->
       <!-- Custom js for this page -->
       <!-- End custom js for this page -->
 </body>

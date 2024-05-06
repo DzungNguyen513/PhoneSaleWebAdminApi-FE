@@ -304,7 +304,7 @@
               <div class="card">
                 <div id="customerInfo" class="card-body">
 
-                  <table class="table">
+                  <table class="table" id="tableCustomer">
                     <thead>
                       <tr class="table-warning">
                         <th>
@@ -341,6 +341,10 @@
 
                         <th>
                           Cập nhật lúc
+                        </th>
+
+                        <th>
+                          Thao tác
                         </th>
                       </tr>
                     </thead>
@@ -383,10 +387,8 @@
   <script type="module">
     import api from "../../assets/Base-url/Url.js"
 
-
-    const apiUrl = 'https://localhost:7244/api/'
-
-
+    const apiUrl = api;
+    
     let allCustomers = []; // Mảng chứa tất cả các khách hàng
     let filteredCustomers = []; // Mảng chứa khách hàng đã lọc
     fetch(`${apiUrl}Customer`)
@@ -429,6 +431,7 @@
 
                 const status = document.createElement('td');
                 status.textContent = customer.status === 0 ? 'Đang bị khóa' : 'Đang hoạt động';
+                status.style.color = customer.status === 1 ? 'black' : 'red';
                 row.appendChild(status);
 
                 // Chưa có dữ liệu chưa dùng
