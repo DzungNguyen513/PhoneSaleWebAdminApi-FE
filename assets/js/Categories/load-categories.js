@@ -62,8 +62,8 @@ fetch(`${apiUrl}Categories/GetCategories`)
 
 
            const categoryStatus = document.createElement('td');
-           categoryStatus.textContent = category.status === 0 ? 'Đang hợp tác' : 'Đã ngừng hợp tác';
-           categoryStatus.style.color = category.status === 0 ? 'green' : 'red';
+           categoryStatus.textContent = category.status === 1 ? 'Đang hợp tác' : 'Đã ngừng hợp tác';
+           categoryStatus.style.color = category.status === 1 ? 'green' : 'red';
            categoryStatus.style.fontWeight = 'bold'    
            row.appendChild(categoryStatus);
 
@@ -499,8 +499,8 @@ fetch(`${apiUrl}Vendors/GetVendors`)
            row.appendChild(VendorPhone);
 
            const VendorStatus = document.createElement('td');
-           VendorStatus.textContent = vendor.status === 0 ? 'Đang hợp tác' : 'Đã ngừng hợp tác';
-           VendorStatus.style.color = vendor.status === 0 ? 'green' : 'red';
+           VendorStatus.textContent = vendor.status === 1 ? 'Đang hợp tác' : 'Đã ngừng hợp tác';
+           VendorStatus.style.color = vendor.status === 1 ? 'green' : 'red';
            VendorStatus.style.fontWeight = 'bold'    
            row.appendChild(VendorStatus);
 

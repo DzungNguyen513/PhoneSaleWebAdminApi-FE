@@ -64,8 +64,8 @@ const apiUrl = api
                         row.appendChild(imgCell);
 
                         const statusCell = document.createElement('td');
-                        statusCell.textContent = product.status === 0 ? 'Đang kinh doanh' : 'Đã ngừng kinh doanh';
-                        statusCell.style.color = product.status === 0 ? 'green' : 'red';
+                        statusCell.textContent = product.status === 1 ? 'Đang kinh doanh' : 'Đã ngừng kinh doanh';
+                        statusCell.style.color = product.status === 1 ? 'green' : 'red';
                         statusCell.style.fontWeight = 'bold'                         
                         row.appendChild(statusCell);
                         tableBody.appendChild(row);
