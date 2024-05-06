@@ -21397,3 +21397,7 @@ dl li {
   display: inline-block;
   vertical-align: middle;
 }
+
+#tableCustomer td{
+  white-space: normal;
+}
