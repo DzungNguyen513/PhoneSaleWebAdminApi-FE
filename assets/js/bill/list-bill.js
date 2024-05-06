@@ -42,7 +42,7 @@ fetch(bill)
                 // Thêm sự kiện click vào dòng
                 row.addEventListener('click', function () {
                     const idBill = idBillCell.textContent;
-                    window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-detail.html?id=${bill.billId}`;
+                    window.location.href = `../../../pages/Bill/Bill-detail.html?id=${bill.billId}`;
                 });
 
                 const idEmployeeCell = document.createElement('td');

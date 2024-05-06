@@ -310,7 +310,7 @@
                 <div id="billDetail" class="card-body">
                   <div class="">
                     <h2 class="mb-4">Add Product Bill</h2>
-                    <form id="form-edit-bill-detail">
+                    <form id="form-add-bill-detail">
                       <div class="form-group">
                         <label for="name">Tên sản phẩm:</label>
                         <select class="form-control col-4" id="name">
@@ -332,25 +332,25 @@
 
                       <div class="form-group">
                         <label for="amount">Số lượng:</label>
-                        <input type="number" class="form-control col-4" id="amount">
+                        <input type="number" class="form-control col-4" id="amount" placeholder="0">
                         <p>Số lượng tồn: <span id="amount-product"></span></p>
                       </div>
                       <div class="form-group">
                         <label for="price">Giá:</label>
-                        <input type="number" class="form-control col-4" id="price" readonly>
+                        <input type="number" class="form-control col-4" id="price" readonly placeholder="0">
                       </div>
                       <div class="form-group">
                         <label for="discount">Giảm giá:</label>
-                        <input type="number" class="form-control col-4" id="discount">
+                        <input type="number" class="form-control col-4" id="discount" placeholder="0">
                       </div>
                       <div class="form-group">
                         <label for="total">Tổng tiền sản phẩm:</label>
-                        <input type="number" class="form-control col-4" id="total" readonly>
+                        <input type="number" class="form-control col-4" id="total" readonly placeholder="0">
                       </div>
 
                       <div class="form-group">
 
-                        <button type="submit" class="btn btn-primary mb-2">Lưu</button>
+                        <button type="submit" class="btn btn-primary mb-2">Thêm</button>
 
                         <!-- <a href="../Bill/Bill-management.html" class="btn btn-secondary mb-2">Back</a> -->
                     </form>
@@ -381,7 +381,7 @@
       <script src="../../assets/js/off-canvas.js"></script>
       <script src="../../assets/js/hoverable-collapse.js"></script>
       <script src="../../assets/js/misc.js"></script>
-      <script type="module" src="../../assets/js/bill/bill-detail-create.js"></script> <!-- endinject -->
+      <script type="module" src="../../assets/js/bill/bill-detail-add.js"></script> <!-- endinject -->
       <!-- Custom js for this page -->
       <!-- End custom js for this page -->
 </body>
