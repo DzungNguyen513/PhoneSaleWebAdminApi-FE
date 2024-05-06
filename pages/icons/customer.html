@@ -427,6 +427,7 @@
 
                 const status = document.createElement('td');
                 status.textContent = customer.status === 0 ? 'Đang bị khóa' : 'Đang hoạt động';
+                status.style.color = customer.status === 1 ? 'black' : 'red';
                 row.appendChild(status);
 
                 // Chưa có dữ liệu chưa dùng

@@ -46,6 +46,7 @@ fetch(`${apiUrl}Account/GetAllAccounts`)
 
                 const status = document.createElement('td');
                 status.textContent = account.status === 0 ? 'Đang bị khóa' : 'Đang hoạt động';
+                status.style.color = account.status === 1 ? 'black' : 'red';
                 row.appendChild(status);
 
                 const createAtCell = document.createElement('td');
