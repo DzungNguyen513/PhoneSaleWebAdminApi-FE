@@ -7,7 +7,7 @@ const bill = `${api}Bill`
 let allBills = []; // Mảng chứa tất cả các Bill
 let filteredBills = []; // Mảng chứa Bill đã lọc
 fetch(bill)
-    // fetch(`https://localhost:7244/api/Bill`)
+    // fetch(`${api}Bill`)
     .then(response => response.json())
     .then(data => {
         allBills = data; // Lưu trữ tất cả Bill

@@ -1,6 +1,10 @@
+import api from '../../Base-url/Url.js'
+import currentDateTime from '../function/currentDateTime.js'
+import fetchAmountProduct from '../function/fetchAmountProduct.js'
+const urlParams = new URLSearchParams(window.location.search);
+
 document.addEventListener('DOMContentLoaded', function () {
-    // Lấy thông tin sản phẩm từ URL
-    const urlParams = new URLSearchParams(window.location.search);
+    // Lấy thông tin từ URL
     const billId = urlParams.get('id');
     const productId = urlParams.get('productId');
     let colorName = urlParams.get('colorName');
@@ -9,10 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let amount = urlParams.get('amount');
     const price = urlParams.get('price');
     const total = urlParams.get('total');
-    //console.log(getFilteredBillDetails(billId, productId, colorName, storageGb))
-
-    //storageGb = parseInt(storageGb)
-    // console.log(billId)
 
     fetchAmountProduct(productId, colorName, storageGb)
         .then(amount => {
@@ -26,54 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Đổ dữ liệu vào các trường nhập liệu trên trang chỉnh sửa
     document.getElementById('name').value = productId;
+    document.getElementById('color').value = colorName;
+    document.getElementById('storage').value = storageGb;
     document.getElementById('amount').value = amount;
     document.getElementById('price').value = price;
     document.getElementById('discount').value = discount;
     document.getElementById('total').value = total;
 
-    // Lấy dữ liệu storageGb từ URL và đổ vào trường lựa chọn 'storage'
-    const storageSelect = document.getElementById('storage');
-    fetch('https://localhost:7244/api/Storages/GetStorages')
-        .then(response => response.json())
-        .then(data => {
-            // Duyệt qua dữ liệu trả về để tạo các tùy chọn cho trường lựa chọn storage
-            data.forEach(storage => {
-                const optionElement = document.createElement('option');
-                optionElement.value = storage.storageGb;
-                optionElement.textContent = storage.storageGb;
-                storageSelect.appendChild(optionElement);
-            });
-            // Chọn storageGb từ dữ liệu ban đầu
-            storageSelect.value = storageGb;
-        })
-        .catch(error => console.error('Error fetching storage data:', error));
-
-    // Lấy dữ liệu color từ URL và đổ vào trường lựa chọn 'color'
-    const colorSelect = document.getElementById('color');
-    fetch('https://localhost:7244/api/Colors/GetColors')
-        .then(response => response.json())
-        .then(data => {
-            // Duyệt qua dữ liệu trả về để tạo các tùy chọn cho trường lựa chọn color
-            data.forEach(color => {
-                const optionElement = document.createElement('option');
-                optionElement.value = color.colorName;
-                optionElement.textContent = color.colorName;
-                colorSelect.appendChild(optionElement);
-            });
-            colorSelect.value = colorName;
-        })
-        .catch(error => console.error('Error fetching color data:', error));
-
-    // Thêm sự kiện change vào các trường colorName, storageGb, discount và amount
-    colorSelect.addEventListener('change', function () {
-        colorName = this.value;
-        updatePriceAndTotal(productId, colorName, storageGb, discount, amount);
-    });
-
-    storageSelect.addEventListener('change', function () {
-        storageGb = this.value;
-        updatePriceAndTotal(productId, colorName, storageGb, discount, amount);
-    });
 
     document.getElementById('discount').addEventListener('input', function () {
         discount = this.value;
@@ -90,38 +49,63 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('form-edit-bill-detail');
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        const newAmount = document.getElementById('amount').value;
-        const newPrice = document.getElementById('price').value;
-        const newTotal = document.getElementById('total').value;
-        const newColor = document.getElementById('color').value;
-        const newStorage = document.getElementById('storage').value;
-        const newDiscount = document.getElementById('discount').value;
-        console.log(newColor, newStorage, newAmount, newPrice, newTotal)
-        // Tạo object chứa dữ liệu cập nhật
+        const newAmount = parseInt(document.getElementById('amount').value);
+        const newPrice = parseInt(document.getElementById('price').value);
+        const newTotal = parseInt(document.getElementById('total').value);
+        const newDiscount = parseInt(document.getElementById('discount').value);
+
+        // console.log(newColor, newStorage, newAmount, newPrice, newTotal)
+        console.log(billId, productId, colorName, storageGb)
+        // // Tạo object chứa dữ liệu cập nhật
         const updatedBillDetailData = {
-            // billId: billId,
-            // productId: productId,
-            colorName: newColor,
-            storageGb: newStorage,
+            billId: billId,
+            productId: productId,
+            colorName: colorName,
+            storageGb: parseInt(storageGb),
             amount: newAmount,
             price: newPrice,
             discount: newDiscount,
-            total: newTotal
+            total: newTotal,
+            updateAt: currentDateTime()
+
+
         };
-        fetch(`https://localhost:7244/api/BillDetail/filter?billId=${billId}&productId=${productId}&colorName=${colorName}&storageGb=${storageGb}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedBillDetailData)
-        })
+
+        fetch(`${api}BillDetail/${billId}/${productId}/${colorName}/${storageGb}`,
+            // fetch(`${api}BillDetail/BILL0105240001/PRD002/${colorName}/${storageGb}`, 
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedBillDetailData)
+            })
             .then(response => {
                 if (response.ok) {
                     // Xử lý thành công
-                    console.log('Thông tin chi tiết hóa đơn đã được cập nhật thành công.');
+                    // Gọi endpoint CalculateTotalBill để tính lại tổng hóa đơn
+                    return fetch(`${api}Bill/CalculateTotalBill/${billId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
                 } else {
-                    // Xử lý lỗi
+                    // Xử lý lỗi khi cập nhật thông tin chi tiết hóa đơn
                     console.error('Đã xảy ra lỗi khi cập nhật thông tin chi tiết hóa đơn:', response.status);
+                    throw new Error('Có lỗi khi cập nhật thông tin chi tiết hóa đơn.');
+                }
+            })
+            .then(calculateTotalBillResponse => {
+                if (calculateTotalBillResponse.ok) {
+                    // Xử lý khi tính toán tổng hóa đơn thành công
+                    // Chuyển hướng hoặc hiển thị thông báo tùy ý
+                    window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-detail.html?id=${billId}`;
+                    alert('Thông tin chi tiết hóa đơn đã được cập nhật thành công.');
+                } else {
+                    // Xử lý khi có lỗi khi tính toán tổng hóa đơn
+                    console.error('Đã xảy ra lỗi khi tính toán tổng hóa đơn:', calculateTotalBillResponse.status);
+                    throw new Error('Có lỗi khi tính toán tổng hóa đơn.');
                 }
             })
             .catch(error => {
@@ -151,7 +135,7 @@ function updatePriceAndTotal(productId, colorName, storageGb, discount, amount) 
 }
 
 function calculatePrice(productId, colorName, storageGb, discount) {
-    let productPricePromise = fetch(`https://localhost:7244/api/Product/GetProduct/${productId}`)
+    let productPricePromise = fetch(`${api}Product/GetProduct/${productId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Có lỗi khi lấy giá của sản phẩm.');
@@ -164,7 +148,7 @@ function calculatePrice(productId, colorName, storageGb, discount) {
             return 0;
         });
 
-    let colorPricePromise = fetch(`https://localhost:7244/api/Colors/${colorName}`)
+    let colorPricePromise = fetch(`${api}Colors/${colorName}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Có lỗi khi lấy giá của màu sắc.');
@@ -177,7 +161,7 @@ function calculatePrice(productId, colorName, storageGb, discount) {
             return 0;
         });
 
-    let storagePricePromise = fetch(`https://localhost:7244/api/Storages/${storageGb}`)
+    let storagePricePromise = fetch(`${api}Storages/${storageGb}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Có lỗi khi lấy giá của dung lượng lưu trữ.');
@@ -202,34 +186,6 @@ function calculatePrice(productId, colorName, storageGb, discount) {
         });
 }
 
-function fetchAmountProduct(productId, colorName, storageGb) {
-    return fetch(`https://localhost:7244/api/Product/GetALLProductDetails`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Có lỗi khi lấy số lượng sản phẩm tồn kho.');
-            }
-            return response.json();
-        })
-        .then(data => {
 
-            const filteredProducts = data.filter(product =>
-                product.productId === productId &&
-                product.colorName === colorName &&
-                product.storageGb === storageGb
-            );
-
-            // Nếu không có sản phẩm nào sau khi lọc, trả về 0
-            if (filteredProducts.length === 0) {
-                return 0;
-            }
-
-            // Trả về số lượng của sản phẩm đã lọc
-            return filteredProducts[0].amount;
-        })
-        .catch(error => {
-            console.error('Lỗi khi lấy số lượng sản phẩm tồn kho:', error);
-            return 0;
-        });
-}
 
 
