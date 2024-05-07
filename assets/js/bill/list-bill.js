@@ -40,7 +40,6 @@ fetch(bill)
                 });
                 // Thêm sự kiện click vào dòng
                 row.addEventListener('click', function () {
-                    const idBill = idBillCell.textContent;
                     window.location.href = `../../../pages/Bill/Bill-detail.html?id=${bill.billId}`;
                 });
 
@@ -54,11 +53,11 @@ fetch(bill)
                 statusCell.classList.add('waiting-confirmation');
 
                 const statusColors = {
-                    0: 'Gold',   // Màu xanh cho trạng thái "Chờ xác nhận"
-                    1: 'Chartreuse',  // Màu xanh lá cây cho trạng thái "Chờ lấy hàng"
-                    2: 'PaleTurquoise', // Màu cam cho trạng thái "Chờ giao hàng"
-                    3: 'MediumBlue', // Màu tím cho trạng thái "Đã giao"
-                    4: 'red'     // Màu đỏ cho trạng thái "Đã hủy"
+                    0: 'Gold',   
+                    1: 'Chartreuse',
+                    2: 'PaleTurquoise', 
+                    3: 'MediumBlue', 
+                    4: 'red'     
                 };
 
                 statusCell.style.color = statusColors[bill.status]; 
