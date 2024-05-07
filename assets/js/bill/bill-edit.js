@@ -54,8 +54,7 @@ fetch(billUrl)
                 note: note,
                 totalBill: totalBill,
                 updateAt: currentDateTime(),
-                customer: null,
-                billDetails: []
+
             };
 
             // Gửi yêu cầu PUT để cập nhật hóa đơn

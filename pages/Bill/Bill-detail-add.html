@@ -61,7 +61,7 @@
               <a class="dropdown-item" href="#">
                 <i class="mdi mdi-cached me-2 text-success"></i> Activity Log </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../samples/login.html">
+              <a class="dropdown-item" href="#">
                 <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
             </div>
           </li>
@@ -215,7 +215,7 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Danh sách sản
                     phẩm</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/categories.html">Danh mục</a>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/categories.html">Typography</a>
                 </li>
               </ul>
             </div>
@@ -244,13 +244,13 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../../pages/charts/chartjs.html">
-              <span class="menu-title">Báo cáo thống kê</span>
+              <span class="menu-title">Charts</span>
               <i class="mdi mdi-chart-bar menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../../pages/tables/basic-table.html">
-              <span class="menu-title">Quản lý thông báo</span>
+              <span class="menu-title">Tables</span>
               <i class="mdi mdi-table-large menu-icon"></i>
             </a>
           </li>
@@ -296,51 +296,65 @@
         <div class="content-wrapper">
           <div class="page-header">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="./categories.html">Danh mục</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa danh mục màu điện thoại</li>
+              <li class="breadcrumb-item"><a href="./Bill-management.html">Danh sách đơn hàng</a></li>
+              <li class="breadcrumb-item"><a href="./Bill-detail.html">Chi tiết đơn hàng</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Thêm đơn hàng</li>
             </ol>
             <nav aria-label="breadcrumb">
+
             </nav>
           </div>
           <div class="row">
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
-                <div id="EditProduct" class="card-body">
-                    <form id="vendorForm">
-                        <div class="container">
-                          <h2>Add New Vendor</h2>
-                          <form>
-                              <div class="mb-3">
-                                  <label for="vendorName" class="form-label">Vendor Name</label>
-                                  <input type="text" class="form-control" id="vendorName" placeholder="Enter vendor name">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="address" class="form-label">Address</label>
-                                  <input type="text" class="form-control" id="address" placeholder="Enter address">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="phoneNumber" class="form-label">Phone Number</label>
-                                  <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phone number">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="status" class="form-label">Status</label>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="statusActive" value="1">
-                                    <label class="form-check-label" for="statusActive">
-                                        Active
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="statusInactive" value="0">
-                                    <label class="form-check-label" for="statusInactive">
-                                        Inactive
-                                    </label>
-                                </div>
-                              </div>
-                              <button id="createVendor" type="submit" class="btn btn-primary">Submit</button>
-                          </form>
-                      </div>                    
-                      </form>
+                <div id="billDetail" class="card-body">
+                  <div class="">
+                    <h2 class="mb-4">Add Product Bill</h2>
+                    <form id="form-add-bill-detail">
+                      <div class="form-group">
+                        <label for="name">Tên sản phẩm:</label>
+                        <select class="form-control col-4" id="name">
+
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="color">Màu:</label>
+                        <select class="form-control col-4" id="color">
+
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="storage">Dung lượng:</label>
+                        <select class="form-control col-4" id="storage">
+
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="amount">Số lượng:</label>
+                        <input type="number" class="form-control col-4" id="amount" placeholder="0">
+                        <p>Số lượng tồn: <span id="amount-product"></span></p>
+                      </div>
+                      <div class="form-group">
+                        <label for="price">Giá:</label>
+                        <input type="number" class="form-control col-4" id="price" readonly placeholder="0">
+                      </div>
+                      <div class="form-group">
+                        <label for="discount">Giảm giá:</label>
+                        <input type="number" class="form-control col-4" id="discount" placeholder="0">
+                      </div>
+                      <div class="form-group">
+                        <label for="total">Tổng tiền sản phẩm:</label>
+                        <input type="number" class="form-control col-4" id="total" readonly placeholder="0">
+                      </div>
+
+                      <div class="form-group">
+
+                        <button type="submit" class="btn btn-primary mb-2">Thêm</button>
+
+                        <!-- <a href="../Bill/Bill-management.html" class="btn btn-secondary mb-2">Back</a> -->
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -348,10 +362,10 @@
             <footer class="footer">
               <div class="container-fluid d-flex justify-content-between">
                 <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright ©
-                  <a href="https://www.youtube.com/@1heedteam" target="_blank"></a> from Berlin 
+                  <a href="https://www.youtube.com/@1heedteam" target="_blank">1heed</a> from Thái Bình NorthSide
                 </span>
                 <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Làm bởi <a
-                    href="https://www.facebook.com/vietta10112003" target="_blank">Dzung Nguyễn</a> from IT5-K62</span>
+                    href="https://www.facebook.com/vietta10112003" target="_blank">Khánh Phạm</a> from IT5-K62</span>
               </div>
             </footer>
             <!-- partial -->
@@ -367,86 +381,8 @@
       <script src="../../assets/js/off-canvas.js"></script>
       <script src="../../assets/js/hoverable-collapse.js"></script>
       <script src="../../assets/js/misc.js"></script>
-      <script type="module" src="../../assets/js/Categories/edit-categories.js">
-
-      </script>
-      <script type="module">
-        
-        import api from '../../assets/Base-url/Url.js'
-        const apiUrl = api
-
-        const urlParams = new URLSearchParams(window.location.search)
-        const vendorId = urlParams.get('id')
-
-        document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('storageForm');
-   
-
-    // Fetch category by ID
-    fetch(`${apiUrl}Vendors/${vendorId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch category');
-            }
-            return response.json();
-        })
-        .then(vendor => {
-            // Đổ dữ liệu category lấy được từ API lên form
-            document.getElementById('vendorName').value = vendor.vendorName;
-            document.getElementById('address').value = vendor.address;
-            document.getElementById('phoneNumber').value = vendor.phoneNumber;
-            document.getElementById('statusActive').checked = vendor.status === 1;
-            document.getElementById('statusInactive').checked = vendor.status === 0;
-        })
-        .catch(error => {
-            console.error('Error fetching category:', error);
-            // Xử lý lỗi, hiển thị thông báo hoặc thực hiện các hành động khác
-        });
-
-    
-
-});
-
-$(document).ready(function() {
-    $('#createVendor').click(function(event) {
-        event.preventDefault();
-
-        // Lấy dữ liệu từ form
-        var formData = new FormData();
-         formData.append('vendorId', vendorId); 
-
-        formData.append('vendorName', $('#vendorName').val());
-        formData.append('address', $('#address').val());
-        formData.append('phoneNumber', $('#phoneNumber').val());
-        var status = $('input[name=status]:checked').val();
-        formData.append('status', status);
-
-        // Thực hiện ajax request
-        $.ajax({
-            url: `${apiUrl}Vendors/${vendorId}`,
-            type: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify(Object.fromEntries(formData.entries())), // Chuyển đổi FormData thành object JSON
-            processData: false, // Không xử lý dữ liệu trước khi gửi đi vì chúng đã được chuyển đổi thành JSON
-            success: function(response) {
-                //console.log('Storage updated:', response);
-                window.alert('Vendor updated successfully');
-                // Xử lý dữ liệu trả về nếu cần
-            },
-            error: function(error) {
-                console.error('Error updating storage:', error);
-                window.alert('Failed to update storage. Please try again.');
-                // Xử lý lỗi, hiển thị thông báo hoặc thực hiện các hành động khác
-            }
-        });
-    });
-});
-
-
-
-
-
-      </script>
+      <script type="module" src="../../assets/js/bill/bill-detail-add.js"></script> <!-- endinject -->
+      <!-- Custom js for this page -->
       <!-- End custom js for this page -->
 </body>
 

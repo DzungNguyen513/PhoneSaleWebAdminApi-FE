@@ -723,5 +723,3 @@ const getRandomColor = () => {
 
 // Gọi hàm để fetch dữ liệu và vẽ biểu đồ tròn
 fetchPieChartDataAndDraw();
-
-

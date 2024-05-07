@@ -1,6 +1,6 @@
  
 import api from '../../Base-url/Url.js'
-const apiUrl = api
+
         const urlParams = new URLSearchParams(window.location.search)
         const productId = urlParams.get('id')
         const ColorName = urlParams.get('colorName')
@@ -30,7 +30,7 @@ const apiUrl = api
                 };
 
                 // Thực hiện yêu cầu POST
-                fetch(`https://localhost:7244/api/Product/EditProductDetails/${productId}/${StorageGb}/${ColorName}`, {
+                fetch(`${api}Product/EditProductDetails/${productId}/${StorageGb}/${ColorName}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

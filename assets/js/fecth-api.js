@@ -1,11 +1,13 @@
 
+import api from '../../Base-url/Url.js'
+
 function start() {
     handleCreateAccount()//tạo tk
     //GetProducts(RenderProducts)
 }
 start()
 //tạo tài khoản-------------------------------------------------------------------------
-var apiURL = 'https://localhost:7244/api/Register/register'
+var apiURL = `${api}Register/register`
 function CreateAccount(data, callback) {
     var options = {
         method: 'POST',
@@ -46,7 +48,7 @@ function handleCreateAccount() {
 
 // startProducts();
 
-// var productURL = 'https://localhost:7244/api/Product';
+// var productURL = `${api}Product`;
 // function GetProducts(callback) {
 //     fetch(productURL)
 //         .then(function (response) {

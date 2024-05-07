@@ -9,6 +9,17 @@ const billId = urlParams.get('id');
 const billDetail = `${api}BillDetail/${billId}`
 const billUrl = `${api}Bill/${billId}`;
 
+// Bắt sự kiện khi nhấp vào nút "Thêm sản phẩm"
+document.querySelector('.add-product-detail').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    // Lấy billId từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const billId = urlParams.get('id');
+
+    // Chuyển hướng đến trang thêm chi tiết hóa đơn và truyền billId vào URL
+    window.location.href = `./Bill-detail-add.html?id=${billId}`;
+});
 // Lấy chi tiết hóa đơn
 fetch(billUrl)
     .then(response => response.json())
@@ -142,13 +153,12 @@ fetch(billDetail)
                         const total = detail.total;
 
                         // Chuyển hướng sang trang chỉnh sửa và truyền thông tin sản phẩm
-                        window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-detail-edit.html?id=${detail.billId}&productId=${productId}&colorName=${colorName}&storageGb=${storageGb}&amount=${amount}&price=${price}&discount=${discount}&total=${total}`;
+                        window.location.href = `../../../pages/Bill/Bill-detail-edit.html?id=${detail.billId}&productId=${productId}&colorName=${colorName}&storageGb=${storageGb}&amount=${amount}&price=${price}&discount=${discount}&total=${total}`;
                     };
                     const editIcon = document.createElement('i');
                     editIcon.className = 'mdi mdi-pencil';
                     editButton.appendChild(editIcon);
                     actionCell.appendChild(editButton);
-
 
                     // Tạo nút Delete
                     const deleteButton = document.createElement('button');
@@ -156,7 +166,7 @@ fetch(billDetail)
                     deleteButton.className = 'btn btn-danger';
                     deleteButton.onclick = function (e) {
                         e.stopPropagation();
-                        window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-delete.html?id=${detail.billId}`;
+                        window.location.href = `../../../pages/Bill/Bill-delete.html?id=${detail.billId}`;
                     };
                     const deleteIcon = document.createElement('i');
                     deleteIcon.className = 'mdi mdi-delete';
