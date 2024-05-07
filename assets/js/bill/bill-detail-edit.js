@@ -4,7 +4,6 @@ import fetchAmountProduct from '../function/fetchAmountProduct.js'
 import calculatePrice from '../function/calculatePrice.js'
 const urlParams = new URLSearchParams(window.location.search);
 
-
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.btn-secondary').addEventListener('click', function (event) {
         event.preventDefault();
