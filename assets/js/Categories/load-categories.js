@@ -1,5 +1,7 @@
 
 import api from '../../Base-url/Url.js'
+import formatDateTime from '../function/formatDateTime.js'
+
 const apiUrl = api
 
 async function getCategoryImage(categoryId) {
@@ -68,11 +70,11 @@ fetch(`${apiUrl}Categories/GetCategories`)
            row.appendChild(categoryStatus);
 
            const createAt = document.createElement('td');
-           createAt.textContent = category.createAt; 
+           createAt.textContent = formatDateTime(category.createAt); 
            row.appendChild(createAt);
 
            const updateAt = document.createElement('td');
-           updateAt.textContent = category.updateAt; 
+           updateAt.textContent = formatDateTime(category.updateAt); 
            row.appendChild(updateAt);
 
            // Tạo thẻ td để chứa các nút bấm
@@ -233,11 +235,11 @@ fetch(`${apiUrl}Colors/GetColors`)
            row.appendChild(colorPrice);
 
            const createAt = document.createElement('td');
-           createAt.textContent = color.createAt; 
+           createAt.textContent = formatDateTime(color.createAt); 
            row.appendChild(createAt);
 
            const updateAt = document.createElement('td');
-           updateAt.textContent = color.updateAt; 
+           updateAt.textContent = formatDateTime(color.updateAt); 
            row.appendChild(updateAt);
 
            // Tạo thẻ td để chứa các nút bấm
@@ -362,11 +364,11 @@ fetch(`${apiUrl}Storages/GetStorages`)
            row.appendChild(storagePrice);
 
            const createAt = document.createElement('td');
-           createAt.textContent = storage.createAt; 
+           createAt.textContent = formatDateTime(storage.createAt); 
            row.appendChild(createAt);
 
            const updateAt = document.createElement('td');
-           updateAt.textContent = storage.updateAt; 
+           updateAt.textContent = formatDateTime(storage.updateAt); 
            row.appendChild(updateAt);
 
            // Tạo thẻ td để chứa các nút bấm
@@ -505,11 +507,11 @@ fetch(`${apiUrl}Vendors/GetVendors`)
            row.appendChild(VendorStatus);
 
            const createAt = document.createElement('td');
-           createAt.textContent = vendor.createAt; 
+           createAt.textContent = formatDateTime(vendor.createAt)
            row.appendChild(createAt);
 
            const updateAt = document.createElement('td');
-           updateAt.textContent = vendor.updateAt; 
+           updateAt.textContent = formatDateTime(vendor.updateAt); 
            row.appendChild(updateAt);
 
            // Tạo thẻ td để chứa các nút bấm

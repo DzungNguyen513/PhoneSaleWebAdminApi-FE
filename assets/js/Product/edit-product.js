@@ -42,7 +42,7 @@ const apiUrl = api
                 console.error('Error fetching categories:', error);
             });
 
-        
+        var createAt;
         //get ID
         const urlParams = new URLSearchParams(window.location.search)
         const productId = urlParams.get('id')
@@ -65,6 +65,8 @@ const apiUrl = api
                     document.getElementById('vendorId').value = product.vendorId;
                     document.getElementById('detail').value = product.detail;
                     document.getElementById('status').value = product.status;
+
+                    createAt = product.createAt
                 })
                 .catch(error => {
                     console.error('Error fetching product details:', error);
@@ -72,7 +74,18 @@ const apiUrl = api
 
 
         })
+        var currentTime = new Date();
 
+        // Lấy các thành phần của thời gian hiện tại
+        var year = currentTime.getFullYear(); // Năm
+        var month = currentTime.getMonth() + 1; // Tháng (lưu ý: tháng bắt đầu từ 0)
+        var date = currentTime.getDate(); // Ngày
+        var hours = currentTime.getHours(); // Giờ
+        var minutes = currentTime.getMinutes(); // Phút
+        var seconds = currentTime.getSeconds(); // Giây
+        
+        // Tạo một đối tượng Date mới đại diện cho thời gian hiện tại
+        var formattedTime = new Date(year, month - 1, date, hours, minutes, seconds);
 
 
         //edit product
@@ -85,6 +98,7 @@ const apiUrl = api
             const discount = document.getElementById('discount').value
             const detail = document.getElementById('detail').value
             const status = document.getElementById('status').value
+            const updateAt = formattedTime;
             const formData = {
                 productId: productId,
                 productName: productName,
@@ -93,7 +107,10 @@ const apiUrl = api
                 categoryId: categoryId,
                 vendorId: vendorId,
                 detail: detail,
-                status: status
+                status: status,
+                createAt: createAt,
+                updateAt: updateAt
+
             }
 
             fetch(`${apiUrl}Product/${productId}`, {
