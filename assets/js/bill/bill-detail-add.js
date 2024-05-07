@@ -9,28 +9,32 @@ let colorName = null;
 let storageGb = null;
 let discount = 0;
 let amount = 0;
-document.addEventListener('DOMContentLoaded', function () {
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('.btn-secondary').addEventListener('click', function (event) {
+        event.preventDefault();
+        window.location.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
+    });
     // Lấy dữ liệu product từ URL và đổ vào trường lựa chọn 'product'
     const productSelect = document.getElementById('name');
-    fetch('https://localhost:7244/api/Product/GetProducts')
+    fetch(`${api}Product/GetProducts`)
         .then(response => response.json())
         .then(data => {
-            // Duyệt qua dữ liệu trả về để tạo các tùy chọn cho trường lựa chọn product
             data.forEach(product => {
                 const optionElement = document.createElement('option');
                 optionElement.value = product.productId;
                 optionElement.textContent = product.productId;
                 productSelect.appendChild(optionElement);
             });
-            // Chọn storageGb từ dữ liệu ban đầu
+            // Chọn productSelect từ dữ liệu ban đầu
             productSelect.value = storageGb;
         })
         .catch(error => console.error('Error fetching storage data:', error));
 
     // Lấy dữ liệu storageGb từ URL và đổ vào trường lựa chọn 'storage'
     const storageSelect = document.getElementById('storage');
-    fetch('https://localhost:7244/api/Storages/GetStorages')
+    fetch(`${api}Storages/GetStorages`)
         .then(response => response.json())
         .then(data => {
             // Duyệt qua dữ liệu trả về để tạo các tùy chọn cho trường lựa chọn storage
@@ -47,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lấy dữ liệu color từ URL và đổ vào trường lựa chọn 'color'
     const colorSelect = document.getElementById('color');
-    fetch('https://localhost:7244/api/Colors/GetColors')
+    fetch(`${api}Colors/GetColors`)
         .then(response => response.json())
         .then(data => {
             // Duyệt qua dữ liệu trả về để tạo các tùy chọn cho trường lựa chọn color
@@ -82,14 +86,80 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('amount').addEventListener('input', function () {
-        amount = this.value;
+        const inputAmount = parseInt(this.value);
+        const amountProduct = parseInt(document.getElementById('amount-product').innerText);
+        if (inputAmount > amountProduct) {
+
+            alert('Bạn đã nhập quá số lượng tồn kho.');
+            this.value = " ";
+        }
+        amount = parseInt(this.value);
         updatePriceAndTotal(productId, colorName, storageGb, discount, amount);
     });
 
     const form = document.getElementById('form-add-bill-detail');
     form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const value = input();
+        if (value !== true) {
+            alert(value);
+            return;
+        }
+        else {
+            // Lấy giá trị từ các trường nhập liệu
+            const newProduct = document.getElementById('name').value;
+            const newColor = document.getElementById('color').value;
+            const newStorage = parseInt(document.getElementById('storage').value);
+            const newAmount = parseInt(document.getElementById('amount').value);
+            const newPrice = parseInt(document.getElementById('price').value);
+            const newTotal = parseInt(document.getElementById('total').value);
+            const newDiscount = parseInt(document.getElementById('discount').value);
+
+            console.log(billId, newProduct, newColor, newStorage, newAmount, newPrice, newTotal, newDiscount)
+
+            const addBillDetailData = {
+                billId: billId,
+                productId: newProduct,
+                colorName: newColor,
+                storageGb: newStorage,
+                amount: newAmount,
+                price: newPrice,
+                discount: newDiscount,
+                total: newTotal,
+                createAt: currentDateTime(),
+                updateAt: currentDateTime(),
+                bill: null,
+                colorNameNavigation: null,
+                product: null,
+                storageGbNavigation: null
+            };
+
+            // Gửi yêu cầu POST đến API
+            fetch(`${api}BillDetail/CreateBillDetail/${billId}/${newProduct}/${newColor}/${newStorage}`, {
+                // fetch(`${api}CreateBillDetail/${billId}/${newProduct}/${newColor}/128`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(addBillDetailData)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
+                        alert('Thông tin chi tiết hóa đơn đã được cập nhật thành công.');
+                    } else {
+                        alert('Hóa đơn đã có sản phẩm này rồi', response.status);
+                        throw new Error('Có lỗi khi cập nhật thông tin chi tiết hóa đơn.');
+                    }
+                })
+                .catch(error => {
+                    // Xử lý lỗi khi gửi yêu cầu
+                    console.error('Lỗi khi gửi yêu cầu cập nhật thông tin chi tiết hóa đơn:', error);
+                });
+        }
 
     });
+
 });
 
 
@@ -97,10 +167,7 @@ function updatePriceAndTotal(productId, colorName, storageGb, discount, amount) 
     storageGb = parseInt(storageGb);
     fetchAmountProduct(productId, colorName, storageGb)
         .then(amountProduct => {
-            // Hiển thị số lượng sản phẩm tồn kho trên giao diện người dùng
             document.getElementById('amount-product').innerText = amountProduct;
-            console.log(amountProduct); // Debugging: Log new amount to console
-            // Sau khi cập nhật số lượng sản phẩm tồn kho, tính toán và cập nhật giá và tổng mới
             return calculatePrice(productId, colorName, storageGb, discount);
         })
         .then(newPrice => {
@@ -113,3 +180,21 @@ function updatePriceAndTotal(productId, colorName, storageGb, discount, amount) 
         });
 }
 
+function input() {
+    const productSelect = document.getElementById('name');
+    const colorSelect = document.getElementById('color');
+    const storageSelect = document.getElementById('storage');
+    const newAmount = document.getElementById('amount').value;
+
+    if (productSelect.value === '') {
+        return "Thiếu sản phẩm!";
+    } else if (colorSelect.value === '') {
+        return "Thiếu màu!";
+    } else if (storageSelect.value === '') {
+        return "Thiếu dung lượng!";
+    } else if (newAmount === '') {
+        return "Thiếu số lượng!";
+    } else {
+        return true;
+    }
+}
