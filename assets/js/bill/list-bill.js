@@ -5,7 +5,6 @@ console.log(api);
 const bill = `${api}Bill`
 
 let allBills = []; // Mảng chứa tất cả các Bill
-let filteredBills = []; // Mảng chứa Bill đã lọc
 fetch(bill)
     // fetch(`${api}Bill`)
     .then(response => response.json())
@@ -97,10 +96,10 @@ fetch(bill)
                     if (bill.status === 4) {
                         const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
                         if (confirmation) {
-                            window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-edit.html?id=${bill.billId}`;
+                            window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
                         }
                     } else {
-                        window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-edit.html?id=${bill.billId}`;
+                        window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
                     }
                 }
                 const editIcon = document.createElement('i');
@@ -206,9 +205,6 @@ fetch(bill)
         //         }
         //     });
         // });
-
-
-
 
         // Khởi tạo
         renderBills(currentPage);

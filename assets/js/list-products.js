@@ -52,7 +52,7 @@ import api from '../../Base-url/Url.js'
 //             editButton.textContent = 'Edit';
 //             editButton.className = 'btn btn-primary mr-2';
 //             editButton.onclick = function () {
-//                 window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-product.html?id=${product.productId}`;
+//                 window.location.href = `/pages/ui-features/edit-product.html?id=${product.productId}`;
 //             };
 //             actionCell.appendChild(editButton);
 

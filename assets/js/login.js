@@ -17,7 +17,7 @@ async function loginUser(email, password) {
         const responseData = await response.json();
 
         if (response.ok) {
-            window.location.href = 'http://127.0.0.1:5500/index.html';
+            window.location.href = '../../index.html';
         } else {
             alert('Đăng nhập thất bại: ' + responseData.message);
         }

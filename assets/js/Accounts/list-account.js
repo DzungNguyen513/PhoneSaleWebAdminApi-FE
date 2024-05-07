@@ -73,7 +73,7 @@ fetch(`${apiUrl}Account/GetAllAccounts`)
                 editButton.textContent = 'Edit';
                 editButton.className = 'btn btn-primary mr-2';
                 editButton.onclick = function () {
-                    window.location.href = `http://127.0.0.1:5500/pages/icons/edit-account.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
+                    window.location.href = `../../../pages/icons/edit-account.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
                 };
                 const editIcon = document.createElement('i');
                 editIcon.className = 'mdi mdi-pencil';
@@ -265,7 +265,7 @@ function renderCustomerData(account) {
         // editButton.textContent = 'Edit';
         // editButton.className = 'btn btn-primary mr-2';
         // editButton.onclick = function () {
-        //     window.location.href = `http://127.0.0.1:5500/pages/icons/edit-account.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
+        //     window.location.href = `/pages/icons/edit-account.html?id=${account.accountId}`; // Sử dụng accountId thay vì productId
         // };
         // const editIcon = document.createElement('i');
         // editIcon.className = 'mdi mdi-pencil';
