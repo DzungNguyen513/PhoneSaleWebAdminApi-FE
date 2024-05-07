@@ -1,4 +1,6 @@
-fetch('https://localhost:7244/api/Categories')
+import api from '../../Base-url/Url.js'
+
+fetch(`${api}Categories`)
     .then(response => response.json())
     .then(data => {
         const categoryList = document.getElementById('categoryList');

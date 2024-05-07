@@ -1,4 +1,5 @@
-// fetch('https://localhost:7244/api/Product/GetProducts')
+import api from '../../Base-url/Url.js'
+// fetch('${api}Product/GetProducts')
 //     .then(response => response.json())
 //     .then(data => {
 //         const tableBody = document.querySelector('.table tbody');
@@ -75,7 +76,7 @@
 //                 // Nếu người dùng đồng ý xóa sản phẩm
 //                 if (confirmDelete) {
 //                     // Gọi fetch API phương thức DELETE
-//                     fetch(`https://localhost:7244/api/Product/${product.productId}`, {
+//                     fetch(`${api}Product/${product.productId}`, {
 //                         method: 'DELETE'
 //                     })
 //                         .then(response => {
