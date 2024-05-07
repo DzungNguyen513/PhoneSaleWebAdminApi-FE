@@ -89,26 +89,53 @@ fetch(bill)
 
                 // Tạo nút Edit
                 const editButton = document.createElement('button');
-                editButton.textContent = 'Edit';
+                editButton.textContent = 'Sửa đơn';
                 editButton.className = 'btn btn-primary mr-2';
                 editButton.innerHTML += '&nbsp;';
                 editButton.onclick = function (e) {
                     e.stopPropagation();
-                    window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-edit.html?id=${bill.billId}`;
-                };
+                    if (bill.status === 4) {
+                        const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
+                        if (confirmation) {
+                            window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-edit.html?id=${bill.billId}`;
+                        }
+                    } else {
+                        window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-edit.html?id=${bill.billId}`;
+                    }
+                }
                 const editIcon = document.createElement('i');
                 editIcon.className = 'mdi mdi-pencil';
                 editButton.appendChild(editIcon);
                 actionCell.appendChild(editButton);
 
-
                 // Tạo nút Delete
                 const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
+                deleteButton.textContent = 'Hủy đơn';
                 deleteButton.className = 'btn btn-danger';
+                if(bill.status ===4){
+                    deleteButton.disabled = true;
+                }
                 deleteButton.onclick = function (e) {
                     e.stopPropagation();
-                    window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-delete.html?id=${bill.billId}`;
+                    const confirmation = confirm(`Bạn có chắc chắn muốn hủy đơn hàng này không`);
+                    if (confirmation) {
+                        fetch(`${api}Bill/${bill.billId}`, {
+                            method: 'DELETE'
+                        })    
+                            .then(response => {
+                                if (response.ok) {
+                                    alert(`Bạn đã hủy đơn hàng thành công`)
+                                    location.reload();
+                                } else {
+                                    // Nếu có lỗi trong quá trình xóa, thông báo cho người dùng
+                                    alert('Đã xảy ra lỗi khi hủy đơn hàng.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Đã xảy ra lỗi khi gọi API hủy đơn hàng:', error);
+                                alert('Đã xảy ra lỗi khi gọi API hủy đơn hàng.');
+                            });
+                    }
                 };
                 const deleteIcon = document.createElement('i');
                 deleteIcon.className = 'mdi mdi-delete';

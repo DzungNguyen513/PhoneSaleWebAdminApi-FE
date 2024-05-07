@@ -3,14 +3,16 @@ import currentDateTime from '../function/currentDateTime.js'
 import fetchAmountProduct from '../function/fetchAmountProduct.js'
 import calculatePrice from '../function/calculatePrice.js'
 const urlParams = new URLSearchParams(window.location.search);
+const billId = urlParams.get('id');
 
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.btn-secondary').addEventListener('click', function (event) {
         event.preventDefault();
         window.location.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
     });
+    const breadcrumbLink = document.querySelector('.breadcrumb-item.page-1 a');
+    breadcrumbLink.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
     // Lấy thông tin từ URL
-    const billId = urlParams.get('id');
     const productId = urlParams.get('productId');
     let colorName = urlParams.get('colorName');
     let storageGb = parseInt(urlParams.get('storageGb'));

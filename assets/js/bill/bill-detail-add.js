@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         window.location.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
     });
+    const breadcrumbLink = document.querySelector('.breadcrumb-item.page-1 a');
+    breadcrumbLink.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
     // Lấy dữ liệu product từ URL và đổ vào trường lựa chọn 'product'
     const productSelect = document.getElementById('name');
     fetch(`${api}Product/GetProducts`)
@@ -143,6 +145,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: JSON.stringify(addBillDetailData)
             })
+                .then(response => {
+                    if (response.ok) {
+                        return fetch(`${api}Bill/CalculateTotalBill/${billId}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                    } else {
+                        console.error('Đã xảy ra lỗi khi cập nhật thông tin chi tiết hóa đơn:', response.status);
+                        throw new Error('Có lỗi khi cập nhật thông tin chi tiết hóa đơn.');
+                    }
+                })
                 .then(response => {
                     if (response.ok) {
                         window.location.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
