@@ -9,22 +9,24 @@ const billId = urlParams.get('id');
 const billDetail = `${api}BillDetail/${billId}`
 const billUrl = `${api}Bill/${billId}`;
 
-// Bắt sự kiện khi nhấp vào nút "Thêm sản phẩm"
-document.querySelector('.add-product-detail').addEventListener('click', function (event) {
-    event.preventDefault();
-
-    // Lấy billId từ URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const billId = urlParams.get('id');
-
-    // Chuyển hướng đến trang thêm chi tiết hóa đơn và truyền billId vào URL
-    window.location.href = `./Bill-detail-add.html?id=${billId}`;
-});
+let statusCheck
 // Lấy chi tiết hóa đơn
 fetch(billUrl)
     .then(response => response.json())
     .then(data => {
+        statusCheck = data.status
         const headDetailDiv = document.getElementById('head-detail');
+        // Bắt sự kiện khi nhấp vào nút "Thêm sản phẩm"
+        document.querySelector('.add-product-detail').addEventListener('click', function (event) {
+            event.preventDefault();
+            window.location.href = `./Bill-detail-add.html?id=${billId}`;
+        });
+
+        if (data.status === 4) { // Nếu trạng thái là "Đã hủy"
+            document.querySelector('.add-product-detail').setAttribute('disabled', true);
+        }
+
+
 
         // Hiển thị thông tin khách hàng và hóa đơn
         const customerName = document.createElement('p');
@@ -123,38 +125,26 @@ fetch(billDetail)
                     // Tạo thẻ td để chứa các nút bấm
                     const actionCell = document.createElement('td');
 
-                    // Tạo nút Edit
-                    // const editButton = document.createElement('button');
-                    // editButton.textContent = 'Edit';
-                    // editButton.className = 'btn btn-primary mr-2';
-                    // editButton.innerHTML += '&nbsp;';
-                    // editButton.onclick = function (e) {
-                    //     // e.stopPropagation();
-                    //     window.location.href = `http://127.0.0.1:5500/pages/Bill/Bill-detail-edit.html?id=${detail.billId}`;
-                    // };
-                    // const editIcon = document.createElement('i');
-                    // editIcon.className = 'mdi mdi-pencil';
-                    // editButton.appendChild(editIcon);
-                    // actionCell.appendChild(editButton);
 
                     // Lấy thông tin sản phẩm cần chỉnh sửa khi ấn nút Edit
                     const editButton = document.createElement('button');
                     editButton.textContent = 'Edit';
                     editButton.className = 'btn btn-primary mr-2';
                     editButton.innerHTML += '&nbsp;';
+                    
                     editButton.onclick = function (e) {
                         // Lấy thông tin từ dòng hiện tại
-                        const productId= detail.productId;
+                        const productId = detail.productId;
                         const colorName = detail.colorName;
                         const storageGb = detail.storageGb;
                         const amount = detail.amount;
                         const price = detail.price;
                         const discount = detail.discount;
                         const total = detail.total;
-
                         // Chuyển hướng sang trang chỉnh sửa và truyền thông tin sản phẩm
                         window.location.href = `../../../pages/Bill/Bill-detail-edit.html?id=${detail.billId}&productId=${productId}&colorName=${colorName}&storageGb=${storageGb}&amount=${amount}&price=${price}&discount=${discount}&total=${total}`;
                     };
+
                     const editIcon = document.createElement('i');
                     editIcon.className = 'mdi mdi-pencil';
                     editButton.appendChild(editIcon);
@@ -166,13 +156,51 @@ fetch(billDetail)
                     deleteButton.className = 'btn btn-danger';
                     deleteButton.onclick = function (e) {
                         e.stopPropagation();
-                        window.location.href = `../../../pages/Bill/Bill-delete.html?id=${detail.billId}`;
-                    };
+                        const productId = detail.productId;
+                        const colorName = detail.colorName;
+                        const storageGb = detail.storageGb;
+                        const confirmation = confirm(`Bạn có chắc chắn muốn xóa sản phẩm ${productName}-${colorName}-${storageGb} ?`);
+                        if (confirmation) {
+                            fetch(`${api}BillDetail/${detail.billId}/${productId}/${colorName}/${storageGb}`, {
+                                method: 'DELETE'
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        return fetch(`${api}Bill/CalculateTotalBill/${billId}`, {
+                                            method: 'GET',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            }
+                                        });
+                                    } else {
+                                        console.error('Đã xảy ra lỗi khi cập nhật thông tin chi tiết hóa đơn:', response.status);
+                                        throw new Error('Có lỗi khi cập nhật thông tin chi tiết hóa đơn.');
+                                    }
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        alert(`Bạn đã xóa sản phẩm thành công`)
+                                        location.reload();
+                                    } else {
+                                        // Nếu có lỗi trong quá trình xóa, thông báo cho người dùng
+                                        alert('Đã xảy ra lỗi khi xóa sản phẩm.');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Đã xảy ra lỗi khi gọi API xóa sản phẩm:', error);
+                                    alert('Đã xảy ra lỗi khi gọi API xóa sản phẩm.');
+                                });
+                        }
+                    };;
                     const deleteIcon = document.createElement('i');
                     deleteIcon.className = 'mdi mdi-delete';
                     deleteButton.appendChild(deleteIcon);
                     actionCell.appendChild(deleteButton);
 
+                    if (statusCheck === 4) { 
+                        editButton.disabled = true; 
+                        deleteButton.disabled = true; 
+                    }
                     // // Thêm cell vào hàng
                     row.appendChild(actionCell);
 

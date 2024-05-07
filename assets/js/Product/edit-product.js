@@ -74,19 +74,6 @@ const apiUrl = api
 
 
         })
-        var currentTime = new Date();
-
-        // Lấy các thành phần của thời gian hiện tại
-        var year = currentTime.getFullYear(); // Năm
-        var month = currentTime.getMonth() + 1; // Tháng (lưu ý: tháng bắt đầu từ 0)
-        var date = currentTime.getDate(); // Ngày
-        var hours = currentTime.getHours(); // Giờ
-        var minutes = currentTime.getMinutes(); // Phút
-        var seconds = currentTime.getSeconds(); // Giây
-        
-        // Tạo một đối tượng Date mới đại diện cho thời gian hiện tại
-        var formattedTime = new Date(year, month - 1, date, hours, minutes, seconds);
-
 
         //edit product
         document.getElementById('editProductForm').addEventListener('submit', async function (event) {
@@ -98,7 +85,6 @@ const apiUrl = api
             const discount = document.getElementById('discount').value
             const detail = document.getElementById('detail').value
             const status = document.getElementById('status').value
-            const updateAt = formattedTime;
             const formData = {
                 productId: productId,
                 productName: productName,
@@ -108,9 +94,7 @@ const apiUrl = api
                 vendorId: vendorId,
                 detail: detail,
                 status: status,
-                createAt: createAt,
-                updateAt: updateAt
-
+                createAt: createAt
             }
 
             fetch(`${apiUrl}Product/${productId}`, {

@@ -418,9 +418,6 @@ $(document).ready(function () {
                 var status = $('input[name=status]:checked').val();
                 formData.append('status', status);
                 formData.append('createAt', createAt)
-                var currentDateTime = new Date().toISOString();
-                console.log(currentDateTime)
-                formData.append('updateAt', currentDateTime);
 
                 $.ajax({
                     url: `${apiUrl}Categories/UpdateCategory/${categoryId}`,
