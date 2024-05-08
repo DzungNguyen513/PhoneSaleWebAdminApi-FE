@@ -205,24 +205,6 @@ fetch(bill)
             });
         }
 
-        //Phần sử lý tìm kiếm
-        // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
-        // const searchInput = document.querySelector('.form-control');
-        // searchInput.addEventListener('input', function () {
-        //     const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
-        //     const Bills = document.querySelectorAll('.table tbody tr'); // Danh sách các Bill
-
-        //     Bills.forEach(Bill => {
-        //         const BillName = Bill.querySelector('td:first-child').textContent.toLowerCase(); // Lấy tên Bill
-
-        //         // So sánh tên Bill với giá trị tìm kiếm
-        //         if (BillName.includes(searchValue)) {
-        //             Bill.style.display = 'table-row'; // Hiển thị Bill nếu tên chứa từ khóa tìm kiếm
-        //         } else {
-        //             Bill.style.display = 'none'; // Ẩn Bill nếu không chứa từ khóa tìm kiếm
-        //         }
-        //     });
-        // });
 
         // Khởi tạo
         renderBills(currentPage);
@@ -232,5 +214,153 @@ fetch(bill)
     .catch(error => {
         console.error('Đã xảy ra lỗi khi lấy danh sách hóa đơn:', error);
     });
+
+
+    // Lắng nghe sự kiện thay đổi của select
+const filterSelect = document.getElementById('filterBill');
+filterSelect.addEventListener('change', function() {
+    const selectedStatus = this.value; // Lấy giá trị trạng thái được chọn
+    let filteredBills = [];
+
+    // Lọc danh sách hóa đơn dựa trên trạng thái được chọn
+    if (selectedStatus === 'Tất cả') {
+        // Nếu chọn Tất cả, sử dụng danh sách hóa đơn ban đầu
+        filteredBills = allBills;
+    } else {
+        // Lọc danh sách hóa đơn theo trạng thái được chọn
+        switch(selectedStatus) {
+            case 'Chờ xác nhận':
+                filteredBills = allBills.filter(bill => bill.status === 0);
+                break;
+            case 'Chờ lấy hàng':
+                filteredBills = allBills.filter(bill => bill.status === 1);
+                break;
+            case 'Chờ giao hàng':
+                filteredBills = allBills.filter(bill => bill.status === 2);
+                break;
+            case 'Đã giao':
+                filteredBills = allBills.filter(bill => bill.status === 3);
+                break;
+            case 'Đã hủy':
+                filteredBills = allBills.filter(bill => bill.status === 4);
+                break;
+            default:
+                // Mặc định, sử dụng danh sách hóa đơn ban đầu
+                filteredBills = allBills;
+        }
+    }
+
+    // Sau khi lọc, hiển thị lại danh sách hóa đơn đã được lọc
+    renderBills(1, filteredBills);
+});
+
+// Hàm hiển thị Bill trên trang hiện tại với danh sách đã lọc (nếu có)
+function renderBills(page, bills = allBills) {
+    const tableBody = document.querySelector('.table tbody');
+    tableBody.innerHTML = ''; // Xóa nội dung cũ
+    const itemsPerPage = 5; // Số Bill trên mỗi trang
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = page * itemsPerPage;
+    const billsToShow = bills.slice(startIndex, endIndex);
+
+    billsToShow.forEach(bill => {
+        const row = document.createElement('tr');
+
+        // Tạo các ô và nội dung của từng hàng
+        const idBillCell = document.createElement('td');
+        idBillCell.textContent = bill.billId;
+        row.appendChild(idBillCell);
+
+        const idEmployeeCell = document.createElement('td');
+        idEmployeeCell.textContent = bill.customerId;
+        row.appendChild(idEmployeeCell);
+
+        const statusCell = document.createElement('td');
+        const statusText = ['Chờ xác nhận', 'Chờ lấy hàng', 'Chờ giao hàng', 'Đã giao', 'Đã hủy'];
+        statusCell.textContent = statusText[bill.status];
+        statusCell.style.fontWeight = "bold";
+        statusCell.classList.add('waiting-confirmation');
+        const statusColors = {
+            0: 'Gold',
+            1: 'Chartreuse',
+            2: 'PaleTurquoise',
+            3: 'MediumBlue',
+            4: 'red'
+        };
+        statusCell.style.color = statusColors[bill.status];
+        row.appendChild(statusCell);
+
+        const dateBillCell = document.createElement('td');
+        dateBillCell.textContent = formatDateTime(bill.dateBill);
+        row.appendChild(dateBillCell);
+
+        const updateBillCell = document.createElement('td');
+        updateBillCell.textContent = formatDateTime(bill.updateAt);
+        row.appendChild(updateBillCell);
+
+        const totalBillCell = document.createElement('td');
+        totalBillCell.textContent = `${formatMoney(bill.totalBill)}`;
+        row.appendChild(totalBillCell);
+
+        const actionCell = document.createElement('td');
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Sửa đơn';
+        editButton.className = 'btn btn-primary mr-2';
+        editButton.onclick = function (e) {
+            e.stopPropagation();
+            if (bill.status === 4) {
+                const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
+                if (confirmation) {
+                    window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
+                }
+            } else {
+                window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
+            }
+        };
+        const editIcon = document.createElement('i');
+        editIcon.className = 'mdi mdi-pencil';
+        editButton.appendChild(editIcon);
+        actionCell.appendChild(editButton);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Hủy đơn';
+        deleteButton.className = 'btn btn-danger';
+        if (bill.status === 4) {
+            deleteButton.disabled = true;
+        }
+        deleteButton.onclick = function (e) {
+            e.stopPropagation();
+            const confirmation = confirm(`Bạn có chắc chắn muốn hủy đơn hàng này không`);
+            if (confirmation) {
+                fetch(`${api}Bill/${bill.billId}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert(`Bạn đã hủy đơn hàng thành công`);
+                            location.reload();
+                        } else {
+                            alert('Đã xảy ra lỗi khi hủy đơn hàng.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Đã xảy ra lỗi khi gọi API hủy đơn hàng:', error);
+                        alert('Đã xảy ra lỗi khi gọi API hủy đơn hàng.');
+                    });
+            }
+        };
+        const deleteIcon = document.createElement('i');
+        deleteIcon.className = 'mdi mdi-delete';
+        deleteButton.appendChild(deleteIcon);
+        actionCell.appendChild(deleteButton);
+
+        row.appendChild(actionCell);
+
+        tableBody.appendChild(row);
+    });
+}
+
+
 
 
