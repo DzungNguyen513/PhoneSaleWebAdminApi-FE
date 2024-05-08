@@ -54,24 +54,24 @@ fetch(bill)
                 statusCell.classList.add('waiting-confirmation');
 
                 const statusColors = {
-                    0: 'Gold',   
+                    0: 'Gold',
                     1: 'Chartreuse',
-                    2: 'PaleTurquoise', 
-                    3: 'MediumBlue', 
-                    4: 'red'     
+                    2: 'PaleTurquoise',
+                    3: 'MediumBlue',
+                    4: 'red'
                 };
 
-                statusCell.style.color = statusColors[bill.status]; 
+                statusCell.style.color = statusColors[bill.status];
                 row.appendChild(statusCell);
 
 
                 // Ngày tạo
-                const dateBillCell = document.createElement('td');              
+                const dateBillCell = document.createElement('td');
                 dateBillCell.textContent = formatDateTime(bill.dateBill);
                 row.appendChild(dateBillCell);
 
                 // Ngày sửa
-                const updateBillCell = document.createElement('td');              
+                const updateBillCell = document.createElement('td');
                 updateBillCell.textContent = formatDateTime(bill.updateAt);
                 row.appendChild(updateBillCell);
                 // Tổng tiền
@@ -91,8 +91,25 @@ fetch(bill)
                 editButton.textContent = 'Sửa đơn';
                 editButton.className = 'btn btn-primary mr-2';
                 editButton.innerHTML += '&nbsp;';
+                // if (bill.status !== 1 ||bill.status !== 4 ) {
+                //     editButton.disabled = true;
+                // } else{
+                //     editButton.onclick = function (e) {
+                //         e.stopPropagation();
+                      
+                //         if (bill.status === 4) {
+                //             const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
+                //             if (confirmation) {
+                //                 window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
+                //             }
+                //         } else {
+                //             window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
+                //         }
+                //     }
+                // }
                 editButton.onclick = function (e) {
                     e.stopPropagation();
+                  
                     if (bill.status === 4) {
                         const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
                         if (confirmation) {
@@ -102,6 +119,7 @@ fetch(bill)
                         window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
                     }
                 }
+                
                 const editIcon = document.createElement('i');
                 editIcon.className = 'mdi mdi-pencil';
                 editButton.appendChild(editIcon);
@@ -111,7 +129,7 @@ fetch(bill)
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Hủy đơn';
                 deleteButton.className = 'btn btn-danger';
-                if(bill.status ===4){
+                if (bill.status === 4) {
                     deleteButton.disabled = true;
                 }
                 deleteButton.onclick = function (e) {
@@ -120,7 +138,7 @@ fetch(bill)
                     if (confirmation) {
                         fetch(`${api}Bill/${bill.billId}`, {
                             method: 'DELETE'
-                        })    
+                        })
                             .then(response => {
                                 if (response.ok) {
                                     alert(`Bạn đã hủy đơn hàng thành công`)

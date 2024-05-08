@@ -1,7 +1,9 @@
 import api from '../../Base-url/Url.js'
-import currentDateTime from '../function/currentDateTime.js'
 import fetchAmountProduct from '../function/fetchAmountProduct.js'
-// import editAmountProduct from '../function/editAmoutProduct.js'
+import editAmountProduct from '../function/editAmoutProduct.js'
+
+import currentDateTime from '../function/currentDateTime.js'
+
 import calculatePrice from '../function/calculatePrice.js'
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -165,6 +167,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         fetchAmountProduct(newProduct, newColor, newStorage)
                             .then(amountProduct => {
                                 editAmountProduct(newProduct, newStorage, newColor, amountProduct - newAmount);
+                                window.location.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
+                                alert('Thông tin chi tiết hóa đơn đã được cập nhật thành công.');
+
                             })
                             .catch(error => {
                                 console.error('Lỗi khi lấy số lượng sản phẩm từ cơ sở dữ liệu:', error);
@@ -178,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => {
                     if (response.ok) {
                         
-                        alert('Thông tin chi tiết hóa đơn đã được cập nhật thành công.');
+                        // alert('Thông tin chi tiết hóa đơn đã được cập nhật thành công.');
                         window.location.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
                     } else {
                         alert('Hóa đơn đã có sản phẩm này rồi', response.status);
