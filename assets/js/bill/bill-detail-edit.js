@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const total = urlParams.get('total');
 
     fetchAmountProduct(productId, colorName, storageGb)
-        .then(amount => {
+        .then(amountProduct => {
             // Hiển thị số lượng sản phẩm tồn kho trên giao diện người dùng
-            document.getElementById('amount-product').innerText = amount;
+            document.getElementById('amount-product').innerText = amountProduct;
             // console.log(amount)
         })
         .catch(error => {
@@ -48,12 +48,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('amount').addEventListener('input', function () {
         const inputAmount = parseInt(this.value);
-        const amountProduct = parseInt(document.getElementById('amount-product').innerText);
+        let amountProduct = parseInt(document.getElementById('amount-product').innerText);
+        const originalAmount = parseInt(urlParams.get('amount'))
+        console.log(amountProduct)
         if (inputAmount > amountProduct) {
 
             alert('Bạn đã nhập quá số lượng tồn kho.');
             this.value = " ";
         }
+
+        amountProduct = calculateTotal(inputAmount,originalAmount,amountProduct)
+        console.log(amountProduct)
+        
         amount = parseInt(this.value);
         updatePriceAndTotal(productId, colorName, storageGb, discount, amount);
     });
@@ -63,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('form-edit-bill-detail');
     form.addEventListener('submit', function (event) {
         event.preventDefault();
+        const value = input()
         if (value !== true) {
             alert(value);
             return;
@@ -125,8 +132,8 @@ function updatePriceAndTotal(productId, colorName, storageGb, discount, amount) 
     storageGb = parseInt(storageGb);
     fetchAmountProduct(productId, colorName, storageGb)
         .then(amountProduct => {
-            document.getElementById('amount-product').innerText = amountProduct;
-            return calculatePrice(productId, colorName, storageGb, discount);
+            // document.getElementById('amount-product').innerText = amountProduct;
+            // return calculatePrice(productId, colorName, storageGb, discount);
         })
         .then(newPrice => {
             document.getElementById('price').value = newPrice;
@@ -147,3 +154,13 @@ function input() {
         return true;
     }
 }
+
+function calculateTotal(inputAmount,originalAmount, amountProduct) {
+
+    while (inputAmount >0) {
+        amountProduct += originalAmount - inputAmount;
+        return amountProduct;
+    }
+}
+
+// const total = calculateTotal();

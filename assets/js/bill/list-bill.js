@@ -50,6 +50,7 @@ fetch(bill)
                 const statusCell = document.createElement('td');
                 const statusText = ['Chờ xác nhận', 'Chờ lấy hàng', 'Chờ giao hàng', 'Đã giao', 'Đã hủy'];
                 statusCell.textContent = statusText[bill.status];
+                statusCell.style.fontWeight = "bold"
                 statusCell.classList.add('waiting-confirmation');
 
                 const statusColors = {

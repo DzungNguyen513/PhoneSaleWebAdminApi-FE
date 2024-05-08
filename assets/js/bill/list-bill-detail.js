@@ -1,5 +1,9 @@
 import api from '../../Base-url/Url.js'
+import fetchAmountProduct from '../function/fetchAmountProduct.js'
+import editAmountProduct from '../function/editAmoutProduct.js'
+
 import formatDateTime from '../function/formatDateTime.js'
+
 import formatMoney from '../function/formatMoneyVN.js'
 import statusText from '../function/statusText.js'
 
@@ -131,7 +135,7 @@ fetch(billDetail)
                     editButton.textContent = 'Edit';
                     editButton.className = 'btn btn-primary mr-2';
                     editButton.innerHTML += '&nbsp;';
-                    
+
                     editButton.onclick = function (e) {
                         // Lấy thông tin từ dòng hiện tại
                         const productId = detail.productId;
@@ -150,6 +154,7 @@ fetch(billDetail)
                     editButton.appendChild(editIcon);
                     actionCell.appendChild(editButton);
 
+
                     // Tạo nút Delete
                     const deleteButton = document.createElement('button');
                     deleteButton.textContent = 'Delete';
@@ -159,11 +164,14 @@ fetch(billDetail)
                         const productId = detail.productId;
                         const colorName = detail.colorName;
                         const storageGb = detail.storageGb;
+                        const amount = detail.amount;
+                        
                         const confirmation = confirm(`Bạn có chắc chắn muốn xóa sản phẩm ${productName}-${colorName}-${storageGb} ?`);
                         if (confirmation) {
                             fetch(`${api}BillDetail/${detail.billId}/${productId}/${colorName}/${storageGb}`, {
                                 method: 'DELETE'
                             })
+                                //Cập nhật tổng tiền bill
                                 .then(response => {
                                     if (response.ok) {
                                         return fetch(`${api}Bill/CalculateTotalBill/${billId}`, {
@@ -177,6 +185,22 @@ fetch(billDetail)
                                         throw new Error('Có lỗi khi cập nhật thông tin chi tiết hóa đơn.');
                                     }
                                 })
+                                //Cập nhập số lượng sản phẩm
+                                .then(response => {
+                                    if (response.ok) {
+                                        fetchAmountProduct(productId, colorName, storageGb)
+                                            .then(amountProduct => {
+                                                editAmountProduct(productId, storageGb, colorName, amountProduct + amount);
+                                            })
+                                            .catch(error => {
+                                                console.error('Lỗi khi lấy số lượng sản phẩm từ cơ sở dữ liệu:', error);
+                                            });
+                                    } else {
+                                        alert('số lượng sản phẩm không cập nhật được ', response.status);
+                                        throw new Error('Có lỗi khi cập nhật thông tin chi tiết hóa đơn.');
+                                    }
+                                })
+                                z``
                                 .then(response => {
                                     if (response.ok) {
                                         alert(`Bạn đã xóa sản phẩm thành công`)
@@ -197,9 +221,9 @@ fetch(billDetail)
                     deleteButton.appendChild(deleteIcon);
                     actionCell.appendChild(deleteButton);
 
-                    if (statusCheck === 4) { 
-                        editButton.disabled = true; 
-                        deleteButton.disabled = true; 
+                    if (statusCheck === 4) {
+                        editButton.disabled = true;
+                        deleteButton.disabled = true;
                     }
                     // // Thêm cell vào hàng
                     row.appendChild(actionCell);
@@ -223,3 +247,4 @@ const getProductName = (productId) => {
             return 'Product Name Not Found'; // Trả về một giá trị mặc định nếu có lỗi
         });
 }
+

@@ -1,15 +1,16 @@
 import api from '../../Base-url/Url.js'
 import currentDateTime from '../function/currentDateTime.js'
 import fetchAmountProduct from '../function/fetchAmountProduct.js'
+// import editAmountProduct from '../function/editAmoutProduct.js'
 import calculatePrice from '../function/calculatePrice.js'
 const urlParams = new URLSearchParams(window.location.search);
+
 const billId = urlParams.get('id');
 let productId = null;
 let colorName = null;
 let storageGb = null;
 let discount = 0;
 let amount = 0;
-
 
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.btn-secondary').addEventListener('click', function (event) {
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data.forEach(product => {
                 const optionElement = document.createElement('option');
                 optionElement.value = product.productId;
-                optionElement.textContent = product.productId;
+                optionElement.textContent = product.productName;
                 productSelect.appendChild(optionElement);
             });
             // Chọn productSelect từ dữ liệu ban đầu
@@ -138,13 +139,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Gửi yêu cầu POST đến API
             fetch(`${api}BillDetail/CreateBillDetail/${billId}/${newProduct}/${newColor}/${newStorage}`, {
-                // fetch(`${api}CreateBillDetail/${billId}/${newProduct}/${newColor}/128`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(addBillDetailData)
             })
+                //Cập nhật tổng tiền bill
                 .then(response => {
                     if (response.ok) {
                         return fetch(`${api}Bill/CalculateTotalBill/${billId}`, {
@@ -154,14 +155,31 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                         });
                     } else {
-                        console.error('Đã xảy ra lỗi khi cập nhật thông tin chi tiết hóa đơn:', response.status);
+                        alert('Hóa đơn đã có sản phẩm này rồi', response.status);
                         throw new Error('Có lỗi khi cập nhật thông tin chi tiết hóa đơn.');
                     }
                 })
+                //Cập nhập số lượng sản phẩm
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
+                        fetchAmountProduct(newProduct, newColor, newStorage)
+                            .then(amountProduct => {
+                                editAmountProduct(newProduct, newStorage, newColor, amountProduct - newAmount);
+                            })
+                            .catch(error => {
+                                console.error('Lỗi khi lấy số lượng sản phẩm từ cơ sở dữ liệu:', error);
+                            });
+                    } else {
+                        alert('số lượng sản phẩm không cập nhật được ', response.status);
+                        throw new Error('Có lỗi khi cập nhật thông tin chi tiết hóa đơn.');
+                    }
+                })
+                //Cập nhật bill deatil Thành công
+                .then(response => {
+                    if (response.ok) {
+                        
                         alert('Thông tin chi tiết hóa đơn đã được cập nhật thành công.');
+                        window.location.href = `../../../pages/Bill/Bill-detail.html?id=${billId}`;
                     } else {
                         alert('Hóa đơn đã có sản phẩm này rồi', response.status);
                         throw new Error('Có lỗi khi cập nhật thông tin chi tiết hóa đơn.');
@@ -213,3 +231,4 @@ function input() {
         return true;
     }
 }
+
