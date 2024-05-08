@@ -116,11 +116,29 @@ fetch(`${apiUrl}Product/GetALLProductDetails`)
             deleteButton.textContent = 'Delete';
             deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
             deleteButton.addEventListener('click', function () {
-                // Xử lý sự kiện khi click vào nút Delete
-                // Gửi yêu cầu xóa sản phẩm với productId
-                // Sau khi xóa thành công, có thể cập nhật giao diện hoặc điều hướng tới trang khác
-                // Ví dụ:
-                // deleteProduct(productId);
+                const confirmDelete = confirm('Bạn có muốn xóa sản phẩm này không?');
+
+                // Nếu người dùng đồng ý xóa sản phẩm
+                if (confirmDelete) {
+                    // Gửi yêu cầu xóa sản phẩm
+                    fetch(`${apiUrl}Product/DeleteProductDetail/${product.productId}/${product.storageGb}/${product.colorName}`, {
+                        method: 'DELETE'
+                    })
+                    .then(response => {
+                        // Kiểm tra xem yêu cầu đã thành công hay không
+                        if (!response.ok) {
+                            throw new Error('Failed to delete product');
+                        }
+                        // Log ra console nếu xóa thành công
+                        alert('Xóa sản phẩm thành công')
+                        // Reload trang sau khi xóa
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        alert('Lỗi không thể xóa sản phẩm, vui lòng kiểm tra lại')
+                        console.error('Error deleting product:', error);
+                    });
+                }
             });
             deleteButtonCell.appendChild(deleteButton);
             row.appendChild(deleteButtonCell);

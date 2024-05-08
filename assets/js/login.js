@@ -31,7 +31,6 @@
   
           if (response.ok) {
             alert('Đăng nhập thành công');
-            apiUrl = "https://localhost:7244/api/";
             // Redirect or do something upon successful login
             window.location.href = 'http://127.0.0.1:5500/index.html';
 
