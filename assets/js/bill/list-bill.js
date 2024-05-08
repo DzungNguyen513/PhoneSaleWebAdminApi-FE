@@ -1,10 +1,11 @@
 import api from '../../Base-url/Url.js'
 import formatDateTime from '../function/formatDateTime.js'
 import formatMoney from '../function/formatMoneyVN.js'
-console.log(api);
 const bill = `${api}Bill`
-
 let allBills = []; // Mảng chứa tất cả các Bill
+
+
+
 fetch(bill)
     // fetch(`${api}Bill`)
     .then(response => response.json())
@@ -44,7 +45,7 @@ fetch(bill)
                 });
 
                 const idEmployeeCell = document.createElement('td');
-                idEmployeeCell.textContent = bill.customerId;
+                idEmployeeCell.textContent = bill.customerName;
                 row.appendChild(idEmployeeCell);
 
                 const statusCell = document.createElement('td');
@@ -96,7 +97,7 @@ fetch(bill)
                 // } else{
                 //     editButton.onclick = function (e) {
                 //         e.stopPropagation();
-                      
+
                 //         if (bill.status === 4) {
                 //             const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
                 //             if (confirmation) {
@@ -109,7 +110,7 @@ fetch(bill)
                 // }
                 editButton.onclick = function (e) {
                     e.stopPropagation();
-                  
+
                     if (bill.status === 4) {
                         const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
                         if (confirmation) {
@@ -119,7 +120,7 @@ fetch(bill)
                         window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
                     }
                 }
-                
+
                 const editIcon = document.createElement('i');
                 editIcon.className = 'mdi mdi-pencil';
                 editButton.appendChild(editIcon);
@@ -205,29 +206,8 @@ fetch(bill)
             });
         }
 
-        //Phần sử lý tìm kiếm
-        // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
-        // const searchInput = document.querySelector('.form-control');
-        // searchInput.addEventListener('input', function () {
-        //     const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
-        //     const Bills = document.querySelectorAll('.table tbody tr'); // Danh sách các Bill
-
-        //     Bills.forEach(Bill => {
-        //         const BillName = Bill.querySelector('td:first-child').textContent.toLowerCase(); // Lấy tên Bill
-
-        //         // So sánh tên Bill với giá trị tìm kiếm
-        //         if (BillName.includes(searchValue)) {
-        //             Bill.style.display = 'table-row'; // Hiển thị Bill nếu tên chứa từ khóa tìm kiếm
-        //         } else {
-        //             Bill.style.display = 'none'; // Ẩn Bill nếu không chứa từ khóa tìm kiếm
-        //         }
-        //     });
-        // });
-
-        // Khởi tạo
         renderBills(currentPage);
         createPaginationButtons();
-        // updatePaginationUI();
     })
     .catch(error => {
         console.error('Đã xảy ra lỗi khi lấy danh sách hóa đơn:', error);
