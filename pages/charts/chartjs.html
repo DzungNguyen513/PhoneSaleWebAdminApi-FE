@@ -15,6 +15,8 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
   </head>
@@ -202,7 +204,7 @@
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Danh sách sản phẩm</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Danh mục</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/categories.html">Danh mục</a></li>
                 </ul>
               </div>
             </li>
@@ -278,13 +280,23 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="page-header">
-              <h3 class="page-title"> Chart-js </h3>
-              <nav aria-label="breadcrumb">
+              <div class="row">
+                <h3 class="col page-title"> Chart-js </h3>
+                  <div class="col form-group">
+                    <select class="form-control" name="" id="filter">
+                      <option value="Ngày">Ngày</option>
+                      <option value="Tháng">Tháng</option>
+                      <option value="Năm">Năm</option>
+                    </select>
+                  </div>
+                
+              <nav aria-label=" col breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="#">Charts</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Chart-js</li>
                 </ol>
               </nav>
+              </div>
             </div>
             <div class="row">
               <div class="col-lg-6 grid-margin stretch-card">
@@ -305,7 +317,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-6 grid-margin stretch-card">
+              <div class="col grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Giá trị hóa đơn theo sản phẩm</h4>
@@ -313,16 +325,16 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6 grid-margin stretch-card">
+              <!-- <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Doughnut chart</h4>
                     <canvas id="doughnutChart" style="height:250px"></canvas>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
@@ -339,7 +351,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:../../partials/_footer.html -->

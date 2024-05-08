@@ -2,8 +2,8 @@ import api from '../../Base-url/Url.js'
 import formatMoney from '../function/formatMoneyVN.js'
 
 const apiUrl = api
+function fetchAllProducts() {
         let allProducts = []; // Mảng chứa tất cả các sản phẩm
-        let filteredProducts = []; // Mảng chứa sản phẩm đã lọc
         fetch(`${apiUrl}Product/GetProducts`)
             .then(response => response.json())
             .then(data => {
@@ -166,25 +166,6 @@ const apiUrl = api
                         }
                     });
                 }
-                //Phần sử lý tìm kiếm
-                // Lắng nghe sự kiện khi người dùng nhập vào trường tìm kiếm
-                const searchInput = document.querySelector('.form-control');
-                searchInput.addEventListener('input', function () {
-                    const searchValue = this.value.toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
-                    const products = document.querySelectorAll('.table tbody tr'); // Danh sách các sản phẩm
-
-                    products.forEach(product => {
-                        const productName = product.querySelector('td:first-child').textContent.toLowerCase(); // Lấy tên sản phẩm
-
-                        // So sánh tên sản phẩm với giá trị tìm kiếm
-                        if (productName.includes(searchValue)) {
-                            product.style.display = 'table-row'; // Hiển thị sản phẩm nếu tên chứa từ khóa tìm kiếm
-                        } else {
-                            product.style.display = 'none'; // Ẩn sản phẩm nếu không chứa từ khóa tìm kiếm
-                        }
-                    });
-                });
-
                 // Khởi tạo
                 renderProducts(currentPage);
                 createPaginationButtons();
@@ -193,3 +174,132 @@ const apiUrl = api
             .catch(error => {
                 console.error('Đã xảy ra lỗi khi lấy danh sách sản phẩm:', error);
             });
+
+        }
+        fetchAllProducts()
+            function removePaginationButtons() {
+                const pagination = document.querySelector('.pagination');
+                if (pagination) {
+                  pagination.remove();
+                }
+              }
+
+
+function searchProducts(searchString) {
+    removePaginationButtons(); 
+    fetch(`${apiUrl}Product/SearchProducts/${searchString}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(products => {
+        const tableBody = document.querySelector('table tbody');
+  
+        // Clear previous search results
+        tableBody.innerHTML = '';
+  
+        // Populate table with search results
+        products.forEach(product => {
+          const row = document.createElement('tr');
+  
+          // Populate table cells with product data
+          const nameCell = document.createElement('td');
+          nameCell.textContent = product.productName;
+          row.appendChild(nameCell);
+
+          row.addEventListener('mouseover', function () {
+            row.style.cursor = 'pointer';
+        });
+
+        // Thêm sự kiện mouseout để trả lại con trỏ chuột khi di chuột ra khỏi dòng
+        row.addEventListener('mouseout', function () {
+            row.style.cursor = 'default';
+        });
+        // Thêm sự kiện click vào dòng
+        row.addEventListener('click', function () {
+            window.location.href = `http://127.0.0.1:5500/pages/ui-features/product-details.html?id=${product.productId}`;
+        });
+  
+          const priceCell = document.createElement('td');
+          priceCell.textContent = `${formatMoney(product.price)}`;
+          row.appendChild(priceCell);
+  
+          const discountCell = document.createElement('td');
+          discountCell.textContent = `${product.discount}%`;
+          row.appendChild(discountCell);
+  
+          const detailCell = document.createElement('td');
+          detailCell.textContent = product.detail;
+          detailCell.style.whiteSpace = 'pre-wrap';
+          row.appendChild(detailCell);
+  
+          const statusCell = document.createElement('td');
+          statusCell.textContent = product.status === 1 ? 'Đang kinh doanh' : 'Đã ngừng kinh doanh';
+          statusCell.style.color = product.status === 1 ? 'green' : 'red';
+          statusCell.style.fontWeight = 'bold';
+          row.appendChild(statusCell);
+  
+          // Create cell to contain action buttons
+          const actionCell = document.createElement('td');
+  
+          // Create Edit button
+          const editButton = document.createElement('button');
+          editButton.textContent = 'Edit';
+          editButton.className = 'btn btn-primary mr-2';
+          editButton.onclick = function (e) {
+            e.stopPropagation();
+            window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-product.html?id=${product.productId}`;
+          };
+          actionCell.appendChild(editButton);
+  
+          // Create Delete button
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Delete';
+          deleteButton.className = 'btn btn-danger';
+          deleteButton.onclick = function (e) {
+            e.stopPropagation();
+            const confirmDelete = confirm('Bạn có muốn xóa sản phẩm này không?');
+            if (confirmDelete) {
+              fetch(`${apiUrl}Product/${product.productId}`, {
+                method: 'DELETE'
+              })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Failed to delete product');
+                  }
+                  console.log('Product deleted successfully');
+                  window.location.reload();
+                })
+                .catch(error => {
+                  console.error('Error deleting product:', error);
+                });
+            }
+          };
+          actionCell.appendChild(deleteButton);
+  
+          // Add action cell to row
+          row.appendChild(actionCell);
+  
+          // Append row to table body
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+      });
+  }
+  
+  // Event listener for input change
+  document.getElementById('searchInput').addEventListener('input', function(event) {
+    const searchString = event.target.value.trim();
+    if (searchString !== '') {
+      searchProducts(searchString);
+    } else {
+      // Clear table if search string is empty
+      const tableBody = document.querySelector('table tbody');
+      tableBody.innerHTML = '';
+      fetchAllProducts()
+    }
+  });

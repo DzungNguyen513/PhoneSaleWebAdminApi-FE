@@ -42,7 +42,7 @@ const apiUrl = api
                 console.error('Error fetching categories:', error);
             });
 
-        
+        var createAt;
         //get ID
         const urlParams = new URLSearchParams(window.location.search)
         const productId = urlParams.get('id')
@@ -65,6 +65,8 @@ const apiUrl = api
                     document.getElementById('vendorId').value = product.vendorId;
                     document.getElementById('detail').value = product.detail;
                     document.getElementById('status').value = product.status;
+
+                    createAt = product.createAt
                 })
                 .catch(error => {
                     console.error('Error fetching product details:', error);
@@ -72,8 +74,6 @@ const apiUrl = api
 
 
         })
-
-
 
         //edit product
         document.getElementById('editProductForm').addEventListener('submit', async function (event) {
@@ -93,7 +93,8 @@ const apiUrl = api
                 categoryId: categoryId,
                 vendorId: vendorId,
                 detail: detail,
-                status: status
+                status: status,
+                createAt: createAt
             }
 
             fetch(`${apiUrl}Product/${productId}`, {
