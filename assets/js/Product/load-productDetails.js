@@ -180,7 +180,7 @@ fetch(`${apiUrl}ProductImage/GetProductImagesByPath/${productId}`)
     // Lặp qua mỗi đường dẫn ảnh và thêm vào src của thẻ img
     imagePaths.forEach(imagePath => {
         const img = document.createElement('img');
-        const host = "https://localhost:7244/";
+        const host = "http://192.168.1.4:7244/";
         img.src = host + imagePath; 
 
         console.log(imagePath)
