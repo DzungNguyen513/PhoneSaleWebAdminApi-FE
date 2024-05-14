@@ -55,14 +55,6 @@ function fetchAllProducts() {
                         detailCell.style.whiteSpace = 'pre-wrap';
                         row.appendChild(detailCell);
 
-                        const imgCell = document.createElement('td');
-                        const imgElement = document.createElement('img');
-                        imgElement.src = '../../assets/images/dashboard/Iphone15.png';
-                        imgElement.alt = product.productName;
-                        imgElement.className = 'img-fluid';
-                        imgCell.appendChild(imgElement);
-                        row.appendChild(imgCell);
-
                         const statusCell = document.createElement('td');
                         statusCell.textContent = product.status === 1 ? 'Đang kinh doanh' : 'Đã ngừng kinh doanh';
                         statusCell.style.color = product.status === 1 ? 'green' : 'red';

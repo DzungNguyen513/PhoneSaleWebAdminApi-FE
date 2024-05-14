@@ -26,7 +26,7 @@ fetch(billUrl)
             window.location.href = `./Bill-detail-add.html?id=${billId}`;
         });
 
-        if (data.status === 4) { // Nếu trạng thái là "Đã hủy"
+        if (data.status !== 0 ) { // Nếu trạng thái là "Đã hủy"
             document.querySelector('.add-product-detail').setAttribute('disabled', true);
         }
 
@@ -221,7 +221,7 @@ fetch(billDetail)
                     deleteButton.appendChild(deleteIcon);
                     actionCell.appendChild(deleteButton);
 
-                    if (statusCheck === 4) {
+                    if (statusCheck !== 0) {
                         editButton.disabled = true;
                         deleteButton.disabled = true;
                     }
