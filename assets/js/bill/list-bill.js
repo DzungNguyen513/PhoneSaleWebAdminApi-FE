@@ -1,10 +1,11 @@
 import api from '../../Base-url/Url.js'
 import formatDateTime from '../function/formatDateTime.js'
 import formatMoney from '../function/formatMoneyVN.js'
-console.log(api);
 const bill = `${api}Bill`
-
 let allBills = []; // Mảng chứa tất cả các Bill
+
+
+
 fetch(bill)
     // fetch(`${api}Bill`)
     .then(response => response.json())
@@ -44,7 +45,7 @@ fetch(bill)
                 });
 
                 const idEmployeeCell = document.createElement('td');
-                idEmployeeCell.textContent = bill.customerId;
+                idEmployeeCell.textContent = bill.customerName;
                 row.appendChild(idEmployeeCell);
 
                 const statusCell = document.createElement('td');
@@ -91,35 +92,24 @@ fetch(bill)
                 editButton.textContent = 'Sửa đơn';
                 editButton.className = 'btn btn-primary mr-2';
                 editButton.innerHTML += '&nbsp;';
-                // if (bill.status !== 1 ||bill.status !== 4 ) {
-                //     editButton.disabled = true;
-                // } else{
-                //     editButton.onclick = function (e) {
-                //         e.stopPropagation();
-                      
-                //         if (bill.status === 4) {
-                //             const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
-                //             if (confirmation) {
-                //                 window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
-                //             }
-                //         } else {
-                //             window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
-                //         }
-                //     }
-                // }
-                editButton.onclick = function (e) {
-                    e.stopPropagation();
-                  
-                    if (bill.status === 4) {
-                        const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
-                        if (confirmation) {
+                if (bill.status !== 0 && bill.status !== 4 ) {
+                    editButton.disabled = true;
+                } else{
+                    editButton.onclick = function (e) {
+                        e.stopPropagation();
+
+                        if (bill.status === 4) {
+                            const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
+                            if (confirmation) {
+                                window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
+                            }
+                        } else {
                             window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
                         }
-                    } else {
-                        window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
                     }
                 }
                 
+
                 const editIcon = document.createElement('i');
                 editIcon.className = 'mdi mdi-pencil';
                 editButton.appendChild(editIcon);
@@ -209,16 +199,15 @@ fetch(bill)
         // Khởi tạo
         renderBills(currentPage);
         createPaginationButtons();
-        // updatePaginationUI();
     })
     .catch(error => {
         console.error('Đã xảy ra lỗi khi lấy danh sách hóa đơn:', error);
     });
 
 
-    // Lắng nghe sự kiện thay đổi của select
+// Lắng nghe sự kiện thay đổi của select
 const filterSelect = document.getElementById('filterBill');
-filterSelect.addEventListener('change', function() {
+filterSelect.addEventListener('change', function () {
     const selectedStatus = this.value; // Lấy giá trị trạng thái được chọn
     let filteredBills = [];
 
@@ -228,7 +217,7 @@ filterSelect.addEventListener('change', function() {
         filteredBills = allBills;
     } else {
         // Lọc danh sách hóa đơn theo trạng thái được chọn
-        switch(selectedStatus) {
+        switch (selectedStatus) {
             case 'Chờ xác nhận':
                 filteredBills = allBills.filter(bill => bill.status === 0);
                 break;
@@ -250,9 +239,34 @@ filterSelect.addEventListener('change', function() {
         }
     }
 
-    // Sau khi lọc, hiển thị lại danh sách hóa đơn đã được lọc
     renderBills(1, filteredBills);
 });
+
+// Lắng nghe sự kiện khi người dùng nhập vào input
+const searchInput = document.querySelector('.btn-search');
+searchInput.addEventListener('input', function (event) {
+    const searchString = event.target.value.trim(); // Lấy giá trị từ input và loại bỏ khoảng trắng ở đầu và cuối
+
+    console.log(searchString.toString())
+    if (searchString !== '') {
+        // Gọi đến API để lấy danh sách hóa đơn theo tên khách hàng
+        fetch(`${api}Bill/SearchCustomerName/${searchString}`)
+            .then(response => response.json())
+            .then(data => {
+                renderBills(1, data);
+            })
+            .catch(error => {
+                console.error('Đã xảy ra lỗi khi tìm kiếm hóa đơn theo tên khách hàng:', error);
+                // Xử lý lỗi nếu có
+            });
+    } else {
+        // Nếu ô tìm kiếm trống, hiển thị lại toàn bộ danh sách hóa đơn
+        renderBills(1);
+        updatePaginationUI();
+
+    }
+});
+
 
 // Hàm hiển thị Bill trên trang hiện tại với danh sách đã lọc (nếu có)
 function renderBills(page, bills = allBills) {
@@ -272,7 +286,7 @@ function renderBills(page, bills = allBills) {
         row.appendChild(idBillCell);
 
         const idEmployeeCell = document.createElement('td');
-        idEmployeeCell.textContent = bill.customerId;
+        idEmployeeCell.textContent = bill.customerName;
         row.appendChild(idEmployeeCell);
 
         const statusCell = document.createElement('td');
@@ -307,17 +321,22 @@ function renderBills(page, bills = allBills) {
         const editButton = document.createElement('button');
         editButton.textContent = 'Sửa đơn';
         editButton.className = 'btn btn-primary mr-2';
-        editButton.onclick = function (e) {
-            e.stopPropagation();
-            if (bill.status === 4) {
-                const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
-                if (confirmation) {
+        if (bill.status !== 0 && bill.status !== 4) {
+            editButton.disabled = true;
+        } else {
+            editButton.onclick = function (e) {
+                e.stopPropagation();
+
+                if (bill.status === 4) {
+                    const confirmation = confirm("Đơn hàng này đã bị hủy. Bạn có muốn tiếp tục sửa đổi không?");
+                    if (confirmation) {
+                        window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
+                    }
+                } else {
                     window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
                 }
-            } else {
-                window.location.href = `../../../pages/Bill/Bill-edit.html?id=${bill.billId}`;
             }
-        };
+        }
         const editIcon = document.createElement('i');
         editIcon.className = 'mdi mdi-pencil';
         editButton.appendChild(editIcon);

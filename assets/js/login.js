@@ -19,7 +19,7 @@
         };
   
         try {
-          const response = await fetch(`https://localhost:7244/api/Login/LoginAccount`, {
+          const response = await fetch(`http://192.168.1.4:7244/api/Login/LoginAccount`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
             this.value = " ";
         }
 
-        amountProduct = calculateTotal(inputAmount,originalAmount,amountProduct)
-        console.log(amountProduct)
+        // amountProduct = calculateTotal(inputAmount,originalAmount,amountProduct)
+        // console.log(amountProduct)
         
         amount = parseInt(this.value);
         updatePriceAndTotal(productId, colorName, storageGb, discount, amount);
@@ -133,7 +133,7 @@ function updatePriceAndTotal(productId, colorName, storageGb, discount, amount) 
     fetchAmountProduct(productId, colorName, storageGb)
         .then(amountProduct => {
             // document.getElementById('amount-product').innerText = amountProduct;
-            // return calculatePrice(productId, colorName, storageGb, discount);
+            return calculatePrice(productId, colorName, storageGb, discount);
         })
         .then(newPrice => {
             document.getElementById('price').value = newPrice;
