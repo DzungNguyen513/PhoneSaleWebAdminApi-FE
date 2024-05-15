@@ -2,8 +2,9 @@ import api from '../../Base-url/Url.js'
 import formatMoney from '../function/formatMoneyVN.js'
 
 const apiUrl = api
+let allProducts = [];
 function fetchAllProducts() {
-        let allProducts = []; // Mảng chứa tất cả các sản phẩm
+         // Mảng chứa tất cả các sản phẩm
         fetch(`${apiUrl}Product/GetProducts`)
             .then(response => response.json())
             .then(data => {
@@ -295,3 +296,139 @@ function searchProducts(searchString) {
       fetchAllProducts()
     }
   });
+
+
+  // Lắng nghe sự kiện thay đổi của select
+const filterSelect = document.getElementById('filterProduct');
+filterSelect.addEventListener('change', function() {
+  removePaginationButtons(); 
+
+    const selectedOption = this.value; // Lấy giá trị lựa chọn từ select
+    let sortedProducts = [];
+
+    // Sắp xếp danh sách sản phẩm dựa trên lựa chọn được chọn
+    switch(selectedOption) {
+        case 'Tất cả':
+            // Nếu chọn Tất cả, sử dụng danh sách sản phẩm ban đầu
+            fetchAllProducts()
+            break;
+        case 'Giá cao nhất':
+            // Sắp xếp danh sách sản phẩm theo giá giảm dần
+            sortedProducts = allProducts.slice().sort((a, b) => b.price - a.price);
+            break;
+        case 'Giá thấp nhất':
+            // Sắp xếp danh sách sản phẩm theo giá tăng dần
+            sortedProducts = allProducts.slice().sort((a, b) => a.price - b.price);
+            break;
+        default:
+            // Mặc định, sử dụng danh sách sản phẩm ban đầu
+            sortedProducts = allProducts;
+    }
+
+    // Sau khi sắp xếp, hiển thị lại danh sách sản phẩm
+    renderProducts(sortedProducts);
+});
+
+// Hàm hiển thị sản phẩm trên trang hiện tại với danh sách đã sắp xếp
+function renderProducts(products = allProducts) {
+  const tableBody = document.querySelector('.table tbody');
+  tableBody.innerHTML = ''; // Xóa nội dung cũ
+
+  products.forEach(product => {
+      const row = document.createElement('tr');
+
+      // Tạo các ô và nội dung của từng hàng sản phẩm
+      const nameCell = document.createElement('td');
+      nameCell.textContent = product.productName;
+      row.appendChild(nameCell);
+
+      row.addEventListener('mouseover', function () {
+          row.style.cursor = 'pointer';
+      });
+
+      // Thêm sự kiện mouseout để trả lại con trỏ chuột khi di chuột ra khỏi dòng
+      row.addEventListener('mouseout', function () {
+          row.style.cursor = 'default';
+      });
+      // Thêm sự kiện click vào dòng
+      row.addEventListener('click', function () {
+          window.location.href = `http://127.0.0.1:5500/pages/ui-features/product-details.html?id=${product.productId}`;
+      });
+
+      const priceCell = document.createElement('td');
+      priceCell.textContent = `${formatMoney(product.price)}`;
+      row.appendChild(priceCell);
+
+      const discountCell = document.createElement('td');
+      discountCell.textContent = `${product.discount}%`;
+      row.appendChild(discountCell);
+
+      const detailCell = document.createElement('td');
+      detailCell.textContent = product.detail;
+      detailCell.style.whiteSpace = 'pre-wrap';
+      row.appendChild(detailCell);
+
+      const statusCell = document.createElement('td');
+      statusCell.textContent = product.status === 1 ? 'Đang kinh doanh' : 'Đã ngừng kinh doanh';
+      statusCell.style.color = product.status === 1 ? 'green' : 'red';
+      statusCell.style.fontWeight = 'bold';
+      row.appendChild(statusCell);
+
+      tableBody.appendChild(row);
+
+      // Tạo thẻ td để chứa các nút bấm
+      const actionCell = document.createElement('td');
+
+      // Tạo nút Edit
+      const editButton = document.createElement('button');
+      editButton.textContent = 'Edit';
+      editButton.className = 'btn btn-primary mr-2';
+      editButton.onclick = function (e) {
+          e.stopPropagation();
+          window.location.href = `http://127.0.0.1:5500/pages/ui-features/edit-product.html?id=${product.productId}`;
+      };
+      const editIcon = document.createElement('i');
+      editIcon.className = 'mdi mdi-pencil';
+      editButton.appendChild(editIcon);
+      actionCell.appendChild(editButton);
+
+      // Tạo nút Delete
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.className = 'btn btn-danger';
+      deleteButton.onclick = function (e) {
+          // Hiển thị hộp thoại xác nhận
+          e.stopPropagation();
+          const confirmDelete = confirm('Bạn có muốn xóa sản phẩm này không?');
+
+          // Nếu người dùng đồng ý xóa sản phẩm
+          if (confirmDelete) {
+              // Gọi fetch API phương thức DELETE
+              fetch(`${apiUrl}Product/${product.productId}`, {
+                  method: 'DELETE'
+              })
+                  .then(response => {
+                      if (!response.ok) {
+                          throw new Error('Failed to delete product');
+                      }
+                      // Xử lý phản hồi nếu cần
+                      console.log('Product deleted successfully');
+                      window.location.reload();
+                  })
+                  .catch(error => {
+                      console.error('Error deleting product:', error);
+                  });
+          }
+      };
+      const deleteIcon = document.createElement('i');
+      deleteIcon.className = 'mdi mdi-delete';
+      deleteButton.appendChild(deleteIcon);
+      actionCell.appendChild(deleteButton);
+
+      // Thêm cell vào hàng
+      row.appendChild(actionCell);
+
+      tableBody.appendChild(row);
+  });
+}
+
