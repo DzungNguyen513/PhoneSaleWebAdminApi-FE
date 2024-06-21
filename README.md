@@ -1,69 +1,36 @@
-<a href="http://www.bootstrapdash.com/demo/purple-admin-free" target="_blank"><img src="screenshot.jpg"></a>
+# PhoneSaleAdmin-FE
 
-<h1>PurpleAdmin-Free-Admin-Template</h1>
-Purple Admin is a free responsive admin template built with Bootstrap 5. The template has colorful, attractive yet simple and elegant design. The template is well crafted, with all the components neatly and carefully designed and arranged within the template.
+An Admin management website allowing management of phones, categories, accounts, orders, push notifications, and statistical reports.
 
-Purple Admin is packed with all the features that fit your needs but not cramped with components you would not even use. It is an excellent fit to build admin panels, e-commerce systems,  project management systems, CMS or CRM.
+## Screenshots
 
-Although the template has a design like none other, it is easily customizable to suit your requirements. Purple Admin comes with a clean and well-commented code that makes it easy to work with the template. Thus making it an ideal pick for jump starting your project.
+### Screenshot 1: Quản lý sản phẩm (Thêm xóa sửa thay đổi dữ liệu trên Mobile App)
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/67b73f95-b3dd-4354-a266-e9f80ca3f708" width="600">
 
+### Screenshot 2: Chi tiết sản phẩm (Upload thêm xóa sửa ảnh, thêm mới ProductDetail)
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/67700713-958d-486e-b7d8-1c3c6ba7a06c" width="600">
 
-<h1>Credits:</h1>
+### Screenshot 3: Quản lý danh mục (Danh mục màu, Danh mục dung lượng, Đối tác)
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/ce267c04-28f5-4db7-83b8-4175e5640645" width="600">
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/c780c755-63a3-4a5a-9d0b-0d50d03e0960" width="600">
 
-- Bootstrap 5
-- Material Design Icons
-- jQuery
-- Gulp
-- Chart.js
+### Screenshot 4: Tài khoản hệ thống
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/62d99d34-f2b6-4a21-b787-9c439bfc2acc" width="600">
 
-<h1>Browser Support:</h1>
+### Screenshot 5: Quản lý Tài khoản khách hàng
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/c22d6699-cbf2-498b-b3b9-365ee5aa840a" width="600">
 
-Purple Admin is designed to work flawlessly with all the latest and modern web browsers.
+### Screenshot 6: Quản lý đơn hàng (Nhận đơn đặt hàng từ Mobile)
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/4f2a6b71-c27b-4ab3-a2b6-71d2c2671a8f" width="600">
 
-- Chrome (latest)
-- FireFox (latest)
-- Safari (latest)
-- Opera (latest)
-- IE10+  
+### Screenshot 7: Chi tiết đơn hàng
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/e21ece07-9622-47ba-a40c-72b654a3a0e9" width="600">
 
-<h1>License Information:</h1>
+### Screenshot 8: Báo cáo thống kê (Theo ngày, tháng, năm)
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/40974eed-eb62-4ca8-aef9-2b077269fe86" width="600">
 
+### Screenshot 9: Quản lý thông báo (Gửi thông báo kết hợp Push Notification gửi đến App)
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/cdc9bf43-fbf5-4a0c-abaf-7d0db8ce3a16" width="600">
 
-Purple Admin is released under MIT license. Purple Admin is a free Bootstrap 5 admin template developed from BootstrapDash. Feel free to download it, use it, share it, get creative with it.
-
-<h1>How to use Purple Admin?</h1>
-
-
-1 - Click the Clone or Download button in GitHub and download as a ZIP file or you can enter the command git clone https://github.com/BootstrapDash/PurpleAdmin-Free-Admin-Template.git in you terminal to get a copy of this template.
-
-2 - After the files have been downloaded you will get a folder with all the required files
-
-3 - You can install all the dependencies in the template by running the command npm install. All the required files are in the node modules.
-
-4 - Find the file named index.html, check what all components you need. Open the file in a text editor and you can start editing.
-
-5 - Now that your project has now kick-started, all you need to do now is to code, code, and code to your heart's content.
-
-<h1>How to Contribute?:</h1>
-
-
-We love your contributions and we welcome them wholeheartedly. We believe the more the merrier.
-To contribute make sure you have a Node.js and npm installed. Now run the command gulp --version. If the command returns with the Gulp version number, it means you have Gulp installed. If not you need to run the command npm install --global gulp-cli to install Gulp.
-
-<h2>Next</h2>
-
-After Gulp has been installed, follow the steps below to contribute.
-  <br>
-	1 - Fork and clone the repo of Purple Admin.
-  <br>
-	2 - Run the command npm install to install all the dependencies.
-  <br>
-	3 - Enter the command gulp serve. This will open Purple Admin in your default browser.
-  <br>
-	4 - Make your valuable contribution
-  <br>
-	5 - Submit a pull request.
-  <hr>
-	Do you need a template with more features and functionalities? Get more with our collection of the premium template with more plugins, eye catching animations, UI components, and sample pages all fitting together with a high-quality design.
-Visit
-  <a href="https://www.bootstrapdash.com" target="_blank">https://www.bootstrapdash.com</a> for more admin templates.
+### Screenshot 10: Notification Form
+<img src="https://github.com/TeamworkProjectsUTC/PhoneSaleAdmin/assets/110480975/cd5dfbdf-9ac8-4d7a-876c-c9ab58e53b31" width="600">
